@@ -19,6 +19,11 @@ public class IA extends Joueur{
 	
 	//============================================ATTRIBUT(S)============================================
 	/**
+	 * Numéro de sérialisation
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
 	 * Difficulté de l'IA (correspond au nombre de tour évalués)
 	 */
 	private int difficulte;
@@ -210,11 +215,6 @@ public class IA extends Joueur{
 		int noteMax = noteDeplacements[0];
 		int indexNoteMax=0;
 		for(int i=0;i<noteDeplacements.length;i++){
-			/*
-			//Affichage note et deplacement
-			System.out.println("Note "+i+" : "+noteDeplacements[i]);
-			System.out.println("Deplacement correspondant : "+tousDeplacements.get(i));
-			*/
 			//Trouve le max
 			if(noteDeplacements[i]>noteMax){
 				noteMax=noteDeplacements[i];
@@ -226,7 +226,7 @@ public class IA extends Joueur{
 		meilleursDeplacement = tousDeplacements.get(indexNoteMax);
 		
 		//Temps
-		System.out.println("\nMeilleur deplacement calculé en "+(System.currentTimeMillis()-debut)+" ms\nNombre de possibilité evaluées : "+formatPossibilites.format(this.nbPossibilitesEvaluees)+"\n");
+		if(this.debug)System.out.println("\nMeilleur deplacement calculé en "+(System.currentTimeMillis()-debut)+" ms\nNombre de possibilité evaluées : "+formatPossibilites.format(this.nbPossibilitesEvaluees)+"\n");
 		
 		//Retour
 		return meilleursDeplacement;

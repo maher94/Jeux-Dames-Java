@@ -204,6 +204,7 @@ public class Deplacement {
 	/**
 	 * Pour convertir une chaine de caractère en un objet Deplacement.<br>
 	 * La chaine doit avoir la forme suivante : <i>x1/y1-x2/y2</i>
+	 * La forme de la chaine doit utiliser une lettre majuscule pour les x et un nombre pour les y (voir la méthode toString() du Plateau)
 	 * @param texte Le texte qui décris le déplacement.
 	 * @return Retourne l'objet déplacement correspondant au texte.
 	 * @throws InvalidDeplacementException Si le texte ne correspond pas à un déplacement (mauvais format).

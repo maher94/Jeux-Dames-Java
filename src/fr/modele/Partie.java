@@ -1,5 +1,6 @@
 package fr.modele;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import fr.modele.exception.InvalidPlateauSizeException;
@@ -15,10 +16,15 @@ import fr.modele.exception.InvalidPlateauSizeException;
  * @since 1.00
  */
 
-public abstract class Partie {
+public abstract class Partie implements Serializable{
 	
 	
 	//============================================ATTRIBUT(S)============================================
+	/**
+	 * Numéro de sérialisation
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Le premier joueur de la partie
 	 */
@@ -98,13 +104,14 @@ public abstract class Partie {
 		return this.nbTours;
 	}
 	public long getTempsEcoule() {
+		this.tempsEcoule = tempsEcoule + (System.currentTimeMillis()-this.tempsDepart);
 		return this.tempsEcoule;
 	}
 	public boolean isPriseMultiple() {
 		return this.priseMultiple;
 	}
-	public Plateau getPlateauJeux() {
-		return this.plateauJeux;
+	public String getNomJoueurActuel(){
+		return this.getJoueurActuel().getNom();
 	}
 	//====================================================================================================
 	
@@ -152,6 +159,25 @@ public abstract class Partie {
 	}
 	
 	/**
+	 * Obtenir le joueur gagnant de la partie.<br>
+	 * Attention à n'appeler cette méthode qu'en fin de partie. 
+	 * @return le joueur à qui il reste encore des déplacements à éffectuer (donc qui a encore des pions ou n'est pas bloqué).<br>
+	 * <strong>ATTENTION : </strong>Retourne null si la partie n'est pas encore finie.
+	 */
+	public Joueur getGagnant(){
+		Joueur gagnant = null;
+		if(this.isPartieFinie()){
+			if(this.plateauJeux.getTousDeplacements(this.j1.getCouleur()).size()>0){
+				gagnant = this.j1;
+			}else if(this.plateauJeux.getTousDeplacements(this.j2.getCouleur()).size()>0){
+				gagnant=this.j2;
+			}
+		}
+		//Retour
+		return gagnant;
+	}
+	
+	/**
 	 * Pour obtenir le joueur qui doit joueur le tour actuel.<br>
 	 * Cela se base sur la couleur actuellement jouée.
 	 * @return le joueur qui doit jouer.
@@ -173,7 +199,6 @@ public abstract class Partie {
 	private void tourSuivant(){
 		//Statistiques de la partie
 		this.nbTours++;
-		this.tempsEcoule = tempsEcoule + (System.currentTimeMillis()-this.tempsDepart);
 		
 		//Réinitialise le boolean de la prise multiple
 		this.priseMultiple=false;

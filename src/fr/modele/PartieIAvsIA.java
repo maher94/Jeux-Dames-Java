@@ -17,25 +17,28 @@ public class PartieIAvsIA extends Partie{
 	
 	
 	//============================================ATTRIBUT(S)============================================
-	
+	/**
+	 * Numéro de sérialisation
+	 */
+	private static final long serialVersionUID = 1L;
 	//====================================================================================================
 	
-	
+
 	//==========================================CONSTRUCTEUR(S)==========================================
 	/**
 	 * Constructeur d'une partie IA vs IA
-	 * @param largeurPlateau la largeur du plateau de jeux
-	 * @param nombrePions le nombre de pions par joueur au lancement de la partie
-	 * @param premierJoueur la couleur qui doit commencer à jouer
+	 * @param largeurPlateauP la largeur du plateau de jeux
+	 * @param nombrePionsP le nombre de pions par joueur au lancement de la partie
+	 * @param premierJoueurP la couleur qui doit commencer à jouer
 	 * @param difficulte la difficulté de l'IA (niveau de précision, voir classe IA)
 	 * @throws IllegalArgumentException si les paramètres de création du plateau sont incorrects
 	 * @throws InvalidPlateauSizeException si il y a un problème avec les joueurs
 	 */
-	public PartieIAvsIA(int largeurPlateau,int nombrePions,int premierJoueur,int difficulte) throws IllegalArgumentException, InvalidPlateauSizeException{
-		super(largeurPlateau,nombrePions,premierJoueur);
+	public PartieIAvsIA(int largeurPlateauP,int nombrePionsP,int premierJoueurP,int difficulte) throws IllegalArgumentException, InvalidPlateauSizeException{
+		super(largeurPlateauP, nombrePionsP, premierJoueurP);
 		//Création des joueurs
-		IA j1 = new IA("Ordinateur 1", difficulte,this.getPlateau(),Pion.PION_BLANC);
-		IA j2 = new IA("Ordinateur 2",difficulte,this.getPlateau(),Pion.PION_NOIR);
+		IA j1 = new IA("Ordinateur 1 (O)", difficulte,this.getPlateau(),Pion.PION_BLANC);
+		IA j2 = new IA("Ordinateur 2 (X)",difficulte,this.getPlateau(),Pion.PION_NOIR);
 		this.setJ1(j1);
 		this.setJ2(j2);
 	}
@@ -43,6 +46,16 @@ public class PartieIAvsIA extends Partie{
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	
+	//====================================================================================================
+	
+	
+	//============================================MUTATEUR(S)============================================
+	
+	//====================================================================================================
+	
+	
+	//========================================AUTRE(S) METHODE(S)========================================
 	/**
 	 * Cette méthode va faire jouer l'IA pour un tour.<br>
 	 * Il se peut que l'IA joue deux fois de suite si il y a une prise multiple. (pour plus de détails, voir la méthode tourSuivant() et jouerTour(...) de Partie) 
@@ -64,20 +77,6 @@ public class PartieIAvsIA extends Partie{
 		}
 		return deplacementAFaire;
 	}
-	
-	public static void main(String[] args){
-		
-	}
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
-	
 	//====================================================================================================
 	
 }

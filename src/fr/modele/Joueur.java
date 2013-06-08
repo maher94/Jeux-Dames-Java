@@ -1,5 +1,7 @@
 package fr.modele;
 
+import java.io.Serializable;
+
 
 /**
  * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
@@ -11,10 +13,14 @@ package fr.modele;
  * @since 1.00
  */
 
-public class Joueur {
-	
+public class Joueur implements Serializable{
 	
 	//============================================ATTRIBUT(S)============================================
+	/**
+	 * Numéro de sérialisation
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Le nom du joueur
 	 */
