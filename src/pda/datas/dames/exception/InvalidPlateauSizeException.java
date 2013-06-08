@@ -1,4 +1,4 @@
-package fr.modele.exception;
+package pda.datas.dames.exception;
 
 
 /**

@@ -1,10 +1,10 @@
-package fr.modele;
+package pda.datas.dames;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import fr.modele.exception.InvalidDeplacementException;
-import fr.modele.exception.InvalidPlateauSizeException;
+import pda.datas.dames.exception.InvalidDeplacementException;
+import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 
 /**

@@ -1,9 +1,15 @@
-package fr.modele;
+package pda.datas.dames;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import fr.modele.exception.InvalidPlateauSizeException;
+import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 
 /**
@@ -255,18 +261,48 @@ public abstract class Partie implements Serializable{
 	
 	
 	//=======================================SAUVEGARDE/CHARGEMENT=======================================
-	
-	public void sauvegarder(){
+	/**
+	 * Permet de sauvegarder la partie actuelle.
+	 */
+	public void sauvegarder(String chemin){
 		//On ajoute le temps écoulé
 		this.tempsEcoule = this.tempsEcoule + (System.currentTimeMillis()-this.tempsDepart);
 		//Sauvegarde
+		try{
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(chemin));
+			oos.writeObject(this);
+			oos.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("Problème de sauvegarde de la partie :\n");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Problème de sauvegarde de la partie :\n");
+			e.printStackTrace();
+		}
 	}
 	
-	
-	public static Partie charger(){
+	/**
+	 * Permet de charger une partie à l'emplacement indiqué.
+	 * @return la partie qui vient d'être chargée, ou null si il y a un problème lors du chargement (pas de fichier, problème I/O ...)
+	 */
+	public static Partie charger(String chemin){
 		Partie chargee = null;
+		ObjectInputStream ois;
 		//Chargement
-		
+		try {
+			ois = new ObjectInputStream(new FileInputStream(chemin));
+			chargee = (Partie)(ois.readObject());
+			ois.close();
+		}catch (ClassNotFoundException e) {
+			System.err.println("Problème de chargement de la partie :\n");
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			System.err.println("Problème de chargement de la partie :\n");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Problème de chargement de la partie :\n");
+			e.printStackTrace();
+		}
 		//On change le temps de départ
 		chargee.tempsDepart = System.currentTimeMillis();
 		//retour

@@ -1,4 +1,4 @@
-package fr.modele;
+package pda.datas.dames;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

@@ -1,20 +1,18 @@
-package fr.modele;
+package pda.datas.dames;
 
-import fr.modele.exception.InvalidPlateauSizeException;
+import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 
 /**
  * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * Cette classe représente une partie IA vs IA<br>
- * La partie se joue sans aucune intervention de l'utilisateur (ou juste le signal pour passer au tour suivant).<br>
+ * Cette classe représente une partie entre un joueur Humain et l'IA<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
  * @since 1.00
  */
 
-public class PartieIAvsIA extends Partie{
-	
+public class PartieHumainvsIA extends Partie{
 	
 	//============================================ATTRIBUT(S)============================================
 	/**
@@ -23,22 +21,25 @@ public class PartieIAvsIA extends Partie{
 	private static final long serialVersionUID = 1L;
 	//====================================================================================================
 	
-
+	
 	//==========================================CONSTRUCTEUR(S)==========================================
+	
 	/**
-	 * Constructeur d'une partie IA vs IA
+	 * Constructeur d'une partie IA vs Humain
 	 * @param largeurPlateauP la largeur du plateau de jeux
 	 * @param nombrePionsP le nombre de pions par joueur au lancement de la partie
 	 * @param premierJoueurP la couleur qui doit commencer à jouer
-	 * @param difficulte la difficulté de l'IA (niveau de précision, voir classe IA)
+	 * @param nomHumain le nom du joueur humain
+	 * @param difficulte la difficulté de l'IA
+	 * @param couleurHumain la couleur que le joueur humain a choisi
 	 * @throws IllegalArgumentException si les paramètres de création du plateau sont incorrects
 	 * @throws InvalidPlateauSizeException si il y a un problème avec les joueurs
 	 */
-	public PartieIAvsIA(int largeurPlateauP,int nombrePionsP,int premierJoueurP,int difficulte) throws IllegalArgumentException, InvalidPlateauSizeException{
+	public PartieHumainvsIA(int largeurPlateauP, int nombrePionsP,int premierJoueurP,String nomHumain,int difficulte,int couleurHumain) throws InvalidPlateauSizeException,IllegalArgumentException {
 		super(largeurPlateauP, nombrePionsP, premierJoueurP);
-		//Création des joueurs
-		IA j1 = new IA("Ordinateur 1 (O)", difficulte,this.getPlateau(),Pion.PION_BLANC);
-		IA j2 = new IA("Ordinateur 2 (X)",difficulte,this.getPlateau(),Pion.PION_NOIR);
+		//Création joueurs
+		Joueur j1 = new Joueur(nomHumain,couleurHumain);
+		IA j2 = new IA("Ordinateur",difficulte,this.getPlateau(),-couleurHumain);
 		this.setJ1(j1);
 		this.setJ2(j2);
 	}
@@ -58,7 +59,8 @@ public class PartieIAvsIA extends Partie{
 	//========================================AUTRE(S) METHODE(S)========================================
 	/**
 	 * Cette méthode va faire jouer l'IA pour un tour.<br>
-	 * Il se peut que l'IA joue deux fois de suite si il y a une prise multiple. (pour plus de détails, voir la méthode tourSuivant() et jouerTour(...) de Partie) 
+	 * Il se peut que l'IA joue deux fois de suite si il y a une prise multiple. (pour plus de détails, voir la méthode tourSuivant() et jouerTour(...) de Partie)
+	 * <strong>ATTENTION : </strong> il faut être sûr d'appeler cette méthode quand c'est vraiment le tour de l'IA 
 	 * @return le déplacement qui vient d'être joué par l'IA.
 	 */
 	public Deplacement faireJouerIA(){

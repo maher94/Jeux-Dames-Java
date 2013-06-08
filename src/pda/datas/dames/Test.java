@@ -1,6 +1,6 @@
-package fr.modele;
+package pda.datas.dames;
 
-import fr.modele.exception.InvalidPlateauSizeException;
+import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 public class Test {
 

@@ -1,9 +1,9 @@
-package fr.modele;
+package pda.datas.dames;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import fr.modele.exception.InvalidPlateauSizeException;
+import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 /**
  * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>

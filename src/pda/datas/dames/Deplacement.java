@@ -1,6 +1,6 @@
-package fr.modele;
+package pda.datas.dames;
 
-import fr.modele.exception.InvalidDeplacementException;
+import pda.datas.dames.exception.InvalidDeplacementException;
 
 
 /**
