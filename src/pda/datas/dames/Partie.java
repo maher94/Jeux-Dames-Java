@@ -1,11 +1,5 @@
 package pda.datas.dames;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -88,7 +82,7 @@ public abstract class Partie implements Serializable{
 		this.plateauJeux = new Plateau(largeurPlateau,nombrePions);
 		this.plateauJeux.placerPions();
 		this.couleurJouee = premierJoueur;
-		this.tempsDepart = System.currentTimeMillis();
+		this.lancerPartie();
 	}
 	//====================================================================================================
 	
@@ -111,6 +105,7 @@ public abstract class Partie implements Serializable{
 	}
 	public long getTempsEcoule() {
 		this.tempsEcoule = tempsEcoule + (System.currentTimeMillis()-this.tempsDepart);
+		this.tempsDepart = System.currentTimeMillis();
 		return this.tempsEcoule;
 	}
 	public boolean isPriseMultiple() {
@@ -262,51 +257,20 @@ public abstract class Partie implements Serializable{
 	
 	//=======================================SAUVEGARDE/CHARGEMENT=======================================
 	/**
-	 * Permet de sauvegarder la partie actuelle.
+	 * Cette méthode permet d'obtenir un temps de partie valide.<br>
+	 * Il faudra l'appeler à chaque début de partie ou après chaque chargement.
 	 */
-	public void sauvegarder(String chemin){
-		//On ajoute le temps écoulé
-		this.tempsEcoule = this.tempsEcoule + (System.currentTimeMillis()-this.tempsDepart);
-		//Sauvegarde
-		try{
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(chemin));
-			oos.writeObject(this);
-			oos.close();
-		} catch (FileNotFoundException e) {
-			System.err.println("Problème de sauvegarde de la partie :\n");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("Problème de sauvegarde de la partie :\n");
-			e.printStackTrace();
-		}
+	public void lancerPartie(){
+		this.tempsDepart = System.currentTimeMillis();
 	}
 	
 	/**
-	 * Permet de charger une partie à l'emplacement indiqué.
-	 * @return la partie qui vient d'être chargée, ou null si il y a un problème lors du chargement (pas de fichier, problème I/O ...)
+	 * Cette méthode permet de recalculer le temps écoulé dans une partie.<br>
+	 * Il est nécessaire d'appeler cette méthode avant chaque sauvegarde de la partie.
 	 */
-	public static Partie charger(String chemin){
-		Partie chargee = null;
-		ObjectInputStream ois;
-		//Chargement
-		try {
-			ois = new ObjectInputStream(new FileInputStream(chemin));
-			chargee = (Partie)(ois.readObject());
-			ois.close();
-		}catch (ClassNotFoundException e) {
-			System.err.println("Problème de chargement de la partie :\n");
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			System.err.println("Problème de chargement de la partie :\n");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.err.println("Problème de chargement de la partie :\n");
-			e.printStackTrace();
-		}
-		//On change le temps de départ
-		chargee.tempsDepart = System.currentTimeMillis();
-		//retour
-		return chargee;
+	public void stopperPartie(){
+		this.tempsEcoule = (System.currentTimeMillis()-this.tempsDepart);
+		this.tempsDepart=0;
 	}
 	//====================================================================================================
 	
