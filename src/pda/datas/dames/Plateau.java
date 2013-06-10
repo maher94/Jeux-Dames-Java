@@ -1,5 +1,6 @@
 package pda.datas.dames;
 
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -141,8 +142,8 @@ public class Plateau implements Serializable{
 	/**
 	 * Sert à effectuer un déplacement de pion
 	 * @param deplacementAFaire Le déplacement à faire
-	 * @param couleurPion La couleur du pion  déplacer
-	 * @return Retourne un booléen qui indique si la prise a été effectuée ou non 
+	 * @param couleurPion La couleur du pion déplacé
+	 * @return Retourne un booléen qui indique si le déplacement a pu être fait ou non
 	 */
 	public boolean effectuerDeplacement(Deplacement deplacementAFaire,int couleurPion){
 		boolean deplacementEffectue=false;
@@ -471,7 +472,7 @@ public class Plateau implements Serializable{
 	
 	/**
 	 * Sert à effectuer une prise
-	 * @param d Déplacement pour laquel une prise doit être effectuée
+	 * @param d Déplacement pour lequel une prise doit être effectuée
 	 */
 	private void effectuerPrise(Deplacement d){
 		//Recuperation de la couleur du pion
@@ -483,59 +484,43 @@ public class Plateau implements Serializable{
 		//Variable qui servent au parcours
 		int x=d.getPositionXOrigine(),y=d.getPositionYOrigine();
 		
-		//Parcours en fonction de l'orientation, pour trouver le pion adverse a enlever
+		int coefX=0,coefY=0;
+		//Determine les coef en fonction de l'orientation
 		switch(orientation){
-		
-			//Orientation nord ouest
-			case Deplacement.NO:
-				while(x!=d.getPositionXArrivee() && y!=d.getPositionYArrivee()){
-					//Si on trouve le pion a supprimer
-					if(this.getPion(x, y)!=null && this.getPion(x, y).getCouleur()!=couleurPionJoueur){
-						this.casesPlateau[y][x].setPionPose(null);
-					}
-					y--;
-					x--;
-				}
+		case Deplacement.NE:
+			coefX=1;
+			coefY=-1;
 			break;
-			
-			//Orientation nord est
-			case Deplacement.NE:
-				while(x!=d.getPositionXArrivee() && y!=d.getPositionYArrivee()){
-					//Si on trouve le pion a supprimer
-					if(this.getPion(x, y)!=null && this.getPion(x, y).getCouleur()!=couleurPionJoueur){
-						this.casesPlateau[y][x].setPionPose(null);
-					}
-					x++;
-					y--;
-				}
+		case Deplacement.NO:
+			coefX=-1;
+			coefY=-1;
 			break;
-			
-			//Orientation sud est
-			case Deplacement.SE:
-				while(x!=d.getPositionXArrivee() && y!=d.getPositionYArrivee()){
-					//Si on trouve le pion a supprimer
-					if(this.getPion(x, y)!=null && this.getPion(x, y).getCouleur()!=couleurPionJoueur){
-						this.casesPlateau[y][x].setPionPose(null);
-					}
-					x++;
-					y++;
-				}
+		case Deplacement.SE:
+			coefX=1;
+			coefY=1;
 			break;
-			
-			//Orientation sud ouest
-			case Deplacement.SO:
-				while(x!=d.getPositionXArrivee() && y!=d.getPositionYArrivee()){
-					//Si on trouve le pion a supprimer
-					if(this.getPion(x, y)!=null && this.getPion(x, y).getCouleur()!=couleurPionJoueur){
-						this.casesPlateau[y][x].setPionPose(null);
-					}
-					y++;
-					x--;
-				}
+		case Deplacement.SO:
+			coefX=-1;
+			coefY=1;
 			break;
-			
 		}
-		
+		//Parcours
+		while(x!=d.getPositionXArrivee() && y!=d.getPositionYArrivee()){
+			//Si on trouve le pion a supprimer
+			if(this.getPion(x, y)!=null && this.getPion(x, y).getCouleur()!=couleurPionJoueur){
+				//Récuperer le pion pris
+				d.setPointPionPris(new Point(x,y));
+				d.setPionPris(this.getPion(x, y));
+				//Signal qu'il y a eu une prise
+				d.setPriseEffectuee(true);
+				//Enlève le pion
+				this.casesPlateau[y][x].setPionPose(null);
+				
+			}
+			y=y+coefY;
+			x=x+coefX;
+		}
+				
 		//Recuperation du pion de depart et mise a l'emplacement final. Creation d'une dame si besoin
 		Pion nouveauPion = this.getPion(d.getPositionXOrigine(),d.getPositionYOrigine());
 		

@@ -1,5 +1,7 @@
 package pda.datas.dames;
 
+import java.awt.Point;
+
 import pda.datas.dames.exception.InvalidDeplacementException;
 
 
@@ -44,6 +46,16 @@ public class Deplacement {
 	private boolean priseEffectuee;
 
 	/**
+	 * Le pion pris lors de la prise (sert lors des animations)
+	 */
+	private Pion pionPris;
+	
+	/**
+	 * Les coordonnées du pion pris (sert lors des animations)
+	 */
+	private Point pointPionPris;
+	
+	/**
 	 * Orientation NO d'un déplacement
 	 */
 	public static final int NO=0;
@@ -61,7 +73,7 @@ public class Deplacement {
 	/**
 	 * Orientation SO d'un déplacement
 	 */
-	public static final int SO=3;	
+	public static final int SO=3;
 	//====================================================================================================
 	
 	
@@ -123,6 +135,22 @@ public class Deplacement {
 	public boolean isPriseEffectuee() {
 		return this.priseEffectuee;
 	}
+	
+	/**
+	 * Obtenir le pion pris lors de la prise
+	 * @return le pion pris (null si aucun pion n'est pris)
+	 */
+	public Pion getPionPris() {
+		return this.pionPris;
+	}
+
+	/**
+	 * Obtenir le point où le pion a été pris
+	 * @return le point où le pion a été pris
+	 */
+	public Point getPointPionPris() {
+		return this.pointPionPris;
+	}
 	//====================================================================================================
 	
 	
@@ -166,6 +194,22 @@ public class Deplacement {
 	public void setPriseEffectuee(boolean priseEffectueeP) {
 		this.priseEffectuee = priseEffectueeP;
 	}
+	
+	/**
+	 * Changer le pion qui est pris
+	 * @param pionPrisP le pion qui est pris
+	 */
+	public void setPionPris(Pion pionPrisP) {
+		this.pionPris = pionPrisP;
+	}
+
+	/**
+	 * Changer les coordonnées du pion prise
+	 * @param pointPionPrisP les nouvelles coordonnées
+	 */
+	public void setPointPionPris(Point pointPionPrisP) {
+		this.pointPionPris = pointPionPrisP;
+	}
 	//====================================================================================================
 	
 	
@@ -183,6 +227,16 @@ public class Deplacement {
 		deplacementChaine = deplacementChaine+"-->"+"("+(char)(codeDepart+this.positionXArrivee)+","+this.positionYArrivee+")";
 		//Retour
 		return deplacementChaine;
+	}
+	
+	/**
+	 * Méthode qui va servir à obtenir la distance d'un déplacement.<br>
+	 * Cette méthode est utilisée surtout pour les animations lors des déplacements.
+	 * @return la distance du déplacement.
+	 */
+	public int getDistanceDeplacement(){
+		int distance=(int) Math.sqrt((this.positionXArrivee-this.positionXOrigine)*(this.positionXArrivee-this.positionXOrigine)+(this.positionYArrivee-this.positionYOrigine)*(this.positionYArrivee-this.positionYOrigine));
+		return distance;
 	}
 	
 	/**
