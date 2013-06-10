@@ -1,5 +1,7 @@
 package pda.view.dames;
 
+import javax.swing.JPanel;
+
 
 /**
  * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
@@ -14,7 +16,10 @@ public class DameView {
 	
 	
 	//============================================ATTRIBUT(S)============================================
-	
+	/**
+	 * Panel principal du jeux de dames (celui où tout est affiché)
+	 */
+	private JPanel panelPrincipal;
 	//====================================================================================================
 	
 	
@@ -24,7 +29,13 @@ public class DameView {
 	
 	
 	//============================================ACCESSEUR(S)============================================
-	
+	/**
+	 * Obtenir le panel principal de l'application
+	 * @return le panel principal du jeu
+	 */
+	public JPanel getPanelPrincipal(){
+		return this.panelPrincipal;
+	}
 	//====================================================================================================
 	
 	
