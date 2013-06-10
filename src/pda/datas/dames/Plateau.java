@@ -90,16 +90,34 @@ public class Plateau implements Serializable{
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+	 * Sert à retourner une case en fonction de ses coordonnées
+	 * @param posX La coordonnée X de la case
+	 * @param posY La coordonnée Y de la case
+	 * @return Retourne une case
+	 */
 	public Case getCase(int posX,int posY){
 		Case casePlateau=null;
 		if(this.verifierEmplacement(posX, posY))casePlateau=this.casesPlateau[posY][posX];
 		return casePlateau;
 	}
+	
+	/**
+	 * Sert à retourner un pion en fonction de ses coordonnées
+	 * @param posX La coordonnée X du pion
+	 * @param posY La coordonnée Y du pion
+	 * @return Retourne un pion
+	 */
 	public Pion getPion(int posX,int posY){
 		Pion pionPlateau=null;
 		if(this.verifierEmplacement(posX, posY))pionPlateau=this.casesPlateau[posY][posX].getPionPose();
 		return pionPlateau;
 	}
+	
+	/**
+	 * Sert à retourner la taille du plateau
+	 * @return Retourne la taille du plateau
+	 */
 	public int getTaille(){
 		return this.casesPlateau.length;
 	}
@@ -107,6 +125,12 @@ public class Plateau implements Serializable{
 	
 	
 	//============================================MUTATEUR(S)============================================
+	/**
+	 * Sert à poser un pion sur une case
+	 * @param posX La coordonnée X de la case où sera posé le pion
+	 * @param posY La coordonnée Y de la case où sera posé le pion
+	 * @param nouveauPion Le pion qui sera posé
+	 */
 	public void setPion(int posX,int posY,Pion nouveauPion){
 		if(this.verifierEmplacement(posX, posY))this.casesPlateau[posY][posX].setPionPose(nouveauPion);
 	}
@@ -115,10 +139,10 @@ public class Plateau implements Serializable{
 	
 	//============================================DEPLACEMENTS============================================
 	/**
-	 * 
-	 * @param deplacementAFaire
-	 * @param couleurPion
-	 * @return
+	 * Sert à effectuer un déplacement de pion
+	 * @param deplacementAFaire Le déplacement à faire
+	 * @param couleurPion La couleur du pion  déplacer
+	 * @return Retourne un booléen qui indique si la prise a été effectuée ou non 
 	 */
 	public boolean effectuerDeplacement(Deplacement deplacementAFaire,int couleurPion){
 		boolean deplacementEffectue=false;
@@ -156,10 +180,10 @@ public class Plateau implements Serializable{
 	
 	
 	/**
-	 * 
-	 * @param d
-	 * @param couleurPion
-	 * @return
+	 * Sert à vérifié la validité d'un déplacement
+	 * @param d Le déplacement à vérifier
+	 * @param couleurPion Couleur du pion à déplacer
+	 * @return Retourne un booléen qui indique si le déplacement est valide ou non
 	 */
 	private boolean verifierDeplacement(Deplacement d,int couleurPion){
 		boolean deplacementBon=false;
@@ -186,9 +210,9 @@ public class Plateau implements Serializable{
 	
 	
 	/**
-	 * 
-	 * @param couleurPion
-	 * @return
+	 * Sert à retourner la liste de tous les déplacements possibles pour une couleur donnée
+	 * @param couleurPion Couleur des pions pour lequel il faut récupérer les déplacements
+	 * @return Retourne une ArrayList avec tous les déplacements possibles d'un couleur
 	 */
 	public ArrayList<Deplacement> getTousDeplacements(int couleurPion){
 		ArrayList<Deplacement> tousDeplacementsPossibles = new ArrayList<Deplacement>(50);
@@ -214,10 +238,10 @@ public class Plateau implements Serializable{
 	}
 	
 	/**
-	 * 
-	 * @param positionX
-	 * @param positionY
-	 * @return
+	 * Sert à retourner une liste de tous les déplacements possibles  
+	 * @param positionX La coordonnées X du pion pour lequel il faut récupérer les déplacements possibles
+	 * @param positionY La coordonnées Y du pion pour lequel il faut récupérer les déplacements possibles
+	 * @return Retourne une ArrayList avec tous les déplacements possibles pour un pion donné
 	 */
 	public ArrayList<Deplacement> getDeplacementsPion(int positionX,int positionY){
 		ArrayList<Deplacement> deplacementsPion =  new ArrayList<Deplacement>(6);
@@ -272,11 +296,11 @@ public class Plateau implements Serializable{
 	
 	
 	/**
-	 * 
-	 * @param listeDeplacement
-	 * @param positionX
-	 * @param positionY
-	 * @param orientation
+	 * Sert à ajouter à l'ArrayList des déplacements possibles tous les déplacements possibles pour un pion de type dame 
+	 * @param listeDeplacement La liste des déplacements possibles
+	 * @param positionX La coordonnées X de la dame
+	 * @param positionY La coordonnées Y de la dame
+	 * @param orientation Définie l'orientation dans lequel les déplacements doivent être trouvés
 	 */
 	private void ajouterDeplacementsDame(ArrayList<Deplacement> listeDeplacement,int positionX,int positionY,int orientation){
 		boolean continuer=true;
@@ -351,11 +375,11 @@ public class Plateau implements Serializable{
 	
 	
 	/**
-	 * 
-	 * @param listeDeplacement
-	 * @param positionX
-	 * @param positionY
-	 * @param orientation
+	 * Sert à ajouter à l'ArrayList des déplacements possibles tous les déplacements possibles pour un pion
+	 * @param listeDeplacement La liste des déplacements possibles
+	 * @param positionX La coordonnées X de la dame
+	 * @param positionY La coordonnées Y de la dame
+	 * @param orientation Définie l'orientation dans lequel les déplacements doivent être trouvés
 	 */
 	private void ajouterDeplacementsPion(ArrayList<Deplacement> listeDeplacement,int positionX,int positionY,int orientation){
 		int coefX=0,coefY=0;
@@ -421,9 +445,9 @@ public class Plateau implements Serializable{
 	
 	
 	/**
-	 * 
-	 * @param tousDeplacements
-	 * @return
+	 * Sert à trier les déplacements de la liste, en fonction de si une prise est effectuées ou non
+	 * @param tousDeplacements La liste de tous les déplacements possibles
+	 * @return Retourne une liste avec seulement les déplacements qui effectu une prise
 	 */
 	public static ArrayList<Deplacement> trierDeplacements(ArrayList<Deplacement> tousDeplacements){
 		ArrayList<Deplacement> deplacementsTries =  new ArrayList<Deplacement>(50);
@@ -446,8 +470,8 @@ public class Plateau implements Serializable{
 	}
 	
 	/**
-	 * 
-	 * @param d
+	 * Sert à effectuer une prise
+	 * @param d Déplacement pour laquel une prise doit être effectuée
 	 */
 	private void effectuerPrise(Deplacement d){
 		//Recuperation de la couleur du pion

@@ -55,12 +55,26 @@ public class Joueur implements Serializable{
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+	 * Sert à retourner le nom du joueur
+	 * @return Retourne le nom du joueur
+	 */
 	public String getNom(){
 		return this.nom;
 	}
+	
+	/**
+	 * Sert à retourner la couleur du joueur
+	 * @return Retourne la couleur du joueur
+	 */
 	public int getCouleur(){
 		return this.couleur;
 	}
+	
+	/***
+	 *Sert à retourner le dernier déplacement effectué par le joueur 
+	 * @return Retourne le dernier déplacement fait par le joueur
+	 */
 	public Deplacement getDernierDeplacement() {
 		return this.dernierDeplacement;
 	}
@@ -68,9 +82,18 @@ public class Joueur implements Serializable{
 	
 	
 	//============================================MUTATEUR(S)============================================
+	/**
+	 * Sert à définir le nom du joueur
+	 * @param nomP Le nom du joueur
+	 */
 	public void setNom(String nomP){
 		this.nom = nomP;
 	}
+	
+	/**
+	 * Sert à définir le dernier déplacement effectué par le joueur
+	 * @param dernierDeplacementP Le dernier déplacement fait par le joueur
+	 */
 	public void setDernierDeplacement(Deplacement dernierDeplacementP) {
 		this.dernierDeplacement = dernierDeplacementP;
 	}

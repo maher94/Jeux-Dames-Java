@@ -65,9 +65,18 @@ public class Case implements Serializable{
 
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+ 	 * Sert à retourner le piont qui est sur la case
+	 * @return Retourne le pion posé sur la case
+	 */
 	public Pion getPionPose() {
 		return this.pionPose;
 	}
+	
+	/**
+	 * Sert à savoir de quelle couleur est la case
+	 * @return Retourne la couleur de la case
+	 */
 	public int getCouleur() {
 		return this.couleur;
 	}
@@ -75,9 +84,19 @@ public class Case implements Serializable{
 	
 	
 	//============================================MUTATEUR(S)============================================
+	/**
+	 * Sert à changer le pion posé sur la case
+	 * @param pionPoseP le pion qui à été posé sur la case
+	 */
 	public void setPionPose(Pion pionPoseP) {
 		this.pionPose = pionPoseP;
 	}
+	
+	/**
+	 * Sert à définir la couleur de la case
+	 * @param couleurP La couleur de la case
+	 * @throws IllegalArgumentException Si la couleur de la case n'est pas valide
+	 */
 	public void setCouleur(int couleurP)throws IllegalArgumentException {
 		//Si la couleur est valide
 		if(couleurP==Case.CASE_BLANCHE || couleurP==Case.CASE_NOIRE){

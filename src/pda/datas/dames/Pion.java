@@ -65,9 +65,18 @@ public class Pion implements Serializable{
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+	 * Sert à retourner la couleur du pion
+	 * @return Retourne la couleur du pion
+	 */
 	public int getCouleur() {
 		return this.couleur;
 	}
+	
+	/**
+	 * Sert à savoir si le pion est une dame ou pas.
+	 * @return Retourne un booléen qui définie si le pion est une dame ou pas
+	 */
 	public boolean isDame(){
 		return this.dame;
 	}
@@ -75,6 +84,11 @@ public class Pion implements Serializable{
 	
 	
 	//============================================MUTATEUR(S)============================================
+	/**
+	 * Sert à définir la couleur d'un pion
+	 * @param couleurP Le couleur du pion
+	 * @throws IllegalArgumentException Si la couleur n'est pas valide
+	 */
 	public void setCouleur(int couleurP)throws IllegalArgumentException {
 		//Si la couleur est valide
 		if(couleurP==Pion.PION_BLANC || couleurP == Pion.PION_NOIR){
@@ -85,6 +99,11 @@ public class Pion implements Serializable{
 			throw new IllegalArgumentException("Couleur du pion non valide");
 		}
 	}
+	
+	/**
+	 * Sert à changer le statut d'un pion en dame
+	 * @param dameP Booléen qui défini si un pion est aussi une dame ou pas
+	 */
 	public void setDame(boolean dameP){
 		this.dame=dameP;
 	}

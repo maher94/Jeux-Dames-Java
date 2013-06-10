@@ -84,18 +84,42 @@ public class Deplacement {
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+	 * Sert à retourner la coordonnée X de la case d'origine du déplacement
+	 * @return Retourne la coordonnée X
+	 */
 	public int getPositionXOrigine() {
 		return this.positionXOrigine;
 	}
+	
+	/**
+	 * Sert à retourner la coordonnée Y de la case d'origine du déplacement
+	 * @return Retourne la coordonnée Y 
+	 */
 	public int getPositionYOrigine() {
 		return this.positionYOrigine;
 	}
+	
+	/**
+	 * Sert à retourner la coordonnée X de la case d'arrivée du déplacement
+	 * @return
+	 */
 	public int getPositionXArrivee() {
 		return this.positionXArrivee;
 	}
+	
+	/**
+	 * Sert à retourner la coordonnée Y de la case d'arrivée du déplacement
+	 * @return
+	 */
 	public int getPositionYArrivee() {
 		return this.positionYArrivee;
 	}
+	
+	/**
+	 * Sert à savoir si le déplacement à donné lieu à une prise de pion adverse
+	 * @return Un booléen qui indique si il y a eu une prise ou non.
+	 */
 	public boolean isPriseEffectuee() {
 		return this.priseEffectuee;
 	}
@@ -103,18 +127,42 @@ public class Deplacement {
 	
 	
 	//============================================MUTATEUR(S)============================================
+	/**
+	 * Sert à définir la coordonnée X de la case d'origine du déplacement
+	 * @param positionXOrigineP La coordonnée X de la case d'origine
+	 */
 	public void setPositionXOrigine(int positionXOrigineP) {
 		this.positionXOrigine = positionXOrigineP;
 	}
+	
+	/**
+	 * Sert à définir la coordonnée Y de la case d'origine du déplacement
+	 * @param positionXOrigineP La coordonnée Y de la case d'origine
+	 */
 	public void setPositionYOrigine(int positionYOrigineP) {
 		this.positionYOrigine = positionYOrigineP;
 	}
+	
+	/**
+	 * Sert à définir la coordonnée X de la case d'arrivée du déplacement
+	 * @param positionXOrigineP La coordonnée X de la case d'arrivée
+	 */
 	public void setPositionXArrivee(int positionXArriveeP) {
 		this.positionXArrivee = positionXArriveeP;
 	}
+	
+	/**
+	 * Sert à définir la coordonnée Y de la case d'arrivée du déplacement
+	 * @param positionXOrigineP La coordonnée Y de la case d'arrivée
+	 */
 	public void setPositionYArrivee(int positionYArriveeP) {
 		this.positionYArrivee = positionYArriveeP;
 	}
+	
+	/**
+	 * Sert à définir si une prise à été effectuée ou non
+	 * @param priseEffectueeP Booléen qui définie si une prise a été effectuée
+	 */
 	public void setPriseEffectuee(boolean priseEffectueeP) {
 		this.priseEffectuee = priseEffectueeP;
 	}
