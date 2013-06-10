@@ -27,6 +27,9 @@ public class DameView {
 	public DameView(){
 		this.panelPrincipal = new EcranPlateau();
 	}
+	public DameView(){
+		panelPrincipal = new EcranParametre();
+	}
 	//====================================================================================================
 	
 	

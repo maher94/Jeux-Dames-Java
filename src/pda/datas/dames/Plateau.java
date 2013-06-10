@@ -181,7 +181,7 @@ public class Plateau implements Serializable{
 	
 	
 	/**
-	 * Sert à vérifié la validité d'un déplacement
+	 * Sert à vérifier la validité d'un déplacement
 	 * @param d Le déplacement à vérifier
 	 * @param couleurPion Couleur du pion à déplacer
 	 * @return Retourne un booléen qui indique si le déplacement est valide ou non
