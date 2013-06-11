@@ -34,6 +34,16 @@ public class Pion implements Serializable{
 	public final static int PION_BLANC=1;
 	
 	/**
+	 * Texte qui représente la couleur blanche 
+	 */
+	private final static String BLANC="Blanc";
+	
+	/**
+	 * texte qui représente la couleur noire
+	 */
+	private final static String NOIR="Noir";
+	
+	/**
 	 * Couleur du pion
 	 */
 	private int couleur;
@@ -80,6 +90,24 @@ public class Pion implements Serializable{
 	public boolean isDame(){
 		return this.dame;
 	}
+	
+	/**
+	 * Sert à retourner une chaîne de caractère correspondant à la couleur blanche
+	 * @return Retourne un String "Blanc"
+	 */
+	public static String getCouleurBlanc(){
+		return Pion.BLANC;
+	}
+	
+	/**
+	 * Sert à retourner une chaîne de caractère correspondant à la couleur noir
+	 * @return Retourne un String "Noir"
+	 */
+	public static String getCouleurNoir(){
+		return Pion.NOIR;
+	}
+	
+	
 	//====================================================================================================
 	
 	
@@ -137,6 +165,17 @@ public class Pion implements Serializable{
 		}
 		//Retour
 		return pionChaine;
+	}
+	
+	public static String getNomCouleur(int couleur){
+		String nomCouleur="";
+		if(couleur == Pion.PION_BLANC){
+			nomCouleur= Pion.BLANC;
+		}
+		if(couleur==Pion.PION_NOIR){
+			nomCouleur= Pion.NOIR;
+		}
+		return nomCouleur;
 	}
 	//====================================================================================================
 	

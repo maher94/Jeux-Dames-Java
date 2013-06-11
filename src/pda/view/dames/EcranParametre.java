@@ -1,17 +1,22 @@
 package pda.view.dames;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import pda.control.dames.EcouteurCouleurJoueur;
 import pda.control.dames.EcouteurListeModeJeux;
+import pda.control.dames.EcouteurNomJoueur;
+import pda.datas.dames.Pion;
 
 
 /**
@@ -37,6 +42,11 @@ public class EcranParametre extends JPanel {
 	 * JPanel centre qui contient tous les paramètres
 	 */
 	private JPanel centre;
+	
+	/**
+	 * JPanel sud qui contient les boutons "Valider" et "Annuler"
+	 */
+	private JPanel sud;
 	
 	/**
 	 * JPanel qui contient le choix de la variante
@@ -128,6 +138,11 @@ public class EcranParametre extends JPanel {
 	 */
 	private JRadioButton couleurNoir;
 	
+	private JPanel choixGche;
+	
+	private JPanel choixDte;
+	
+	private JLabel couleurJ2;
 	/**
 	 * Bouton Radio pour choisir que le Joueur 1 commence
 	 */
@@ -178,21 +193,22 @@ public class EcranParametre extends JPanel {
 	 */
 	private String humainVShumain;
 	
-	/**
-	 * Attribut qui défini l'affichage des différents parametre
-	 * Il peut prendre trois valeur, 1, 2 ou 3 
-	 */
-	private int param=0;
+	
 	//====================================================================================================
 	
 	
 	//==========================================CONSTRUCTEUR(S)==========================================
-	 public EcranParametre(){
+	/**
+	 * Constructeur de l'écran de paramètre, qui initialise l'écran et met en place les <br>
+	 * différents composants 
+	 */
+	public EcranParametre(){
 		this.setLayout(new BorderLayout());
 		this.creerInterface(); 
 		this.ajoutEcouteurs();
 		this.add(nord,BorderLayout.NORTH);
 		this.add(centre,BorderLayout.CENTER);
+		this.add(sud,BorderLayout.SOUTH);
 		
 		
 		
@@ -201,7 +217,61 @@ public class EcranParametre extends JPanel {
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+	 * Sert à retourner le JTextField joueur1
+	 * @return Retourne joueur1
+	 */
+	public JTextField getJoueur1() {
+		return this.joueur1;
+	}
+
+	/**
+	 * Sert à retourner le JTextField joueur2
+	 * @return Retourne joueur2
+	 */
+	public JTextField getJoueur2() {
+		return this.joueur2;
+	}
+
+	/**
+	 * Sert à retourner le bouton radio de selection du joueur1
+	 * @return Retourne bouton radio
+	 */
+	public JRadioButton getCommenceJ1() {
+		return this.commenceJ1;
+	}
+
+	/**
+	 * Sert à retourner le bouton radio de selection du joueur2
+	 * @return Retourne bouton radio
+	 */
+	public JRadioButton getCommenceJ2() {
+		return this.commenceJ2;
+	}
 	
+	/**
+	 * Sert à retourner le bouton radio de choix de la couleur blanche du Joueur 1
+	 * @return Retourne le bouton radio
+	 */
+	public JRadioButton getCouleurBlanc(){
+		return this.couleurBlanc;
+	}
+	
+	/**
+	 * Sert à retourner le bouton radio de choix de la couleur noire du Joueur 1
+	 * @return Retourne le bouton radio
+	 */
+	public JRadioButton getCouleurNoir(){
+		return this.couleurNoir;
+	}
+	
+	/**
+	 * Sert à retourner le JLabel correspondant à la couleur du Joueur 2
+	 * @return Retourne le JLabel
+	 */
+	public JLabel getCouleurJ2(){
+		return this.couleurJ2;
+	}
 	//====================================================================================================
 	
 	
@@ -211,11 +281,22 @@ public class EcranParametre extends JPanel {
 	
 	
 	//========================================AUTRE(S) METHODE(S)========================================
+	/**
+	 * Sert à créér et mettre en place tous les composants de l'écran de paramètrage.
+	 */
 	public void creerInterface(){
+		
+		//Gère la partie sud avec les boutons "Valider" et "Annuler"
+			this.sud = new JPanel();
+			JButton valider = new JButton("Valider");
+			valider.setPreferredSize(new Dimension(150,20));
+			JButton annuler = new JButton("Annuler");
+			annuler.setPreferredSize(new Dimension(150,20));
+			this.sud.add(valider);
+			this.sud.add(annuler);
 		
 		//Gère la partie nord, qui est le choix du mode de jeu
 		
-		//if (param ==0){
 			this.nord = new JPanel();
 			this.comboMode = new JComboBox();
 			this.iaVSia = "IA vs IA";
@@ -224,11 +305,7 @@ public class EcranParametre extends JPanel {
 			this.comboMode.addItem(this.iaVSia);
 			this.comboMode.addItem(this.iaVShumain);
 			this.comboMode.addItem(this.humainVShumain);
-			this.nord.add(comboMode);
-			param++;
-		//}
-		
-		
+			this.nord.add(comboMode);		
 	
 		//-------Gère la partie CENTRE de l'écran-------
 		
@@ -249,10 +326,7 @@ public class EcranParametre extends JPanel {
 		this.variantes.add(variante3);
 		this.variantes.setBorder(BorderFactory.createTitledBorder("Choix variante"));
 		
-		
-		
 		//Gère la partie choix de la difficulté de l'IA
-
 		this.diff1 = new JRadioButton("Facile");
 		this.diff2 = new JRadioButton("Moyen");
 		this.diff3 = new JRadioButton("Difficile");
@@ -266,8 +340,6 @@ public class EcranParametre extends JPanel {
 		this.diffIA.add(diff3);
 		this.diffIA.setBorder(BorderFactory.createTitledBorder("Choix difficulté"));
 		
-	
-		
 		//Gère la partie choix de la couleur du Joueur 1
 		this.couleurBlanc = new JRadioButton("Blanc");
 		this.couleurNoir = new JRadioButton("Noir");
@@ -275,10 +347,17 @@ public class EcranParametre extends JPanel {
 		this.groupCouleurJ1.add(couleurBlanc);
 		this.groupCouleurJ1.add(couleurNoir);
 		this.choixCouleur = new JPanel();
-		this.choixCouleur.add(couleurBlanc);
-		this.choixCouleur.add(couleurNoir);
-		this.choixCouleur.setBorder(BorderFactory.createTitledBorder("Choix couleur Joueur1"));
-		
+		this.choixCouleur.setLayout(new GridLayout(1,2));
+		this.choixGche = new JPanel();
+		this.choixDte = new JPanel();
+		this.couleurJ2 = new JLabel(Pion.getCouleurBlanc());
+		choixGche.add(this.couleurBlanc);
+		choixGche.add(this.couleurNoir);
+		choixDte.add(couleurJ2);
+		this.choixCouleur.add(choixGche);
+		this.choixCouleur.add(choixDte);
+		choixGche.setBorder(BorderFactory.createTitledBorder("Choix couleur Joueur 1"));
+		choixDte.setBorder(BorderFactory.createTitledBorder("Couleur Joueur 2"));
 		
 		//Gère la partie choix du nom du Joueur 1
 		joueur1 = new JTextField(10);
@@ -289,7 +368,6 @@ public class EcranParametre extends JPanel {
 		this.nomJoueur1.add(joueur1);
 		this.nomJoueur1.setBorder(BorderFactory.createTitledBorder("Choix nom du Joueur1"));
 		
-		
 		//Gère la partie choix du nom du Joueur 2
 		joueur2 = new JTextField(10);
 		joueur2.setText("Joueur 2");
@@ -298,7 +376,6 @@ public class EcranParametre extends JPanel {
 		this.nomJoueur2.add(textJoueur2);
 		this.nomJoueur2.add(joueur2);
 		this.nomJoueur2.setBorder(BorderFactory.createTitledBorder("Choix nom du Joueur2"));
-		
 		
 		//Gère la partie du choix du joueur qui commence*
 		this.commenceJ1 = new JRadioButton("Joueur 1");
@@ -315,6 +392,10 @@ public class EcranParametre extends JPanel {
 	}	
 		
 	
+	/**
+	 * Sert à actualiser l'écran de paramétrage à chaque fois que le mode de jeu est modifié
+	 * L'écran est vidé est reconstruit à chaque fois, en fonction du mode de jeu choisi.
+	 */
 	public void actualiserAffichage(){
 		
 		this.centre.removeAll();
@@ -322,12 +403,16 @@ public class EcranParametre extends JPanel {
 		
 		if (comboMode.getSelectedItem()==this.iaVSia){
 			System.out.println("IA vs IA choisi");
+			this.commenceJ1.setText("IA 1");
+			this.commenceJ2.setText("IA 2");
 			this.centre.add(variantes);
 			this.centre.add(diffIA);
 			this.centre.add(choixCommence);
 		}
 		if (comboMode.getSelectedItem()==this.iaVShumain){
 			System.out.println("IA vs HUMAIN choisi");
+			this.commenceJ2.setText("IA");
+			this.commenceJ1.setText("Joueur1");
 			this.centre.add(variantes);
 			this.centre.add(diffIA);
 			this.centre.add(choixCouleur);
@@ -336,6 +421,8 @@ public class EcranParametre extends JPanel {
 		}
 		if(comboMode.getSelectedItem()==this.humainVShumain){
 			System.out.println("HUMAIN vs HUMAIN choisi");
+			this.commenceJ1.setText("Joueur1");
+			this.commenceJ2.setText("Joueur2");
 			this.centre.add(variantes);
 			this.centre.add(choixCouleur);
 			this.centre.add(nomJoueur1);
@@ -346,11 +433,15 @@ public class EcranParametre extends JPanel {
 		
 	}
 	
-	
-	
-	
+	/**
+	 * Sert à prendre en compte les écouteurs sur les items choisi. 
+	 */
 	public void ajoutEcouteurs(){
 		this.comboMode.addActionListener(new EcouteurListeModeJeux(this));
+		this.joueur1.addKeyListener(new EcouteurNomJoueur(this));
+		this.joueur2.addKeyListener(new EcouteurNomJoueur(this));
+		this.couleurBlanc.addActionListener(new EcouteurCouleurJoueur(this));
+		this.couleurNoir.addActionListener(new EcouteurCouleurJoueur(this));
 	}
 	
 	//====================================================================================================
