@@ -1,11 +1,11 @@
 package pda.view.dames;
 
+import java.awt.CardLayout;
+
 import javax.swing.JPanel;
 
 import pda.control.dames.DamesCtrl;
 import pda.datas.dames.Partie;
-import pda.datas.dames.PartieIAvsIA;
-import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 
 /**
@@ -52,6 +52,11 @@ public class DameView {
 	private JPanel ecranSauvegardes;
 	
 	/**
+	 * Le layout qui permet de changer d'écran
+	 */
+	private CardLayout changeurMenu;
+	
+	/**
 	 * Le controleur principal du jeu
 	 */
 	private DamesCtrl controleur;
@@ -59,8 +64,18 @@ public class DameView {
 	
 	
 	//==========================================CONSTRUCTEUR(S)==========================================
-	public DameView(){
-		
+	/**
+	 * 
+	 * @param controleurP
+	 * @throws IllegalArgumentException
+	 */
+	public DameView(DamesCtrl controleurP)throws IllegalArgumentException{
+		if(controleurP==null)throw new IllegalArgumentException("Le controleur doit exister");
+		this.controleur = controleurP;
+		//Création des écrans
+		this.creerEcrans();
+		//Menu par défault
+		this.changerMenu(DamesCtrl.ECRAN_PARAMETRES);
 	}
 	//====================================================================================================
 	
@@ -82,37 +97,28 @@ public class DameView {
 	 * Cela ne créera pas l'écran de jeu car celui-ci ne peut être créer qu'à partir d'une partie.
 	 */
 	public void creerEcrans(){
+		//Création panel
+		this.changeurMenu = new CardLayout();
+		this.panelPrincipal = new JPanel(changeurMenu);
 		
+		//Créations écrans
+		this.ecranParametres = new EcranParametre(this.controleur);
+		
+		//Ajout des écrans
+		this.panelPrincipal.add(this.ecranParametres, DamesCtrl.ECRAN_PARAMETRES);
 	}
 	
 	/**
 	 * Cette méthode permet de changer le menu affiché
-	 * @param indexMenu l'index du menu à afficher (utiliser les variables de classes)
+	 * @param menu l'index du menu à afficher (utiliser les variables de classes)
 	 */
-	public void changerMenu(int indexMenu){
+	public void changerMenu(String menu){
 		//Change menu
-		switch(indexMenu){
-		case DamesCtrl.ECRAN_PRINCIPAL:
-			this.panelPrincipal = this.ecranMenu;
-			break;
-		case DamesCtrl.ECRAN_SCORES:
-			this.panelPrincipal = this.ecranScores;
-			break;
-		case DamesCtrl.ECRAN_PARAMETRES:
-			this.panelPrincipal = this.ecranParametres;
-			break;
-		case DamesCtrl.ECRAN_SAUVEGARDES:
-			this.panelPrincipal = this.ecranSauvegardes;
-			break;
-		case DamesCtrl.ECRAN_JEU:
-			this.panelPrincipal = this.ecranJeu;
-			break;
-		default:
-			System.err.println("Menu choisi est inexistant");
-			break;
-		}
+		this.changeurMenu.show(this.panelPrincipal, menu);
+		
 		//Actualise
 		this.panelPrincipal.repaint();
+		this.panelPrincipal.revalidate();
 	}
 	
 	/**
@@ -121,7 +127,11 @@ public class DameView {
 	 */
 	public void lancerPartie(Partie partie){
 		if(partie!=null){
+			//Création et ajout
+			if(this.ecranJeu!=null)this.panelPrincipal.remove(this.ecranJeu);
 			this.ecranJeu = new EcranJeu(this.controleur, partie);
+			this.panelPrincipal.add(this.ecranJeu, DamesCtrl.ECRAN_JEU);
+
 			this.changerMenu(DamesCtrl.ECRAN_JEU);
 		}
 		

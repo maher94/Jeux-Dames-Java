@@ -152,8 +152,7 @@ public class PanelPlateau extends JPanel{
 		}
 		//Récupération du plateau
 		this.plateauJeux = this.ecranActuel.getPartieJouee().getPlateau();
-		//Ajout de l'écouteur
-		
+		this.partieJouee = this.ecranActuel.getPartieJouee();
 	}
 	//====================================================================================================
 	

@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import pda.control.dames.ControleurAjoutPartie;
+import pda.control.dames.DamesCtrl;
 import pda.control.dames.EcouteurCouleurJoueur;
 import pda.control.dames.EcouteurListeModeJeux;
 import pda.control.dames.EcouteurNomJoueur;
@@ -193,7 +195,20 @@ public class EcranParametre extends JPanel {
 	 */
 	private String humainVShumain;
 	
+	/**
+	 * Le controleur de l'application
+	 */
+	private DamesCtrl controleur;
 	
+	/**
+	 * Bouton valider
+	 */
+	private JButton valider;
+	
+	/**
+	 * Bouton annuler
+	 */
+	private JButton annuler;
 	//====================================================================================================
 	
 	
@@ -202,16 +217,14 @@ public class EcranParametre extends JPanel {
 	 * Constructeur de l'écran de paramètre, qui initialise l'écran et met en place les <br>
 	 * différents composants 
 	 */
-	public EcranParametre(){
+	public EcranParametre(DamesCtrl controleurP){
 		this.setLayout(new BorderLayout());
+		this.controleur = controleurP;
 		this.creerInterface(); 
 		this.ajoutEcouteurs();
 		this.add(nord,BorderLayout.NORTH);
 		this.add(centre,BorderLayout.CENTER);
 		this.add(sud,BorderLayout.SOUTH);
-		
-		
-		
 	}
 	//====================================================================================================
 	
@@ -272,6 +285,7 @@ public class EcranParametre extends JPanel {
 	public JLabel getCouleurJ2(){
 		return this.couleurJ2;
 	}
+	
 	//====================================================================================================
 	
 	
@@ -280,6 +294,106 @@ public class EcranParametre extends JPanel {
 	//====================================================================================================
 	
 	
+	public JPanel getChoixCouleur() {
+		return this.choixCouleur;
+	}
+
+
+	public String getIaVSia() {
+		return this.iaVSia;
+	}
+
+
+	public String getIaVShumain() {
+		return this.iaVShumain;
+	}
+
+
+	public String getHumainVShumain() {
+		return this.humainVShumain;
+	}
+
+
+	public void setIaVSia(String iaVSiaP) {
+		this.iaVSia = iaVSiaP;
+	}
+
+
+	public void setIaVShumain(String iaVShumainP) {
+		this.iaVShumain = iaVShumainP;
+	}
+
+
+	public void setHumainVShumain(String humainVShumainP) {
+		this.humainVShumain = humainVShumainP;
+	}
+
+
+	public JPanel getNomJoueur1() {
+		return this.nomJoueur1;
+	}
+
+
+	public JPanel getNomJoueur2() {
+		return this.nomJoueur2;
+	}
+
+
+	public JPanel getChoixCommence() {
+		return this.choixCommence;
+	}
+
+
+	public JRadioButton getVariante1() {
+		return this.variante1;
+	}
+
+
+	public JRadioButton getVariante2() {
+		return this.variante2;
+	}
+
+
+	public JRadioButton getVariante3() {
+		return this.variante3;
+	}
+
+
+	public JRadioButton getDiff1() {
+		return this.diff1;
+	}
+
+
+	public JRadioButton getDiff2() {
+		return this.diff2;
+	}
+
+
+	public JRadioButton getDiff3() {
+		return this.diff3;
+	}
+
+
+	public JComboBox getComboMode() {
+		return this.comboMode;
+	}
+
+
+	public DamesCtrl getControleur() {
+		return this.controleur;
+	}
+
+
+	public JButton getValider() {
+		return this.valider;
+	}
+
+
+	public JButton getAnnuler() {
+		return this.annuler;
+	}
+
+
 	//========================================AUTRE(S) METHODE(S)========================================
 	/**
 	 * Sert à créér et mettre en place tous les composants de l'écran de paramètrage.
@@ -288,10 +402,10 @@ public class EcranParametre extends JPanel {
 		
 		//Gère la partie sud avec les boutons "Valider" et "Annuler"
 			this.sud = new JPanel();
-			JButton valider = new JButton("Valider");
-			valider.setPreferredSize(new Dimension(150,20));
-			JButton annuler = new JButton("Annuler");
-			annuler.setPreferredSize(new Dimension(150,20));
+			this.valider = new JButton("Valider");
+			this.valider.setPreferredSize(new Dimension(150,20));
+			this.annuler = new JButton("Annuler");
+			this.annuler.setPreferredSize(new Dimension(150,20));
 			this.sud.add(valider);
 			this.sud.add(annuler);
 		
@@ -324,7 +438,7 @@ public class EcranParametre extends JPanel {
 		this.variantes.add(variante1);
 		this.variantes.add(variante2);
 		this.variantes.add(variante3);
-		this.variantes.setBorder(BorderFactory.createTitledBorder("Choix variante"));
+		this.variantes.setBorder(BorderFactory.createTitledBorder("Taille du plateau"));
 		
 		//Gère la partie choix de la difficulté de l'IA
 		this.diff1 = new JRadioButton("Facile");
@@ -403,8 +517,8 @@ public class EcranParametre extends JPanel {
 		
 		if (comboMode.getSelectedItem()==this.iaVSia){
 			System.out.println("IA vs IA choisi");
-			this.commenceJ1.setText("IA 1");
-			this.commenceJ2.setText("IA 2");
+			this.commenceJ1.setText(Pion.getCouleurBlanc());
+			this.commenceJ2.setText(Pion.getCouleurNoir());
 			this.centre.add(variantes);
 			this.centre.add(diffIA);
 			this.centre.add(choixCommence);
@@ -412,7 +526,7 @@ public class EcranParametre extends JPanel {
 		if (comboMode.getSelectedItem()==this.iaVShumain){
 			System.out.println("IA vs HUMAIN choisi");
 			this.commenceJ2.setText("IA");
-			this.commenceJ1.setText("Joueur1");
+			this.commenceJ1.setText("Joueur");
 			this.centre.add(variantes);
 			this.centre.add(diffIA);
 			this.centre.add(choixCouleur);
@@ -421,8 +535,8 @@ public class EcranParametre extends JPanel {
 		}
 		if(comboMode.getSelectedItem()==this.humainVShumain){
 			System.out.println("HUMAIN vs HUMAIN choisi");
-			this.commenceJ1.setText("Joueur1");
-			this.commenceJ2.setText("Joueur2");
+			this.commenceJ1.setText("Joueur 1");
+			this.commenceJ2.setText("Joueur 2");
 			this.centre.add(variantes);
 			this.centre.add(choixCouleur);
 			this.centre.add(nomJoueur1);
@@ -437,11 +551,16 @@ public class EcranParametre extends JPanel {
 	 * Sert à prendre en compte les écouteurs sur les items choisi. 
 	 */
 	public void ajoutEcouteurs(){
+		//Modif en fonction du contenu
 		this.comboMode.addActionListener(new EcouteurListeModeJeux(this));
 		this.joueur1.addKeyListener(new EcouteurNomJoueur(this));
 		this.joueur2.addKeyListener(new EcouteurNomJoueur(this));
 		this.couleurBlanc.addActionListener(new EcouteurCouleurJoueur(this));
 		this.couleurNoir.addActionListener(new EcouteurCouleurJoueur(this));
+		
+		//Clic annuler ou valider
+		this.valider.addActionListener(new ControleurAjoutPartie(this));
+		this.annuler.addActionListener(new ControleurAjoutPartie(this));
 	}
 	
 	//====================================================================================================

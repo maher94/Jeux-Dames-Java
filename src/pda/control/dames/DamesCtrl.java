@@ -31,29 +31,34 @@ public class DamesCtrl implements IApplication{
 	private DameView vue;
 	
 	/**
+	 * Le pda
+	 */
+	private PdaCtrl pda;
+	
+	/**
 	 * Menu principal
 	 */
-	public static final int ECRAN_PRINCIPAL=0;
+	public static final String ECRAN_PRINCIPAL="Menu principal";
 	
 	/**
 	 * Menu des scores
 	 */
-	public static final int ECRAN_SCORES=1;
+	public static final String ECRAN_SCORES="Scores";
 	
 	/**
 	 * Menu des parties sauvegardées
 	 */
-	public static final int ECRAN_SAUVEGARDES=2;
+	public static final String ECRAN_SAUVEGARDES="Sauvegardes";
 	
 	/**
 	 * Ecran de paramètrage d'une partie
 	 */
-	public static final int ECRAN_PARAMETRES=3;
+	public static final String ECRAN_PARAMETRES="Paramètres";
 	
 	/**
 	 * Ecran de jeu
 	 */
-	public static final int ECRAN_JEU=4;
+	public static final String ECRAN_JEU="Jeu";
 	//====================================================================================================
 	
 	
@@ -63,7 +68,7 @@ public class DamesCtrl implements IApplication{
 	 * Cela va initialiser la vue ainsi que le modèle.
 	 */
 	public DamesCtrl(){
-		this.vue = new DameView();
+		this.vue = new DameView(this);
 	}
 	//====================================================================================================
 	
@@ -86,11 +91,11 @@ public class DamesCtrl implements IApplication{
 	//===========================================CHANGEMENT IHM===========================================
 	/**
 	 * Cette méthode permet de changer le menu affiché dans la vue principale.
-	 * @param indexMenu l'index du menu à afficher (utiliser les variables de classes)
+	 * @param menu menu à afficher (utiliser les variables de classes)
 	 */
-	public void changerMenu(int indexMenu){
+	public void changerMenu(String menu){
 		//Change la vue
-		this.vue.changerMenu(indexMenu);
+		this.vue.changerMenu(menu);
 	}
 	
 	/**
@@ -111,6 +116,7 @@ public class DamesCtrl implements IApplication{
 	public void start(PdaCtrl pda) {
 		System.out.println("\n\tIUT VANNES\nPROJET JEUX DE DAMES - 2013\n");
 		System.out.println("Mathieu THEBAUD\nNathan VILLIOT\n");
+		this.pda=pda;
 	}
 	
 	/**
