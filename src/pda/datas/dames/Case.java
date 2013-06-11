@@ -41,6 +41,11 @@ public class Case implements Serializable{
 	 * Couleur de la case, representée par un entier
 	 */
 	private int couleur;
+	
+	/**
+	 * Savoir si la case est selectionnée (uniquement utile dans l'IHM)
+	 */
+	private boolean selectionnee;
 	//====================================================================================================
 	
 	
@@ -80,6 +85,14 @@ public class Case implements Serializable{
 	public int getCouleur() {
 		return this.couleur;
 	}
+	
+	/**
+	 * Savoir si la case est actuellement selectionnée
+	 * @return vrai si la case est selectionnée, sinon retourne faux.
+	 */
+	public boolean isSelectionnee(){
+		return this.selectionnee;
+	}
 	//====================================================================================================
 	
 	
@@ -106,6 +119,14 @@ public class Case implements Serializable{
 		else{
 			throw new IllegalArgumentException("Couleur de la case non valide");
 		}
+	}
+	
+	/**
+	 * Pour changer si la case est selectionnée
+	 * @param selectionneeP le booleen qui représente la selection de la case
+	 */
+	public void setSelectionnee(boolean selectionneeP){
+		this.selectionnee=selectionneeP;
 	}
 	//====================================================================================================
 	

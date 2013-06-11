@@ -5,22 +5,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import pda.control.dames.ControleurJeu;
 import pda.datas.dames.Case;
 import pda.datas.dames.Deplacement;
 import pda.datas.dames.Partie;
-import pda.datas.dames.PartieIAvsIA;
 import pda.datas.dames.Pion;
 import pda.datas.dames.Plateau;
-import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 
 /**
@@ -32,7 +28,7 @@ import pda.datas.dames.exception.InvalidPlateauSizeException;
  * @since 1.00
  */
 
-public class EcranPlateau extends JPanel{
+public class EcranJeu extends JPanel{
 	
 	
 	//============================================ATTRIBUT(S)============================================
@@ -54,60 +50,44 @@ public class EcranPlateau extends JPanel{
 	
 	
 	//==========================================CONSTRUCTEUR(S)==========================================
-	public EcranPlateau(){
-		//
+	public EcranJeu(Partie partieJoueeP)throws IllegalArgumentException{
 		super(new BorderLayout());
-		try {
-			this.partieJouee = new PartieIAvsIA(10,20,-1,2);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidPlateauSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if(partieJoueeP==null)throw new IllegalArgumentException("Il faut une partie à jouer pour créer le panel de jeu");
+		this.partieJouee = partieJoueeP;
 		this.affichagePlateau = new PanelJeux();
-		this.affichageInfos = new JPanel();
-		JButton b = new JButton("Lancer");
-		this.affichageInfos.add(b);
-		EcranPlateau.this.partieJouee.getPlateau().setPion(2,5, new Pion(Pion.PION_BLANC));
-		b.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent clic) {
-				final Deplacement d = new Deplacement(1,6,3,4);
-				System.out.println("Marche ? "+EcranPlateau.this.partieJouee.getPlateau().effectuerDeplacement(d,Pion.PION_NOIR));
-				System.out.println(d.getPointPionPris());
-				System.out.println(d.isPriseEffectuee());
-				Thread t = new Thread(){
-					public void run(){
-						System.out.println("Lance le thread");
-						EcranPlateau.this.affichagePlateau.faireAnimationDeplacement(d);
-					}
-				};
-				t.start();
-			}
-			
-		});
 		this.add(this.affichagePlateau, BorderLayout.CENTER);
-		this.add(this.affichageInfos,BorderLayout.NORTH);
+		this.repaint();
 	}
 	//====================================================================================================
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+	 * Permet d'obtenir la panel qui affiche le plateau.
+	 * @return le PanelJeux qui affiche le plateau
+	 */
+	public PanelJeux getAffichagePlateau(){
+		return this.affichagePlateau;
+	}
 	
+	/**
+	 * Obtenir la partie jouée sur l'écran de jeu
+	 * @return la partie jouée
+	 */
+	public Partie getPartieJouee(){
+		return this.partieJouee;
+	}
 	//====================================================================================================
-	
 	
 	//============================================MUTATEUR(S)============================================
 	
 	//====================================================================================================
 	
 	
-	//========================================AUTRE(S) METHODE(S)========================================
+	//==========================================AFFICHAGE PLATEAU=========================================
 	/**
 	 * Panel qui afficher le plateau de jeux.<br>
-	 * @author Mathieu
+	 * @author Mathieu THEBAUD
 	 *
 	 */
 	public class PanelJeux extends JPanel{
@@ -140,11 +120,21 @@ public class EcranPlateau extends JPanel{
 		 * Image d'un pion blanc
 		 */
 		private Image pionBlanc;
+
+		/**
+		 * Image d'une case blanche selectionnée
+		 */
+		private Image caseBlancheSelectionnee;
 		
 		/**
 		 * Image d'une case blanche
 		 */
 		private Image caseBlanche;
+				
+		/**
+		 * Image d'une case noire selectionnée
+		 */
+		private Image caseNoireSelectionnee;
 		
 		/**
 		 * Image d'une case noire
@@ -200,11 +190,15 @@ public class EcranPlateau extends JPanel{
 				this.caseNoire = ImageIO.read(new File("./data/img/dames/case_noire.png"));
 				this.dameBlanche = ImageIO.read(new File("./data/img/dames/dame_blanche.png"));
 				this.dameNoire = ImageIO.read(new File("./data/img/dames/dame_noire.png"));
+				this.caseBlancheSelectionnee = ImageIO.read(new File("./data/img/dames/case_blanche_selec.png"));
+				this.caseNoireSelectionnee = ImageIO.read(new File("./data/img/dames/case_noire_selec.png"));
 			}catch(Exception e){
 				System.err.println("Erreur de chargement d'image : "+e.getMessage());
 			}
 			//Récupération du plateau
-			this.plateauJeux = EcranPlateau.this.partieJouee.getPlateau();
+			this.plateauJeux = EcranJeu.this.partieJouee.getPlateau();
+			//Ajout de l'écouteur
+			this.addMouseListener(new ControleurJeu(EcranJeu.this));
 		}
 		
 		/**
@@ -227,8 +221,14 @@ public class EcranPlateau extends JPanel{
 				for(int x=0;x<this.plateauJeux.getTaille();x++){
 					Image textureCase=null;
 					//Determine la texture en fonction de la couleur
-					if(this.plateauJeux.getCase(x,y).getCouleur()==Case.CASE_NOIRE)textureCase=this.caseNoire;
-					else textureCase=this.caseBlanche;
+					if(this.plateauJeux.getCase(x,y).getCouleur()==Case.CASE_NOIRE){
+						if(this.plateauJeux.getCase(x, y).isSelectionnee())textureCase=this.caseNoireSelectionnee;
+						else textureCase=this.caseNoire;
+					}
+					else{
+						if(this.plateauJeux.getCase(x, y).isSelectionnee())textureCase=this.caseBlancheSelectionnee;
+						else textureCase=this.caseBlanche;
+					}
 					//Dessine
 					g.drawImage(textureCase,this.decalageLargeur+x*this.largeurCase,this.decalageHauteur+y*this.hauteurCase,this.largeurCase,this.hauteurCase,null);
 					
@@ -249,7 +249,7 @@ public class EcranPlateau extends JPanel{
 					}
 					
 					//Dessin du pion en déplacement
-					if(this.deplacementEnCours){
+					if(this.deplacementEnCours && this.pionDeplace!=null){
 						Image texturePion = null;
 						//Determine la texture en fonction de la dame et de la couleur
 						if(!this.pionDeplace.isDame()){
@@ -279,6 +279,11 @@ public class EcranPlateau extends JPanel{
 		 */
 		public Point getCoordonneeGrille(Point p){
 			Point pointGrille=null;
+			//Calcul coordonnées (opération inverse de celles faîtes pour afficher une case)
+			int x = (p.x-this.decalageLargeur)/this.largeurCase;
+			int y = (p.y-this.decalageHauteur)/this.hauteurCase;
+			//Création point si coordonnées valides
+			if(this.plateauJeux.verifierEmplacement(x, y))pointGrille = new Point(x,y);
 			return pointGrille;
 		}
 		
@@ -348,6 +353,49 @@ public class EcranPlateau extends JPanel{
 			
 			//Fin déplacement
 			this.deplacementEnCours=false;
+		}
+		
+		/**
+		 * Va mettre en évidence sur la grille tous les déplacements possible à partir d'un piont selectionné.
+		 * @param pionSelec les coordonnées du pion selectionné
+		 */
+		public void afficherDeplacementPossible(Point pionSelec){
+			//Si il y a un pion
+			if(this.plateauJeux.getPion(pionSelec.x, pionSelec.y)!=null){
+				//Si la couleur est celle jouée
+				if(this.plateauJeux.getPion(pionSelec.x, pionSelec.y).getCouleur()==EcranJeu.this.partieJouee.getCouleurJouee()){
+					//On enlève toutes les cases selectionnées précedement
+					this.plateauJeux.deselectionnerToutesCases();
+					//récupération des déplacements possibles et sélection des cases d'arrivées
+					ArrayList<Deplacement> deplacementsPossible = this.plateauJeux.getDeplacementsPion(pionSelec.x, pionSelec.y);
+					ArrayList<Deplacement> tousDeplacementsTries = Plateau.trierDeplacements(this.plateauJeux.getTousDeplacements(EcranJeu.this.partieJouee.getCouleurJouee()));
+					for(Deplacement d : deplacementsPossible){
+						if(tousDeplacementsTries.contains(d))this.plateauJeux.getCase(d.getPositionXArrivee(), d.getPositionYArrivee()).setSelectionnee(true);
+					}
+				}
+			}
+			//Actualise l'affichage
+			this.repaint();
+		}
+		
+		/**
+		 * Cette méthode va permettre de mettre en évidence tous les pions pour lesquels un déplacement est possible.
+		 */
+		public void afficherTousPionDeplacables(){
+			//On enlève les selections précedentes
+			this.plateauJeux.deselectionnerToutesCases();
+			
+			//Récupération des déplacements possibles
+			ArrayList<Deplacement> deplacementsPossible = this.plateauJeux.getTousDeplacements(EcranJeu.this.partieJouee.getCouleurJouee());
+			deplacementsPossible = Plateau.trierDeplacements(deplacementsPossible);
+			
+			//On selectionne tous les cases dont partent les déplacements
+			for(Deplacement d : deplacementsPossible){
+				this.plateauJeux.getCase(d.getPositionXOrigine(), d.getPositionYOrigine()).setSelectionnee(true);
+			}
+			
+			//Actualise l'affichage
+			this.repaint();
 		}
 	}
 	//====================================================================================================

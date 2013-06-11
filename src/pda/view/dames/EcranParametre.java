@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import pda.control.dames.EcouteurListeModeJeux;
+
 
 /**
  * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
@@ -182,7 +184,8 @@ public class EcranParametre extends JPanel {
 	//==========================================CONSTRUCTEUR(S)==========================================
 	 public EcranParametre(){
 		this.setLayout(new BorderLayout());
-		this.creerInterface();
+		this.creerInterface(); 
+		this.ajoutEcouteurs();
 		this.add(nord,BorderLayout.NORTH);
 		this.add(centre,BorderLayout.CENTER);
 		
@@ -300,6 +303,10 @@ public class EcranParametre extends JPanel {
 		
 		
 	
+	}
+	
+	public void ajoutEcouteurs(){
+		this.comboMode.addActionListener(new EcouteurListeModeJeux(this));
 	}
 	//====================================================================================================
 	

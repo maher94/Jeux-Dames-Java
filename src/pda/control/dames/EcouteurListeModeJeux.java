@@ -1,58 +1,43 @@
-package pda.view.dames;
+package pda.control.dames;
 
-import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import pda.datas.dames.Partie;
-import pda.datas.dames.PartieHumainvsIA;
-import pda.datas.dames.PartieIAvsIA;
-import pda.datas.dames.exception.InvalidPlateauSizeException;
+import pda.view.dames.EcranParametre;
 
 
 /**
  * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * Ecouteur de la liste des modes de jeux de l'écran paramètres.<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
  * @since 1.00
  */
 
-public class DameView {
-	
+public class EcouteurListeModeJeux implements ActionListener{
 	
 	//============================================ATTRIBUT(S)============================================
 	/**
-	 * Panel principal du jeux de dames (celui où tout est affiché)
+	 * Ecrans paramètres
 	 */
-	private JPanel panelPrincipal;
+	private EcranParametre ecranParametres;
 	//====================================================================================================
 	
 	
 	//==========================================CONSTRUCTEUR(S)==========================================
-	public DameView(){
-		Partie p;
-		try {
-			p = new PartieHumainvsIA(10, 20,1,"Mathieu", 2,-1);
-			this.panelPrincipal = new EcranJeu(p);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidPlateauSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	/**
+	 * Constructeur de l'écouteur du changement sur la liste
+	 * @param ecranParametresP l'écran des paramètres
+	 */
+	public EcouteurListeModeJeux(EcranParametre ecranParametresP){
+		this.ecranParametres = ecranParametresP;
 	}
 	//====================================================================================================
 	
 	
 	//============================================ACCESSEUR(S)============================================
-	/**
-	 * Obtenir le panel principal de l'application
-	 * @return le panel principal du jeu
-	 */
-	public JPanel getPanelPrincipal(){
-		return this.panelPrincipal;
-	}
+	
 	//====================================================================================================
 	
 	
@@ -62,7 +47,12 @@ public class DameView {
 	
 	
 	//========================================AUTRE(S) METHODE(S)========================================
-	
+	/**
+	 * Méthode appelée lors du clic sur la liste
+	 */
+	public void actionPerformed(ActionEvent clic) {
+		this.ecranParametres.actualiserAffichage();
+	}
 	//====================================================================================================
 	
 }
