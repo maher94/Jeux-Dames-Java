@@ -1,27 +1,30 @@
 package pda.control.dames;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import pda.datas.dames.Deplacement;
+import pda.datas.dames.IA;
+import pda.datas.dames.Joueur;
 import pda.datas.dames.Partie;
-import pda.datas.dames.PartieHumainvsHumain;
-import pda.datas.dames.PartieHumainvsIA;
 import pda.datas.dames.Plateau;
 import pda.view.dames.EcranJeu;
 
 
 /**
  * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * Cette écouteur est en fait l'écouteur qui va permettre de jouer une partie de dame dans l'écran de jeu qui lui est passé
+ * en paramètre.<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
  * @since 1.00
  */
 
-public class ControleurJeu implements MouseListener{
+public class ControleurJeu implements MouseListener,ActionListener{
 	
 	//============================================ATTRIBUT(S)============================================
 	/**
@@ -43,6 +46,7 @@ public class ControleurJeu implements MouseListener{
 	 * Point d'arrivée du déplacement
 	 */
 	private Point arriveeDeplacement;
+	
 	//====================================================================================================
 	
 	
@@ -58,121 +62,57 @@ public class ControleurJeu implements MouseListener{
 	//====================================================================================================
 	
 	
-	//============================================ACCESSEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	
-	//==========================================ECOUTEUR SOURIS==========================================
+	//===========================================ECOUTE BOUTONS===========================================
 	/**
-	 * Lorsque l'on clic avec la souris
+	 * Lors du clic sur un des boutons de l'écran de jeu
+	 */
+	public void actionPerformed(ActionEvent clic) {
+		
+	}
+	//====================================================================================================
+		
+		
+	//==========================================ECOUTEUR PLATEAU==========================================
+	/**
+	 * Lorsque l'on clic avec la souris sur le plateau de jeu.
 	 */
 	public void mouseClicked(MouseEvent clic) {
 		
 		//Si le clic vient du plateau de jeu
 		if(clic.getSource()==this.ecranJeu.getAffichagePlateau()){
 			
-			Plateau plateau = this.ecranJeu.getPartieJouee().getPlateau();
+			Plateau plateau = this.partieJouee.getPlateau();
 			//Récupération du point de la grille selectionné
 			Point pointGrille = this.ecranJeu.getAffichagePlateau().getCoordonneeGrille(clic.getPoint());
 			
 			//Si le point existe
 			if(pointGrille!=null){
 				
-				//Le fonctionnement du déplacement se faire en fonction du mode de jeux 
-				
-				//Partie humain contre humain
-				if(this.partieJouee instanceof PartieHumainvsHumain){
-					//Si on clic sur une case avec un pion de la couleur dont la personne joue
-					if(plateau.getPion(pointGrille.x,pointGrille.y)!=null && plateau.getPion(pointGrille.x, pointGrille.y).getCouleur() == this.partieJouee.getCouleurJouee()){
-						//Définition du point de départ
+				//Si c'est au tour du joueur
+				if(!(this.partieJouee.getJoueurActuel() instanceof IA)){
+					Joueur humain = this.partieJouee.getJoueurActuel();
+					//Affiche tous les déplacements possibles
+					this.ecranJeu.getAffichagePlateau().afficherTousPionDeplacables();
+					
+					//Si la case est un possède un pion du joueur
+					if(plateau.getPion(pointGrille.x,pointGrille.y)!=null && plateau.getPion(pointGrille.x, pointGrille.y).getCouleur()==humain.getCouleur()){
 						this.departDeplacement = pointGrille;
-						//Affichage des déplacements possibles
+						//Affiche tous les déplacements possible
 						this.ecranJeu.getAffichagePlateau().afficherDeplacementPossible(pointGrille);
 					}
+					//Si la case est vide
+					if(plateau.getPion(pointGrille.x, pointGrille.y)==null){
+						this.arriveeDeplacement = pointGrille;
+					}
 					
-					//Si on clic sur une case sans pion
-					if(plateau.getPion(pointGrille.x,pointGrille.y)==null && this.departDeplacement!=null){
-						this.arriveeDeplacement=pointGrille;
-						
-						//On essaye de faire un déplacemeent
-						Deplacement deplacementIndique=new Deplacement(this.departDeplacement.x,this.departDeplacement.y,this.arriveeDeplacement.x,this.arriveeDeplacement.y);
-						
-						
-						//Peut importe le fonctionement, on réinitialise
-						this.departDeplacement = null;
-						this.arriveeDeplacement =null;
-						plateau.deselectionnerToutesCases();
-					}
-				}
-				
-				//Partie humain contre IA
-				if(this.partieJouee instanceof PartieHumainvsIA){
-					PartieHumainvsIA partie = (PartieHumainvsIA)this.partieJouee;
-					//Si c'est le joueur qui joue
-					if(this.partieJouee.getJoueurActuel()==partie.getJoueurHumain()){
-						this.ecranJeu.getAffichagePlateau().afficherTousPionDeplacables();
-						
-						//Si on clic sur une case avec un pion de la couleur dont la personne joue
-						if(plateau.getPion(pointGrille.x,pointGrille.y)!=null && plateau.getPion(pointGrille.x, pointGrille.y).getCouleur() == this.partieJouee.getCouleurJouee()){
-							//Définition du point de départ
-							this.departDeplacement = pointGrille;
-							//Affichage des déplacements possibles
-							this.ecranJeu.getAffichagePlateau().afficherDeplacementPossible(pointGrille);
-						}
-						
-						//Si on clic sur une case sans pion
-						if(plateau.getPion(pointGrille.x,pointGrille.y)==null && this.departDeplacement!=null){
-							this.arriveeDeplacement=pointGrille;
-							
-							//On essaye de faire un déplacemeent
-							Deplacement deplacementIndique=new Deplacement(this.departDeplacement.x,this.departDeplacement.y,this.arriveeDeplacement.x,this.arriveeDeplacement.y);
-							
-							//On essaye de faire jouer
-							if(partie.jouerTour(deplacementIndique)){
-								//Si ça marche, on fait l'animation
-								AnimationDeplacement animJoueur = new AnimationDeplacement(deplacementIndique);
-								animJoueur.start();
-								//Attend la fin du Thread
-								try {
-									animJoueur.join();
-								} catch (InterruptedException e) {
-									System.err.println("Problème Thread d'animation d'un déplacement "+e.getMessage());
-								}
-							}
-							
-							//Peut importe le fonctionement, on réinitialise
-							this.departDeplacement = null;
-							this.arriveeDeplacement =null;
-							plateau.deselectionnerToutesCases();
-						}
-					}
-					//Si c'est le tour de l'IA
-					while(this.partieJouee.getJoueurActuel()!=partie.getJoueurHumain()){
-						Deplacement deplacementIA = partie.faireJouerIA();
-						//Animation
-						AnimationDeplacement animIA = new AnimationDeplacement(deplacementIA);
-						animIA.start();
-						try{
-						animIA.join();
-						} catch (InterruptedException e) {
-							System.err.println("Problème Thread d'animation d'un déplacement "+e.getMessage());
-						}
-					}
-				}
-				
-				
-				
+				}				
+				//Après la récupération, on tente de jouer un tour
+				JouerTour tour = new JouerTour();
+				tour.start();
 			}
 		}
 	}
-
+	
 	//Pas de redefinition des méthodes
 	public void mouseEntered(MouseEvent clic) {}
 
@@ -181,16 +121,58 @@ public class ControleurJeu implements MouseListener{
 	public void mousePressed(MouseEvent clic) {}
 
 	public void mouseReleased(MouseEvent clic) {}
+	//====================================================================================================
 	
-	//Thread de lancement de l'animation
-	public class AnimationDeplacement extends Thread{
-		private Deplacement deplacementAAnimer;
-		public AnimationDeplacement(Deplacement d){
-			deplacementAAnimer=d;
+	
+	//================================================JEU================================================
+	/**
+	 * Thread pour jouer un tour de jeu.<br>
+	 * Ce Thread est obligatoire car sinon il y a des problèmes de synchronisation à cause des animations de déplacement.
+	 * @author Mathieu THEBAUD
+	 *
+	 */
+	public class JouerTour extends Thread{
+		public JouerTour(){
+			super("Jouer tour");
 		}
 		public void run(){
-			ControleurJeu.this.ecranJeu.getAffichagePlateau().faireAnimationDeplacement(deplacementAAnimer);
+			ControleurJeu.this.jouerTour();
+		}
+	}
+		
+	/**
+	 * Méthode qui va faire jouer le joueur puis l'IA.<br>
+	 * Le tout se fait dans une méthode synchronized pour ne pas avoir de conflit pendant l'animation.
+	 */
+	public synchronized void jouerTour(){
+		//Récupération du joueur actuel
+		Joueur j = this.partieJouee.getJoueurActuel();
+		
+		//Si c'est l'IA qui joue
+		if(j instanceof IA){
+			Deplacement deplacement = this.partieJouee.faireJouerIA();
+			if(deplacement!=null)this.ecranJeu.getAffichagePlateau().faireAnimationDeplacement(deplacement);
+		}
+		//Si c'est un joueur
+		else{
+			//Si l'arrivée et le départ sont définis
+			if(this.departDeplacement!=null && this.arriveeDeplacement!=null){
+				Deplacement deplacement = new Deplacement(this.departDeplacement.x,this.departDeplacement.y,this.arriveeDeplacement.x,this.arriveeDeplacement.y);
+				//Tente de faire le déplacement
+				if(this.partieJouee.jouerTour(deplacement)){
+					//Déselectionne tous les pions
+					this.partieJouee.getPlateau().deselectionnerToutesCases();
+					this.ecranJeu.getAffichagePlateau().faireAnimationDeplacement(deplacement);
+				}
+			}
+		}
+		
+		//Si la partie n'est pas fini est que c'est encore le tour de l'IA
+		if(!this.partieJouee.isPartieFinie() && this.partieJouee.getJoueurActuel() instanceof IA){
+			JouerTour jeu = new JouerTour();
+			jeu.start();
 		}
 	}
 	//====================================================================================================
+	
 }

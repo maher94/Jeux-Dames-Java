@@ -37,8 +37,8 @@ public class PartieIAvsIA extends Partie{
 	public PartieIAvsIA(int largeurPlateauP,int nombrePionsP,int premierJoueurP,int difficulte) throws IllegalArgumentException, InvalidPlateauSizeException{
 		super(largeurPlateauP, nombrePionsP, premierJoueurP);
 		//Création des joueurs
-		IA j1 = new IA("Ordinateur 1 (O)", difficulte,this.getPlateau(),Pion.PION_BLANC);
-		IA j2 = new IA("Ordinateur 2 (X)",difficulte,this.getPlateau(),Pion.PION_NOIR);
+		IA j1 = new IA("Ordinateur 1", difficulte,this.getPlateau(),Pion.PION_BLANC);
+		IA j2 = new IA("Ordinateur 2",difficulte,this.getPlateau(),Pion.PION_NOIR);
 		this.setJ1(j1);
 		this.setJ2(j2);
 	}
@@ -56,27 +56,6 @@ public class PartieIAvsIA extends Partie{
 	
 	
 	//========================================AUTRE(S) METHODE(S)========================================
-	/**
-	 * Cette méthode va faire jouer l'IA pour un tour.<br>
-	 * Il se peut que l'IA joue deux fois de suite si il y a une prise multiple. (pour plus de détails, voir la méthode tourSuivant() et jouerTour(...) de Partie) 
-	 * @return le déplacement qui vient d'être joué par l'IA.
-	 */
-	public Deplacement faireJouerIA(){
-		Deplacement deplacementAFaire=null;
-		if(!this.isPartieFinie()){
-			//Récupération de l'IA
-			IA j = (IA)this.getJoueurActuel();
-			//Si est en train de faire une prise multiple
-			if(this.isPriseMultiple()){
-				deplacementAFaire = j.getMeilleursDeplacement(this.getJoueurActuel().getDernierDeplacement());
-			}else{
-				deplacementAFaire = j.getMeilleursDeplacement(null);
-			}
-			//Fait le déplacement
-			this.jouerTour(deplacementAFaire);
-		}
-		return deplacementAFaire;
-	}
 	//====================================================================================================
 	
 }
