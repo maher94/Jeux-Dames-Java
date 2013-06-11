@@ -236,7 +236,7 @@ public abstract class Partie implements Serializable{
 		//Si on est dans une prise multiple
 		if(this.priseMultiple){
 			//Vérifie si le déplacement part bien de l'arrivée du dernier et qu'il effectue bien une prise
-			if(depl.getPositionXOrigine()==this.getJoueurActuel().getDernierDeplacement().getPositionXArrivee() && depl.getPositionYOrigine()==this.getJoueurActuel().getDernierDeplacement().getPositionYArrivee() && depl.isPriseEffectuee()){
+			if(depl.getPositionXOrigine()==this.getJoueurActuel().getDernierDeplacement().getPositionXArrivee() && depl.getPositionYOrigine()==this.getJoueurActuel().getDernierDeplacement().getPositionYArrivee()){
 				deplacementBon=this.plateauJeux.effectuerDeplacement(depl, this.couleurJouee);
 			}
 		}
@@ -251,6 +251,30 @@ public abstract class Partie implements Serializable{
 		}
 		//Retour
 		return deplacementBon;
+	}
+	
+	/**
+	 * Cette méthode va faire jouer l'IA pour un tour.<br>
+	 * Si la partie ne possède pas de joueur IA, cette méthode ne ferra rien.
+	 * Il se peut que l'IA joue deux fois de suite si il y a une prise multiple. (pour plus de détails, voir la méthode tourSuivant() et jouerTour(...) de Partie)
+	 * <strong>ATTENTION : </strong> il faut être sûr d'appeler cette méthode quand c'est vraiment le tour de l'IA sinon elle retournera null.
+	 * @return le déplacement qui vient d'être joué par l'IA.
+	 */
+	public Deplacement faireJouerIA(){
+		Deplacement deplacementAFaire=null;
+		if(!this.isPartieFinie() && this.getJoueurActuel() instanceof IA){
+			//Récupération de l'IA
+			IA j = (IA)this.getJoueurActuel();
+			//Si est en train de faire une prise multiple
+			if(this.isPriseMultiple()){
+				deplacementAFaire = j.getMeilleursDeplacement(this.getJoueurActuel().getDernierDeplacement());
+			}else{
+				deplacementAFaire = j.getMeilleursDeplacement(null);
+			}
+			//Fait le déplacement
+			this.jouerTour(deplacementAFaire);
+		}
+		return deplacementAFaire;
 	}
 	//=================================================================================================
 	
@@ -272,6 +296,5 @@ public abstract class Partie implements Serializable{
 		this.tempsEcoule = (System.currentTimeMillis()-this.tempsDepart);
 		this.tempsDepart=0;
 	}
-	//====================================================================================================
-	
+	//====================================================================================================	
 }

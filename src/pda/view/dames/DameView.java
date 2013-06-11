@@ -3,6 +3,7 @@ package pda.view.dames;
 import javax.swing.JPanel;
 
 import pda.datas.dames.Partie;
+import pda.datas.dames.PartieHumainvsHumain;
 import pda.datas.dames.PartieHumainvsIA;
 import pda.datas.dames.PartieIAvsIA;
 import pda.datas.dames.exception.InvalidPlateauSizeException;
@@ -37,7 +38,7 @@ public class DameView {
 	public DameView(){
 		Partie p;
 		try {
-			p = new PartieHumainvsIA(10, 20,1,"Mathieu", 2,-1);
+			p = new PartieHumainvsHumain(10, 20,1,"Mathieu", 1,"Michel", -1);
 			this.panelPrincipal = new EcranJeu(p);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block

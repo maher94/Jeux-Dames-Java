@@ -56,27 +56,6 @@ public class PartieIAvsIA extends Partie{
 	
 	
 	//========================================AUTRE(S) METHODE(S)========================================
-	/**
-	 * Cette méthode va faire jouer l'IA pour un tour.<br>
-	 * Il se peut que l'IA joue deux fois de suite si il y a une prise multiple. (pour plus de détails, voir la méthode tourSuivant() et jouerTour(...) de Partie) 
-	 * @return le déplacement qui vient d'être joué par l'IA.
-	 */
-	public Deplacement faireJouerIA(){
-		Deplacement deplacementAFaire=null;
-		if(!this.isPartieFinie()){
-			//Récupération de l'IA
-			IA j = (IA)this.getJoueurActuel();
-			//Si est en train de faire une prise multiple
-			if(this.isPriseMultiple()){
-				deplacementAFaire = j.getMeilleursDeplacement(this.getJoueurActuel().getDernierDeplacement());
-			}else{
-				deplacementAFaire = j.getMeilleursDeplacement(null);
-			}
-			//Fait le déplacement
-			this.jouerTour(deplacementAFaire);
-		}
-		return deplacementAFaire;
-	}
 	//====================================================================================================
 	
 }

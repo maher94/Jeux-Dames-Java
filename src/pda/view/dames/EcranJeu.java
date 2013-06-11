@@ -249,7 +249,7 @@ public class EcranJeu extends JPanel{
 					}
 					
 					//Dessin du pion en déplacement
-					if(this.deplacementEnCours && this.pionDeplace!=null){
+					if(this.deplacementEnCours && this.pionDeplace!=null && this.pointDeplacement!=null){
 						Image texturePion = null;
 						//Determine la texture en fonction de la dame et de la couleur
 						if(!this.pionDeplace.isDame()){
@@ -268,6 +268,14 @@ public class EcranJeu extends JPanel{
 			}
 			
 			//System.out.println("Largeur : "+this.largeurCase+"\nHauteur : "+this.hauteurCase+"\nDecal larg "+this.decalageLargeur+"\nDecal haut "+this.decalageHauteur);
+		}
+		
+		/**
+		 * Méthode qui sert à savoir si une animation de déplacement est en cours.
+		 * @return vrai si un déplacement est en cours, sinon retourne faux.
+		 */
+		public boolean isDeplacementEnCours(){
+			return this.deplacementEnCours;
 		}
 		
 		/**
@@ -294,7 +302,7 @@ public class EcranJeu extends JPanel{
 		 * @param d Le déplacement dont on veut faire l'animation.
 		 * @throws NullPointerException si le déplacement n'est pas valide ou qu'il n'a pas été fait
 		 */
-		public void faireAnimationDeplacement(Deplacement d)throws NullPointerException{
+		public synchronized void faireAnimationDeplacement(Deplacement d)throws NullPointerException{
 			//Début déplacement
 			this.deplacementEnCours=true;
 			
@@ -364,8 +372,6 @@ public class EcranJeu extends JPanel{
 			if(this.plateauJeux.getPion(pionSelec.x, pionSelec.y)!=null){
 				//Si la couleur est celle jouée
 				if(this.plateauJeux.getPion(pionSelec.x, pionSelec.y).getCouleur()==EcranJeu.this.partieJouee.getCouleurJouee()){
-					//On enlève toutes les cases selectionnées précedement
-					this.plateauJeux.deselectionnerToutesCases();
 					//récupération des déplacements possibles et sélection des cases d'arrivées
 					ArrayList<Deplacement> deplacementsPossible = this.plateauJeux.getDeplacementsPion(pionSelec.x, pionSelec.y);
 					ArrayList<Deplacement> tousDeplacementsTries = Plateau.trierDeplacements(this.plateauJeux.getTousDeplacements(EcranJeu.this.partieJouee.getCouleurJouee()));
