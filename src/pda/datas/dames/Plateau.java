@@ -135,6 +135,14 @@ public class Plateau implements Serializable{
 	public void setPion(int posX,int posY,Pion nouveauPion){
 		if(this.verifierEmplacement(posX, posY))this.casesPlateau[posY][posX].setPionPose(nouveauPion);
 	}
+	
+	public void deselectionnerToutesCases(){
+		for(int i=0;i<this.casesPlateau.length;i++){
+			for(int j=0;j<this.casesPlateau.length;j++){
+				this.casesPlateau[i][j].setSelectionnee(false);
+			}
+		}
+	}
 	//====================================================================================================
 	
 	

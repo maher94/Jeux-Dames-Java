@@ -7,6 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import pda.control.dames.EcouteurListeModeJeux;
+
 
 /**
  * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
@@ -158,7 +160,8 @@ public class EcranParametre extends JPanel {
 	//==========================================CONSTRUCTEUR(S)==========================================
 	 public EcranParametre(){
 		this.setLayout(new BorderLayout());
-		this.creerInterface();
+		this.creerInterface(); 
+		this.ajoutEcouteurs();
 		this.add(comboMode,BorderLayout.NORTH);
 		
 		
@@ -198,6 +201,10 @@ public class EcranParametre extends JPanel {
 		nord.add(variante1);
 		nord.add(variante2);
 		nord.add(comboMode);
+	}
+	
+	public void ajoutEcouteurs(){
+		this.comboMode.addActionListener(new EcouteurListeModeJeux(this));
 	}
 	//====================================================================================================
 	
