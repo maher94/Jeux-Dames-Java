@@ -24,9 +24,7 @@ public class DameView {
 	
 	
 	//==========================================CONSTRUCTEUR(S)==========================================
-	public DameView(){
-		this.panelPrincipal = new EcranPlateau();
-	}
+	
 	public DameView(){
 		panelPrincipal = new EcranParametre();
 	}
