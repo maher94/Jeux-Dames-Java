@@ -114,7 +114,7 @@ public class Deplacement {
 	
 	/**
 	 * Sert à retourner la coordonnée X de la case d'arrivée du déplacement
-	 * @return
+	 * @return le x du point d'arrivée
 	 */
 	public int getPositionXArrivee() {
 		return this.positionXArrivee;
@@ -122,7 +122,7 @@ public class Deplacement {
 	
 	/**
 	 * Sert à retourner la coordonnée Y de la case d'arrivée du déplacement
-	 * @return
+	 * @return le y du point d'arrivée
 	 */
 	public int getPositionYArrivee() {
 		return this.positionYArrivee;
@@ -165,7 +165,7 @@ public class Deplacement {
 	
 	/**
 	 * Sert à définir la coordonnée Y de la case d'origine du déplacement
-	 * @param positionXOrigineP La coordonnée Y de la case d'origine
+	 * @param positionYOrigineP La coordonnée Y de la case d'origine
 	 */
 	public void setPositionYOrigine(int positionYOrigineP) {
 		this.positionYOrigine = positionYOrigineP;
@@ -173,7 +173,7 @@ public class Deplacement {
 	
 	/**
 	 * Sert à définir la coordonnée X de la case d'arrivée du déplacement
-	 * @param positionXOrigineP La coordonnée X de la case d'arrivée
+	 * @param positionXArriveeP La coordonnée X de la case d'arrivée
 	 */
 	public void setPositionXArrivee(int positionXArriveeP) {
 		this.positionXArrivee = positionXArriveeP;
@@ -181,7 +181,7 @@ public class Deplacement {
 	
 	/**
 	 * Sert à définir la coordonnée Y de la case d'arrivée du déplacement
-	 * @param positionXOrigineP La coordonnée Y de la case d'arrivée
+	 * @param positionYArriveeP La coordonnée Y de la case d'arrivée
 	 */
 	public void setPositionYArrivee(int positionYArriveeP) {
 		this.positionYArrivee = positionYArriveeP;

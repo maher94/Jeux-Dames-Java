@@ -37,8 +37,8 @@ public class PartieIAvsIA extends Partie{
 	public PartieIAvsIA(int largeurPlateauP,int nombrePionsP,int premierJoueurP,int difficulte) throws IllegalArgumentException, InvalidPlateauSizeException{
 		super(largeurPlateauP, nombrePionsP, premierJoueurP);
 		//Création des joueurs
-		IA j1 = new IA("Ordinateur 1 (O)", difficulte,this.getPlateau(),Pion.PION_BLANC);
-		IA j2 = new IA("Ordinateur 2 (X)",difficulte,this.getPlateau(),Pion.PION_NOIR);
+		IA j1 = new IA("Ordinateur 1", difficulte,this.getPlateau(),Pion.PION_BLANC);
+		IA j2 = new IA("Ordinateur 2",difficulte,this.getPlateau(),Pion.PION_NOIR);
 		this.setJ1(j1);
 		this.setJ2(j2);
 	}

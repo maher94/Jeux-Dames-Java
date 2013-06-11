@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import pda.control.IApplication;
 import pda.control.PdaCtrl;
+import pda.datas.dames.Partie;
 import pda.view.dames.DameView;
 
 
@@ -28,6 +29,31 @@ public class DamesCtrl implements IApplication{
 	 * La vue du jeu de dames
 	 */
 	private DameView vue;
+	
+	/**
+	 * Menu principal
+	 */
+	public static final int ECRAN_PRINCIPAL=0;
+	
+	/**
+	 * Menu des scores
+	 */
+	public static final int ECRAN_SCORES=1;
+	
+	/**
+	 * Menu des parties sauvegardées
+	 */
+	public static final int ECRAN_SAUVEGARDES=2;
+	
+	/**
+	 * Ecran de paramètrage d'une partie
+	 */
+	public static final int ECRAN_PARAMETRES=3;
+	
+	/**
+	 * Ecran de jeu
+	 */
+	public static final int ECRAN_JEU=4;
 	//====================================================================================================
 	
 	
@@ -56,7 +82,27 @@ public class DamesCtrl implements IApplication{
 	
 	//====================================================================================================
 	
+	
+	//===========================================CHANGEMENT IHM===========================================
+	/**
+	 * Cette méthode permet de changer le menu affiché dans la vue principale.
+	 * @param indexMenu l'index du menu à afficher (utiliser les variables de classes)
+	 */
+	public void changerMenu(int indexMenu){
+		//Change la vue
+		this.vue.changerMenu(indexMenu);
+	}
+	
+	/**
+	 * Cette méthode va permet de lancer une partie dans l'application
+	 * @param partie la partie à lancer
+	 */
+	public void lancerPartie(Partie partie){
+		this.vue.lancerPartie(partie);
+	}
+	//====================================================================================================
 
+	
 	//============================================METHODES PDA============================================
 	/**
 	 * Démarrage du jeu de dame.
