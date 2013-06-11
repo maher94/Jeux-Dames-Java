@@ -30,17 +30,7 @@ public class DameView {
 	
 	//==========================================CONSTRUCTEUR(S)==========================================
 	public DameView(){
-		Partie p;
-		try {
-			p = new PartieHumainvsIA(10, 20,1,"Mathieu", 2,-1);
-			this.panelPrincipal = new EcranJeu(p);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidPlateauSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		panelPrincipal = new EcranParametre();
 	}
 	//====================================================================================================
 	

@@ -178,6 +178,11 @@ public class EcranParametre extends JPanel {
 	 */
 	private String humainVShumain;
 	
+	/**
+	 * Attribut qui défini l'affichage des différents parametre
+	 * Il peut prendre trois valeur, 1, 2 ou 3 
+	 */
+	private int param=0;
 	//====================================================================================================
 	
 	
@@ -188,6 +193,7 @@ public class EcranParametre extends JPanel {
 		this.ajoutEcouteurs();
 		this.add(nord,BorderLayout.NORTH);
 		this.add(centre,BorderLayout.CENTER);
+		
 		
 		
 	}
@@ -208,22 +214,26 @@ public class EcranParametre extends JPanel {
 	public void creerInterface(){
 		
 		//Gère la partie nord, qui est le choix du mode de jeu
-		this.nord = new JPanel();
-		this.comboMode = new JComboBox();
-		this.iaVSia = "IA vs IA";
-		this.iaVShumain = "IA vs HUMAIN";
-		this.humainVShumain = "HUMAIN vs HUMAIN";
-		this.comboMode.addItem(this.iaVSia);
-		this.comboMode.addItem(this.iaVShumain);
-		this.comboMode.addItem(this.humainVShumain);
-		this.nord.add(comboMode);
+		
+		//if (param ==0){
+			this.nord = new JPanel();
+			this.comboMode = new JComboBox();
+			this.iaVSia = "IA vs IA";
+			this.iaVShumain = "IA vs HUMAIN";
+			this.humainVShumain = "HUMAIN vs HUMAIN";
+			this.comboMode.addItem(this.iaVSia);
+			this.comboMode.addItem(this.iaVShumain);
+			this.comboMode.addItem(this.humainVShumain);
+			this.nord.add(comboMode);
+			param++;
+		//}
 		
 		
 	
 		//-------Gère la partie CENTRE de l'écran-------
 		
 		this.centre = new JPanel();
-		this.centre.setLayout(new GridLayout(6,1));	
+		this.centre.setLayout(new GridLayout(5,1));	
 		
 		//Gère la partie choix de la variante
 		this.variante1 = new JRadioButton("8X8");
@@ -238,9 +248,11 @@ public class EcranParametre extends JPanel {
 		this.variantes.add(variante2);
 		this.variantes.add(variante3);
 		this.variantes.setBorder(BorderFactory.createTitledBorder("Choix variante"));
-		this.centre.add(variantes);
+		
+		
 		
 		//Gère la partie choix de la difficulté de l'IA
+
 		this.diff1 = new JRadioButton("Facile");
 		this.diff2 = new JRadioButton("Moyen");
 		this.diff3 = new JRadioButton("Difficile");
@@ -253,7 +265,8 @@ public class EcranParametre extends JPanel {
 		this.diffIA.add(diff2);
 		this.diffIA.add(diff3);
 		this.diffIA.setBorder(BorderFactory.createTitledBorder("Choix difficulté"));
-		this.centre.add(diffIA);
+		
+	
 		
 		//Gère la partie choix de la couleur du Joueur 1
 		this.couleurBlanc = new JRadioButton("Blanc");
@@ -265,25 +278,27 @@ public class EcranParametre extends JPanel {
 		this.choixCouleur.add(couleurBlanc);
 		this.choixCouleur.add(couleurNoir);
 		this.choixCouleur.setBorder(BorderFactory.createTitledBorder("Choix couleur Joueur1"));
-		this.centre.add(choixCouleur);
+		
 		
 		//Gère la partie choix du nom du Joueur 1
-		joueur1 = new JTextField("Joueur 1");
+		joueur1 = new JTextField(10);
+		joueur1.setText("Joueur 1");
 		textJoueur1 = new JLabel("Nom du Joueur 1 :");
 		this.nomJoueur1 = new JPanel();
 		this.nomJoueur1.add(textJoueur1);
 		this.nomJoueur1.add(joueur1);
 		this.nomJoueur1.setBorder(BorderFactory.createTitledBorder("Choix nom du Joueur1"));
-		this.centre.add(nomJoueur1);
+		
 		
 		//Gère la partie choix du nom du Joueur 2
-		joueur2 = new JTextField("Joueur 2");
+		joueur2 = new JTextField(10);
+		joueur2.setText("Joueur 2");
 		textJoueur2 = new JLabel("Nom du Joueur 2 :");
 		this.nomJoueur2 = new JPanel();
 		this.nomJoueur2.add(textJoueur2);
 		this.nomJoueur2.add(joueur2);
 		this.nomJoueur2.setBorder(BorderFactory.createTitledBorder("Choix nom du Joueur2"));
-		this.centre.add(nomJoueur2);
+		
 		
 		//Gère la partie du choix du joueur qui commence*
 		this.commenceJ1 = new JRadioButton("Joueur 1");
@@ -295,19 +310,49 @@ public class EcranParametre extends JPanel {
 		this.choixCommence.add(commenceJ1);
 		this.choixCommence.add(commenceJ2);
 		this.choixCommence.setBorder(BorderFactory.createTitledBorder("Qui commence ?"));
-		this.centre.add(choixCommence);
 		
-		
-		
-		
-		
+		this.actualiserAffichage();
+	}	
 		
 	
+	public void actualiserAffichage(){
+		
+		this.centre.removeAll();
+		this.centre.setLayout(new GridLayout(5,1));
+		
+		if (comboMode.getSelectedItem()==this.iaVSia){
+			System.out.println("IA vs IA choisi");
+			this.centre.add(variantes);
+			this.centre.add(diffIA);
+			this.centre.add(choixCommence);
+		}
+		if (comboMode.getSelectedItem()==this.iaVShumain){
+			System.out.println("IA vs HUMAIN choisi");
+			this.centre.add(variantes);
+			this.centre.add(diffIA);
+			this.centre.add(choixCouleur);
+			this.centre.add(nomJoueur1);
+			this.centre.add(choixCommence);
+		}
+		if(comboMode.getSelectedItem()==this.humainVShumain){
+			System.out.println("HUMAIN vs HUMAIN choisi");
+			this.centre.add(variantes);
+			this.centre.add(choixCouleur);
+			this.centre.add(nomJoueur1);
+			this.centre.add(nomJoueur2);
+			this.centre.add(choixCommence);
+		}
+		this.centre.revalidate(); 
+		
 	}
+	
+	
+	
 	
 	public void ajoutEcouteurs(){
 		this.comboMode.addActionListener(new EcouteurListeModeJeux(this));
 	}
+	
 	//====================================================================================================
 	
 }
