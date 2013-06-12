@@ -74,7 +74,6 @@ public class Jeu implements Serializable{
 	 * @throws NoSuchElementException Si la date n'existe pas dans la liste
 	 */
 	public void supprimer(Date date) throws IllegalArgumentException,NoSuchElementException {
-		System.out.println(date);
 		if(date ==null){throw new IllegalArgumentException("La date n'existe pas");}
 		this.listePartie.remove(date);
 		this.sauver();
@@ -137,9 +136,9 @@ public class Jeu implements Serializable{
 			oos.writeObject(this);
 			oos.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("Erreur de chargement du jeu : "+e.getMessage());
+			System.err.println("Erreur de sauvegarde du jeu : "+e.getMessage());
 		} catch (IOException e) {
-			System.err.println("Erreur de chargement du jeu : "+e.getMessage());
+			System.err.println("Erreur de sauvegarde du jeu : "+e.getMessage());
 		}
 	}
 	//====================================================================================================

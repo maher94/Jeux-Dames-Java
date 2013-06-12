@@ -227,7 +227,8 @@ public class PanelPlateau extends JPanel{
 					g.drawImage(texturePion,this.pointDeplacement.x,this.pointDeplacement.y,this.largeurCase,this.hauteurCase,this);
 				}
 				
-				g.drawString(x+","+y,this.decalageLargeur+x*this.largeurCase,this.decalageHauteur+y*this.hauteurCase+10);
+				//Dessine les coordonnées de la case(sert lors des test)
+				//g.drawString(x+","+y,this.decalageLargeur+x*this.largeurCase,this.decalageHauteur+y*this.hauteurCase+10);
 			}
 		}
 	}

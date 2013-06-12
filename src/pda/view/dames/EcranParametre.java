@@ -525,7 +525,6 @@ public class EcranParametre extends JPanel {
 		this.centre.setLayout(new GridLayout(5,1));
 		
 		if (comboMode.getSelectedItem()==this.iaVSia){
-			System.out.println("IA vs IA choisi");
 			this.commenceJ1.setText(Pion.getCouleurBlanc());
 			this.commenceJ2.setText(Pion.getCouleurNoir());
 			this.centre.add(variantes);
@@ -533,9 +532,10 @@ public class EcranParametre extends JPanel {
 			this.centre.add(choixCommence);
 		}
 		if (comboMode.getSelectedItem()==this.iaVShumain){
-			System.out.println("IA vs HUMAIN choisi");
 			this.commenceJ2.setText("IA");
 			this.commenceJ1.setText("Joueur");
+			this.joueur1.setText("Joueur");
+			this.joueur2.setText("IA");
 			this.centre.add(variantes);
 			this.centre.add(diffIA);
 			this.centre.add(choixCouleur);
@@ -543,9 +543,10 @@ public class EcranParametre extends JPanel {
 			this.centre.add(choixCommence);
 		}
 		if(comboMode.getSelectedItem()==this.humainVShumain){
-			System.out.println("HUMAIN vs HUMAIN choisi");
 			this.commenceJ1.setText("Joueur 1");
 			this.commenceJ2.setText("Joueur 2");
+			this.joueur1.setText("Joueur 1");
+			this.joueur2.setText("Joueur 2");
 			this.centre.add(variantes);
 			this.centre.add(choixCouleur);
 			this.centre.add(nomJoueur1);

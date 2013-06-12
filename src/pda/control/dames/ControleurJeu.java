@@ -149,9 +149,10 @@ public class ControleurJeu implements MouseListener,ActionListener{
 	//================================================JEU================================================
 	/**
 	 * Thread pour jouer un tour de jeu.<br>
-	 * Ce Thread est obligatoire car sinon il y a des problèmes de synchronisation à cause des animations de déplacement.
+	 * Ce Thread est obligatoire car sinon il y a des problèmes de synchronisation à cause des animations de déplacement.<br>
+	 * Grâce à ce Thread on ne peut lancer qu'un tour à la fois (car la méthode tour est synchronized) : il n'y aura donc aucun calcul de déplacement
+	 * par l'IA ou d'animation avant que le tour précédent soit terminé. 
 	 * @author Mathieu THEBAUD
-	 *
 	 */
 	public class JouerTour extends Thread{
 		public JouerTour(){

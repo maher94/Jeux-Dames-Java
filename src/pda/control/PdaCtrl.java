@@ -14,6 +14,7 @@ import pda.datas.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.util.ArrayList;
 
 /**
@@ -57,9 +58,6 @@ public class PdaCtrl implements ActionListener {
 	 * Starting of the PDA program.
 	 */
 	public static void main(String[] arg) {
-		String c = "test";
-		String c1 = "test";
-		System.out.println(c1==c);
 		new PdaCtrl();
 	} // --------------------------------------------------------------- main()
 
