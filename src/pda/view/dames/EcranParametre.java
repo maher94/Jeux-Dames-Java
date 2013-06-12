@@ -401,26 +401,25 @@ public class EcranParametre extends JPanel {
 	public void creerInterface(){
 		
 		//Gère la partie sud avec les boutons "Valider" et "Annuler"
-			this.sud = new JPanel();
-			this.valider = new JButton("Valider");
-			this.valider.setPreferredSize(new Dimension(150,20));
-			this.annuler = new JButton("Annuler");
-			this.annuler.setPreferredSize(new Dimension(150,20));
-			this.sud.add(valider);
-			this.sud.add(annuler);
+		this.sud = new JPanel();
+		this.valider = new JButton("Valider");
+		this.valider.setPreferredSize(new Dimension(150,20));
+		this.annuler = new JButton("Annuler");
+		this.annuler.setPreferredSize(new Dimension(150,20));
+		this.sud.add(annuler);
+		this.sud.add(valider);
 		
 		//Gère la partie nord, qui est le choix du mode de jeu
+		this.nord = new JPanel();
+		this.comboMode = new JComboBox();
+		this.iaVSia = "IA vs IA";
+		this.iaVShumain = "IA vs HUMAIN";
+		this.humainVShumain = "HUMAIN vs HUMAIN";
+		this.comboMode.addItem(this.iaVSia);
+		this.comboMode.addItem(this.iaVShumain);
+		this.comboMode.addItem(this.humainVShumain);
+		this.nord.add(comboMode);		
 		
-			this.nord = new JPanel();
-			this.comboMode = new JComboBox();
-			this.iaVSia = "IA vs IA";
-			this.iaVShumain = "IA vs HUMAIN";
-			this.humainVShumain = "HUMAIN vs HUMAIN";
-			this.comboMode.addItem(this.iaVSia);
-			this.comboMode.addItem(this.iaVShumain);
-			this.comboMode.addItem(this.humainVShumain);
-			this.nord.add(comboMode);		
-	
 		//-------Gère la partie CENTRE de l'écran-------
 		
 		this.centre = new JPanel();

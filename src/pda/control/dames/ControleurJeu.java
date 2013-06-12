@@ -50,6 +50,10 @@ public class ControleurJeu implements MouseListener,ActionListener{
 	 */
 	private Point arriveeDeplacement;
 	
+	/**
+	 * Sert à savoir si la partie doit se jouer
+	 */
+	private boolean jouerPartie;
 	//====================================================================================================
 	
 	
@@ -61,6 +65,7 @@ public class ControleurJeu implements MouseListener,ActionListener{
 	public ControleurJeu(EcranJeu ecranJeuP){
 		this.ecranJeu = ecranJeuP;
 		this.partieJouee = this.ecranJeu.getPartieJouee();
+		this.jouerPartie = true;
 	}
 	//====================================================================================================
 	
@@ -73,6 +78,7 @@ public class ControleurJeu implements MouseListener,ActionListener{
 		//Si on clic sur retour menu
 		if(clic.getSource()==this.ecranJeu.getMenu()){
 			//Retour menu
+			this.jouerPartie=false;
 			this.ecranJeu.getControleur().changerMenu(DamesCtrl.ECRAN_PRINCIPAL);
 		}
 		//Si on clic sur sauvegarder
@@ -173,53 +179,56 @@ public class ControleurJeu implements MouseListener,ActionListener{
 	 * Le tout se fait dans une méthode synchronized pour ne pas avoir de conflit pendant l'animation.
 	 */
 	public synchronized void jouerTour(){
-		//Récupération du joueur actuel
-		Joueur j = this.partieJouee.getJoueurActuel();
-		
-		//Si c'est l'IA qui joue
-		if(j instanceof IA){
-			this.ecranJeu.getEtatIA().setText("Réfléchi");
-			Deplacement deplacement = this.partieJouee.faireJouerIA();
-			this.ecranJeu.getEtatIA().setText("En attente");
-			if(deplacement!=null)this.ecranJeu.getAffichagePlateau().faireAnimationDeplacement(deplacement);
-		}
-		//Si c'est un joueur
-		else{
-			//Si l'arrivée et le départ sont définis
-			if(this.departDeplacement!=null && this.arriveeDeplacement!=null){
-				Deplacement deplacement = new Deplacement(this.departDeplacement.x,this.departDeplacement.y,this.arriveeDeplacement.x,this.arriveeDeplacement.y);
-				//Tente de faire le déplacement
-				if(this.partieJouee.jouerTour(deplacement)){
-					//Déselectionne tous les pions
-					this.partieJouee.getPlateau().deselectionnerToutesCases();
-					this.ecranJeu.getAffichagePlateau().faireAnimationDeplacement(deplacement);
+		//Doit on jouer ?
+		if(this.jouerPartie){
+			//Récupération du joueur actuel
+			Joueur j = this.partieJouee.getJoueurActuel();
+			
+			//Si c'est l'IA qui joue
+			if(j instanceof IA){
+				this.ecranJeu.getEtatIA().setText("Réfléchi");
+				Deplacement deplacement = this.partieJouee.faireJouerIA();
+				this.ecranJeu.getEtatIA().setText("En attente");
+				if(deplacement!=null)this.ecranJeu.getAffichagePlateau().faireAnimationDeplacement(deplacement);
+			}
+			//Si c'est un joueur
+			else{
+				//Si l'arrivée et le départ sont définis
+				if(this.departDeplacement!=null && this.arriveeDeplacement!=null){
+					Deplacement deplacement = new Deplacement(this.departDeplacement.x,this.departDeplacement.y,this.arriveeDeplacement.x,this.arriveeDeplacement.y);
+					//Tente de faire le déplacement
+					if(this.partieJouee.jouerTour(deplacement)){
+						//Déselectionne tous les pions
+						this.partieJouee.getPlateau().deselectionnerToutesCases();
+						this.ecranJeu.getAffichagePlateau().faireAnimationDeplacement(deplacement);
+					}
 				}
 			}
-		}
-		
-		//Actualise les infos
-		this.ecranJeu.actualiserInformationsPartie();
-		
-		//Si la partie n'est pas fini est que c'est encore le tour de l'IA
-		if(!this.partieJouee.isPartieFinie() && this.partieJouee.getJoueurActuel() instanceof IA){
-			JouerTour jeu = new JouerTour();
-			jeu.start();
-		}
-		
-		//Si la partie est finie
-		if(this.partieJouee.isPartieFinie()){
-			Date duree = new Date(this.partieJouee.getTempsEcoule());
-			String message = null;
-			//Si il y a un gagnant
-			if(this.partieJouee.getGagnant()!=null)message = "Partie terminée\nGagnant : "+this.partieJouee.getGagnant().getNom();
-			else message = "Partie terminée\nEgalité !";
-			//Autres informations
-			message =message+ "\nTemps écoulé : "+duree.getMinutes()+" min "+duree.getSeconds()+" sec"+
-					"\nNombre de tours : "+this.partieJouee.getNbTours();
-			//Affiche infos
-			JOptionPane.showMessageDialog(this.ecranJeu, message, "Partie terminée",JOptionPane.INFORMATION_MESSAGE);
-			//Retour menu
-			this.ecranJeu.getControleur().changerMenu(DamesCtrl.ECRAN_PRINCIPAL);
+			
+			//Actualise les infos
+			this.ecranJeu.actualiserInformationsPartie();
+			
+			//Si la partie n'est pas fini est que c'est encore le tour de l'IA
+			if(!this.partieJouee.isPartieFinie() && this.partieJouee.getJoueurActuel() instanceof IA){
+				JouerTour jeu = new JouerTour();
+				jeu.start();
+			}
+			
+			//Si la partie est finie
+			if(this.partieJouee.isPartieFinie()){
+				Date duree = new Date(this.partieJouee.getTempsEcoule());
+				String message = null;
+				//Si il y a un gagnant
+				if(this.partieJouee.getGagnant()!=null)message = "Partie terminée\nGagnant : "+this.partieJouee.getGagnant().getNom();
+				else message = "Partie terminée\nEgalité !";
+				//Autres informations
+				message =message+ "\nTemps écoulé : "+duree.getMinutes()+" min "+duree.getSeconds()+" sec"+
+						"\nNombre de tours : "+this.partieJouee.getNbTours();
+				//Affiche infos
+				JOptionPane.showMessageDialog(this.ecranJeu, message, "Partie terminée",JOptionPane.INFORMATION_MESSAGE);
+				//Retour menu
+				this.ecranJeu.getControleur().changerMenu(DamesCtrl.ECRAN_PRINCIPAL);
+			}
 		}
 	}
 	//====================================================================================================

@@ -1,9 +1,12 @@
 package pda.view.dames;
 
-import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.JButton;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import pda.control.dames.DamesCtrl;
@@ -25,22 +28,27 @@ public class EcranPrincipal extends JPanel{
 	/**
 	 * Bouton pour lancer une nouvelle partie
 	 */
-	private JButton nouvellePartie;
+	private BoutonJeuDame nouvellePartie;
 	
 	/**
 	 * Bouton pour charger une partie
 	 */
-	private JButton chargerPartie;
+	private BoutonJeuDame chargerPartie;
 	
 	/**
 	 * Bouton pour quitter une partie
 	 */
-	private JButton quitter;
+	private BoutonJeuDame quitter;
 	
 	/**
 	 * Le controleur de l'application de dames
 	 */
 	private DamesCtrl controleur;
+	
+	/**
+	 * Image de fond
+	 */
+	private Image fond;
 	//====================================================================================================
 	
 	
@@ -52,6 +60,11 @@ public class EcranPrincipal extends JPanel{
 	public EcranPrincipal(DamesCtrl controleurP){
 		super(null);
 		this.controleur = controleurP;
+		try {
+			this.fond = ImageIO.read(new File("./data/img/dames/fond_menu.png"));
+		} catch (IOException e) {
+			System.err.println("Erreur de chargement du fond pour le menu principal : "+e.getMessage());
+		}
 		this.creerInterface();
 		this.ajouterEcouteurs();
 	}
@@ -63,7 +76,7 @@ public class EcranPrincipal extends JPanel{
 	 * Obtenir le bouton de création de partie
 	 * @return le bouton nouvelle partie
 	 */
-	public JButton getNouvellePartie() {
+	public BoutonJeuDame getNouvellePartie() {
 		return this.nouvellePartie;
 	}
 	
@@ -71,7 +84,7 @@ public class EcranPrincipal extends JPanel{
 	 * Obtenir le bouton de chargement de partie
 	 * @return le bouton charger partie
 	 */
-	public JButton getChargerPartie() {
+	public BoutonJeuDame getChargerPartie() {
 		return this.chargerPartie;
 	}
 	
@@ -79,7 +92,7 @@ public class EcranPrincipal extends JPanel{
 	 * Obtenir le bouton pour quitter le jeu
 	 * @return le bouton quitter
 	 */
-	public JButton getQuitter() {
+	public BoutonJeuDame getQuitter() {
 		return this.quitter;
 	}
 	
@@ -105,11 +118,12 @@ public class EcranPrincipal extends JPanel{
 	public void creerInterface(){
 		//Panel de boutons, centré dans le panel
 		JPanel boutons = new JPanel(new GridLayout(3,1,5,10));
+		boutons.setOpaque(false);
 		
 		//Créations boutons
-		this.nouvellePartie = new JButton("Nouvelle partie");
-		this.chargerPartie = new JButton("Charger partie");
-		this.quitter = new JButton("Quitter");
+		this.nouvellePartie = new BoutonJeuDame("Nouvelle partie");
+		this.chargerPartie = new BoutonJeuDame("Charger partie");
+		this.quitter = new BoutonJeuDame("Quitter");
 		
 		//Ajout des boutons
 		boutons.add(this.nouvellePartie);
@@ -117,10 +131,17 @@ public class EcranPrincipal extends JPanel{
 		boutons.add(this.quitter);
 		
 		//Placement boutons
-		boutons.setBounds(60,100,200,150);
+		boutons.setBounds(60,150,200,150);
 		
 		//Ajout total
 		this.add(boutons);
+	}
+	
+	/**
+	 * Dessine le fond du panel
+	 */
+	public void paintComponent(Graphics g){
+		g.drawImage(this.fond, 0, 0, this.getWidth(), this.getHeight(),null);
 	}
 	
 	/**
