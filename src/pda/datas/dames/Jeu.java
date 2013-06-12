@@ -68,6 +68,7 @@ public class Jeu implements Serializable{
 	public Object[] date(){
 		return this.listePartie.keySet().toArray();	
 	}
+	
 
 	/**
 	 * Sert à retourner la taille de la HashMap
@@ -84,11 +85,10 @@ public class Jeu implements Serializable{
 	 * @throws NoSuchElementException Si la date n'existe pas dans la liste
 	 */
 	public void supprimer(Date date) throws IllegalArgumentException,NoSuchElementException {
+		System.out.println(date);
 		if(date ==null){throw new IllegalArgumentException("La date n'existe pas");}
-		if(this.listePartie.containsValue(date)){
-			this.listePartie.remove(date);
-		}
-		else{throw new NoSuchElementException("La date n'existe pas");}
+		this.listePartie.remove(date);
+		this.sauver();
 	}
 
 
@@ -100,7 +100,10 @@ public class Jeu implements Serializable{
 	public void ajouter(Partie partie) throws IllegalArgumentException {
 		Date date = new Date();
 		if(partie==null){throw new IllegalArgumentException("L'objet partie n'existe pas");}
-			this.listePartie.put(date,partie);	
+		partie.stopperPartie();
+		this.listePartie.put(date,partie);	
+		this.sauver();
+		
 	}
 
 	/**

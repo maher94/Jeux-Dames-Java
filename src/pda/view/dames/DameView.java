@@ -70,8 +70,6 @@ public class DameView {
 		this.controleur = controleurP;
 		//Création des écrans
 		this.creerEcrans();
-		//Menu par défault
-		this.changerMenu(DamesCtrl.ECRAN_PARAMETRES);
 	}
 	//====================================================================================================
 	
@@ -112,7 +110,11 @@ public class DameView {
 	 * @param menu l'index du menu à afficher (utiliser les variables de classes)
 	 */
 	public void changerMenu(String menu){
-		//Change menu
+		//Si on passe à l'écran de chargement, on actualise
+		if(menu.equals(DamesCtrl.ECRAN_SAUVEGARDES)){
+			this.ecranSauvegardes.actualiserInterface();
+		}
+		//Change menu	
 		this.changeurMenu.show(this.panelPrincipal, menu);
 		
 		//Actualise
