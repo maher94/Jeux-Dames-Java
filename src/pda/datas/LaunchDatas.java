@@ -30,7 +30,7 @@ public class LaunchDatas {
 	 * The CONSTANT array of application names.
 	 * ADD HERE THE UNIQUE NAME OF A RUNNABLE APPLICATION (!! application name must be unique : it's a key !!).
 	 */
-	private static final String[] appArray = { "hello","Jeux de dames"};
+	private static final String[] appArray = { "hello","Jeu de dames"};
 
 
 	/** The list of applications classes that can be launched */

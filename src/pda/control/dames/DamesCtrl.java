@@ -1,5 +1,6 @@
 package pda.control.dames;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import pda.control.IApplication;
@@ -82,7 +83,6 @@ public class DamesCtrl implements IApplication{
 	 */
 	public void sauvegarderPartie(Partie p){
 		this.jeuCharge.ajouter(p);
-		this.jeuCharge.sauver();
 	}
 	//====================================================================================================
 	
@@ -152,7 +152,9 @@ public class DamesCtrl implements IApplication{
 	 * On demandera une confirmation de la fermeture dans la vue.
 	 */
 	public boolean close() {
-		return true;
+		//Demande confirmation
+		int reponse = JOptionPane.showConfirmDialog(this.getAppliPanel(),"Voulez vous vraiment quitter l'application Jeu de dame ?","Quitter",JOptionPane.YES_NO_OPTION);
+		return reponse==JOptionPane.YES_OPTION;
 	}
 
 	/**

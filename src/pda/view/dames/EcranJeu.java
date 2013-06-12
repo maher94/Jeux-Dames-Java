@@ -1,8 +1,11 @@
 package pda.view.dames;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,6 +13,7 @@ import javax.swing.JPanel;
 import pda.control.dames.ControleurJeu;
 import pda.control.dames.DamesCtrl;
 import pda.datas.dames.Partie;
+import pda.datas.dames.Pion;
 
 
 /**
@@ -67,9 +71,14 @@ public class EcranJeu extends JPanel{
 	private JLabel nombreCoups;
 	
 	/**
-	 * Affichage le nombre de pions restant du joueur actuel
+	 * Affichage du nombre de pions blancs restants
 	 */
-	private JLabel pionRestants;
+	private JLabel pionBlancRestants;
+	
+	/**
+	 * Affichage du nombre de pions noir restants 
+	 */
+	private JLabel pionNoirRestants;
 	
 	/**
 	 * Le controleur principal de l'application de jeu de dame
@@ -80,6 +89,16 @@ public class EcranJeu extends JPanel{
 	 * Affichage de l'état de l'IA (réfléchi ou en attente )
 	 */
 	private JLabel etatIA;
+	
+	/**
+	 * Police qui affiche les informations
+	 */
+	private static final Font POLICE_LABEL = new Font("Tahoma",Font.PLAIN,11);
+	
+	/**
+	 * Police de description des informations
+	 */
+	private static final Font POLICE_DESC = new Font("Tahoma",Font.BOLD,11);
 	//====================================================================================================
 	
 	
@@ -98,6 +117,8 @@ public class EcranJeu extends JPanel{
 		//Récupération de la partie
 		if(partieJoueeP==null)throw new IllegalArgumentException("Il faut une partie à jouer pour créer le panel de jeu");
 		this.partieJouee = partieJoueeP;
+		//Lancement partie
+		this.partieJouee.lancerPartie();
 		//IHM
 		this.creerIHM();
 		this.ajoutEcouteurs();
@@ -167,35 +188,70 @@ public class EcranJeu extends JPanel{
 		this.affichageInfos = new JPanel(new BorderLayout());
 		this.add(this.affichageInfos,BorderLayout.NORTH);
 		
+		//Description des informations
+		JLabel dCouleur = new JLabel("Couleur");
+		JLabel dNombreCoups = new JLabel("Tours");
+		JLabel dNomJoueur = new JLabel("Joueur");
+		JLabel dPionBlancsRestants = new JLabel("Blancs");
+		JLabel dPionNoirsRestants = new JLabel("Noirs");
+		JLabel dEtatIA = new JLabel("IA");
+		
+		//Polices
+		dCouleur.setFont(EcranJeu.POLICE_DESC);
+		dNombreCoups.setFont(EcranJeu.POLICE_DESC);
+		dNomJoueur.setFont(EcranJeu.POLICE_DESC);
+		dPionBlancsRestants.setFont(EcranJeu.POLICE_DESC);
+		dPionNoirsRestants.setFont(EcranJeu.POLICE_DESC);
+		dEtatIA.setFont(EcranJeu.POLICE_DESC);
+		
 		//Informations
 		this.couleurEnCours = new JLabel();
 		this.nombreCoups = new JLabel();
 		this.nomJoueurEnCours = new JLabel();
-		this.pionRestants = new JLabel();
-		this.etatIA =new JLabel();
+		this.pionBlancRestants = new JLabel();
+		this.pionNoirRestants = new JLabel();
+		this.etatIA =new JLabel("Aucune");
+		
+		//Polices
+		this.couleurEnCours.setFont(EcranJeu.POLICE_LABEL);
+		this.nombreCoups.setFont(EcranJeu.POLICE_LABEL);
+		this.nomJoueurEnCours.setFont(EcranJeu.POLICE_LABEL);
+		this.pionBlancRestants.setFont(EcranJeu.POLICE_LABEL);
+		this.pionNoirRestants.setFont(EcranJeu.POLICE_LABEL);
+		this.etatIA.setFont(EcranJeu.POLICE_LABEL);
+		
 		
 		//Boutons
 		this.menu = new JButton("Menu");
 		this.sauvegarder = new JButton("Sauvegarder");
 		
 		//Organisation de la fenetre
-		JPanel droite = new JPanel(new GridLayout(2,1));
-		JPanel gauche = new JPanel(new GridLayout(2,3));
+		JPanel droite = new JPanel(new GridLayout(1,2));
+		JPanel gauche = new JPanel(new GridLayout(3,4));
+		gauche.setBorder(BorderFactory.createRaisedBevelBorder());
 		
 		//Gauche
+		gauche.add(dNombreCoups);
 		gauche.add(this.nombreCoups);
+		gauche.add(dNomJoueur);
 		gauche.add(this.nomJoueurEnCours);
+		gauche.add(dCouleur);
 		gauche.add(this.couleurEnCours);
+		gauche.add(dEtatIA);
 		gauche.add(this.etatIA);
-		gauche.add(this.pionRestants);
+		gauche.add(dPionBlancsRestants);
+		gauche.add(this.pionBlancRestants);
+		gauche.add(dPionNoirsRestants);
+		gauche.add(this.pionNoirRestants);
 		
 		//Droite
 		droite.add(this.menu);
 		droite.add(this.sauvegarder);
+		//droite.setPreferredSize(new Dimension(105,40));
 		
 		//Ajout haut
 		this.affichageInfos.add(gauche,BorderLayout.CENTER);
-		this.affichageInfos.add(droite,BorderLayout.EAST);
+		this.affichageInfos.add(droite,BorderLayout.NORTH);
 		
 		/*
 		 * PANEL DE PLATEAU
@@ -217,6 +273,19 @@ public class EcranJeu extends JPanel{
 		//Boutons
 		this.menu.addActionListener(control);
 		this.sauvegarder.addActionListener(control);
+		//Tente de lancer la partie
+		control.lancerPartie();
+	}
+	
+	/**
+	 * Cette méthode permet d'actualiser les informations sur la partie en cours.
+	 */
+	public void actualiserInformationsPartie(){
+		this.couleurEnCours.setText(Pion.getNomCouleur(this.partieJouee.getCouleurJouee()));
+		this.nombreCoups.setText(""+this.partieJouee.getNbTours());
+		this.nomJoueurEnCours.setText(this.partieJouee.getJoueurActuel().getNom());
+		this.pionBlancRestants.setText(""+this.partieJouee.getPionRestant(Pion.PION_BLANC));
+		this.pionNoirRestants.setText(""+this.partieJouee.getPionRestant(Pion.PION_NOIR));
 	}
 	//====================================================================================================	
 }

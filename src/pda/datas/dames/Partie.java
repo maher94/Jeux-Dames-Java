@@ -114,6 +114,14 @@ public abstract class Partie implements Serializable{
 	public String getNomJoueurActuel(){
 		return this.getJoueurActuel().getNom();
 	}
+	/**
+	 * Obtenir le nombre de pion restant pour la couleur passée en paramètre
+	 * @param couleur la couleur dont on veut le nombre de pion restants
+	 * @return le nombre de pion restants
+	 */
+	public int getPionRestant(int couleur){
+		return this.plateauJeux.getNombrePion(couleur);
+	}
 	//====================================================================================================
 	
 	
@@ -168,10 +176,12 @@ public abstract class Partie implements Serializable{
 	public Joueur getGagnant(){
 		Joueur gagnant = null;
 		if(this.isPartieFinie()){
-			if(this.plateauJeux.getTousDeplacements(this.j1.getCouleur()).size()>0){
-				gagnant = this.j1;
-			}else if(this.plateauJeux.getTousDeplacements(this.j2.getCouleur()).size()>0){
-				gagnant=this.j2;
+			if(this.plateauJeux.getTousDeplacements(this.j1.getCouleur()).size()==0 && this.plateauJeux.getTousDeplacements(this.j2.getCouleur()).size()!=0){
+				gagnant = this.j2;
+			}else if(this.plateauJeux.getTousDeplacements(this.j2.getCouleur()).size()==0 && this.plateauJeux.getTousDeplacements(this.j1.getCouleur()).size()!=0){
+				gagnant=this.j1;
+			}else{
+				gagnant=null;
 			}
 		}
 		//Retour

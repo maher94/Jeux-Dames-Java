@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -76,9 +77,13 @@ public class ControleurJeu implements MouseListener,ActionListener{
 		}
 		//Si on clic sur sauvegarder
 		if(clic.getSource()==this.ecranJeu.getSauvegarder()){
-			//Sauvegarde
-			this.ecranJeu.getControleur().sauvegarderPartie(this.partieJouee);
-			JOptionPane.showMessageDialog(this.ecranJeu,"Votre partie a été sauvegardée", "Sauvegarde",JOptionPane.INFORMATION_MESSAGE);
+			//Si il n'y a pas de déplacement en cours
+			if(!this.ecranJeu.getAffichagePlateau().isDeplacementEnCours()){
+				//Sauvegarde
+				this.partieJouee.stopperPartie();
+				this.ecranJeu.getControleur().sauvegarderPartie(this.partieJouee);
+				JOptionPane.showMessageDialog(this.ecranJeu,"Votre partie a été sauvegardée", "Sauvegarde",JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 	}
 	//====================================================================================================
@@ -97,8 +102,8 @@ public class ControleurJeu implements MouseListener,ActionListener{
 			//Récupération du point de la grille selectionné
 			Point pointGrille = this.ecranJeu.getAffichagePlateau().getCoordonneeGrille(clic.getPoint());
 			
-			//Si le point existe
-			if(pointGrille!=null){
+			//Si le point existe et qu'il n'y a pas de déplacement
+			if(pointGrille!=null && !this.ecranJeu.getAffichagePlateau().isDeplacementEnCours()){
 				
 				//Si c'est au tour du joueur
 				if(!(this.partieJouee.getJoueurActuel() instanceof IA)){
@@ -111,13 +116,15 @@ public class ControleurJeu implements MouseListener,ActionListener{
 						this.departDeplacement = pointGrille;
 						//Affiche tous les déplacements possible
 						this.ecranJeu.getAffichagePlateau().afficherDeplacementPossible(pointGrille);
+						//Arrivée remise à zéro
+						this.arriveeDeplacement=null;
 					}
 					//Si la case est vide
 					if(plateau.getPion(pointGrille.x, pointGrille.y)==null){
 						this.arriveeDeplacement = pointGrille;
 					}
-					
-				}				
+				}
+				
 				//Après la récupération, on tente de jouer un tour
 				JouerTour tour = new JouerTour();
 				tour.start();
@@ -151,7 +158,16 @@ public class ControleurJeu implements MouseListener,ActionListener{
 			ControleurJeu.this.jouerTour();
 		}
 	}
-		
+	
+	/**
+	 * Cette méthode est à appeler une fois l'IHM créé.<br>
+	 * Elle permet de lancer la partie automatiquement (pratique lorsque l'IA commence à jouer)
+	 */
+	public void lancerPartie(){
+		JouerTour tour = new JouerTour();
+		tour.start();
+	}
+	
 	/**
 	 * Méthode qui va faire jouer le joueur puis l'IA.<br>
 	 * Le tout se fait dans une méthode synchronized pour ne pas avoir de conflit pendant l'animation.
@@ -162,7 +178,9 @@ public class ControleurJeu implements MouseListener,ActionListener{
 		
 		//Si c'est l'IA qui joue
 		if(j instanceof IA){
+			this.ecranJeu.getEtatIA().setText("Réfléchi");
 			Deplacement deplacement = this.partieJouee.faireJouerIA();
+			this.ecranJeu.getEtatIA().setText("En attente");
 			if(deplacement!=null)this.ecranJeu.getAffichagePlateau().faireAnimationDeplacement(deplacement);
 		}
 		//Si c'est un joueur
@@ -179,10 +197,29 @@ public class ControleurJeu implements MouseListener,ActionListener{
 			}
 		}
 		
+		//Actualise les infos
+		this.ecranJeu.actualiserInformationsPartie();
+		
 		//Si la partie n'est pas fini est que c'est encore le tour de l'IA
 		if(!this.partieJouee.isPartieFinie() && this.partieJouee.getJoueurActuel() instanceof IA){
 			JouerTour jeu = new JouerTour();
 			jeu.start();
+		}
+		
+		//Si la partie est finie
+		if(this.partieJouee.isPartieFinie()){
+			Date duree = new Date(this.partieJouee.getTempsEcoule());
+			String message = null;
+			//Si il y a un gagnant
+			if(this.partieJouee.getGagnant()!=null)message = "Partie terminée\nGagnant : "+this.partieJouee.getGagnant().getNom();
+			else message = "Partie terminée\nEgalité !";
+			//Autres informations
+			message =message+ "\nTemps écoulé : "+duree.getMinutes()+" min "+duree.getSeconds()+" sec"+
+					"\nNombre de tours : "+this.partieJouee.getNbTours();
+			//Affiche infos
+			JOptionPane.showMessageDialog(this.ecranJeu, message, "Partie terminée",JOptionPane.INFORMATION_MESSAGE);
+			//Retour menu
+			this.ecranJeu.getControleur().changerMenu(DamesCtrl.ECRAN_PRINCIPAL);
 		}
 	}
 	//====================================================================================================
