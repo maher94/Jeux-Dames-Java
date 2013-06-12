@@ -192,6 +192,10 @@ public class Jeu implements Serializable{
 		
 	}
 	
+	public HashMap<Date, Partie> getdates(){
+		return this.listePartie;	
+		
+	}
 }
 
 		

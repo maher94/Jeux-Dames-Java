@@ -56,6 +56,7 @@ public class DamesCtrl implements IApplication{
 	 */
 	public static final String ECRAN_PARAMETRES="Paramètres";
 	
+	
 	/**
 	 * Ecran de jeu
 	 */
