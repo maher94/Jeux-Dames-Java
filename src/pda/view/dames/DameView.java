@@ -49,7 +49,8 @@ public class DameView {
 	/**
 	 * Ecran des sauvegardes
 	 */
-	private JPanel ecranSauvegardes;
+	private EcranChargement ecranSauvegardes;
+	
 	
 	/**
 	 * Le layout qui permet de changer d'écran
@@ -75,7 +76,7 @@ public class DameView {
 		//Création des écrans
 		this.creerEcrans();
 		//Menu par défault
-		this.changerMenu(DamesCtrl.ECRAN_PARAMETRES);
+		this.changerMenu(DamesCtrl.ECRAN_SAUVEGARDES);
 	}
 	//====================================================================================================
 	
@@ -103,9 +104,11 @@ public class DameView {
 		
 		//Créations écrans
 		this.ecranParametres = new EcranParametre(this.controleur);
+		this.ecranSauvegardes = new EcranChargement(this.controleur);
 		
 		//Ajout des écrans
 		this.panelPrincipal.add(this.ecranParametres, DamesCtrl.ECRAN_PARAMETRES);
+		this.panelPrincipal.add(this.ecranSauvegardes, DamesCtrl.ECRAN_SAUVEGARDES);
 	}
 	
 	/**

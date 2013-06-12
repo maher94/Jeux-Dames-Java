@@ -172,6 +172,10 @@ public class Jeu {
 		
 	}
 	
+	public HashMap<Date, Partie> getdates(){
+		return this.listePartie;	
+		
+	}
 }
 
 		
