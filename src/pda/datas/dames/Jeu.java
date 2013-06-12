@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -23,10 +24,15 @@ import pda.datas.dames.exception.InvalidPlateauSizeException;
  * @since 1.00
  */
 
-public class Jeu {
+public class Jeu implements Serializable{
 	
-	
+
 	//============================================ATTRIBUT(S)============================================
+	/**
+	 * Numéro de sérialisation 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Liste des partie, avec pour clé la date de la partie
 	 */
@@ -57,10 +63,10 @@ public class Jeu {
 	//========================================AUTRE(S) METHODE(S)========================================
 	/**
 	 * Enumération des parties
-	 * @return Retourne un tableau de date
+	 * @return Retourne un tableau de date (sous forme d'objet, car pas de cast possible)
 	 */
-	public Date[] date(){
-		return (Date[]) this.listePartie.keySet().toArray();	
+	public Object[] date(){
+		return this.listePartie.keySet().toArray();	
 	}
 
 	/**
@@ -103,14 +109,21 @@ public class Jeu {
 	 */
 	public static Jeu charger(){
 		Jeu jeu =null;
-		File save = new File("annuaire.out");
+		File save = new File("sauvegardeDames.out");
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(save));
 			jeu = (Jeu) ois.readObject();
 			ois.close();
-		}catch(FileNotFoundException e){System.out.println(e.getMessage());}
-	 	 catch(IOException e){System.out.println(e.getMessage());}
-		 catch(ClassNotFoundException e){}
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+			System.out.println(e.getMessage());}
+	 	 catch(IOException e){
+	 		 e.printStackTrace();
+	 		 System.out.println(e.getMessage());}
+		 catch(ClassNotFoundException e){
+			 e.printStackTrace();
+			 System.out.println(e.getMessage());
+		 }
 
 		return jeu;
 	}
@@ -119,13 +132,17 @@ public class Jeu {
 	 * Sert à enregistrer la liste des parties
 	 */
 	public void sauver(){
-		File save = new File("annuaire.out");
+		File save = new File("sauvegardeDames.out");
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(save));
 			oos.writeObject(this);
 			oos.close();
-		} catch (FileNotFoundException e) {System.err.println(e.getMessage());}
-		  catch (IOException e) {System.err.println(e.getMessage());}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.err.println(e.getMessage());}
+		  catch (IOException e) {
+			  e.printStackTrace();
+			  System.err.println(e.getMessage());}
 	}
 
 	//====================================================================================================
@@ -167,7 +184,10 @@ public class Jeu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(jeu.date());
+		for(Object o : jeu.date()){
+			Date d = (Date)o;
+			System.out.println(d);
+		}
 	
 		
 	}

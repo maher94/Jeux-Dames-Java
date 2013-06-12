@@ -1,6 +1,7 @@
 package pda.datas.dames;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import pda.datas.dames.exception.InvalidDeplacementException;
 
@@ -16,10 +17,15 @@ import pda.datas.dames.exception.InvalidDeplacementException;
  * @since 1.00
  */
 
-public class Deplacement {
+public class Deplacement implements Serializable{
 	
 	
 	//============================================ATTRIBUT(S)============================================
+	/**
+	 * Numéro de sérialisation
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Position x du point d'origine
 	 */

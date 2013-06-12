@@ -40,12 +40,7 @@ public class DameView {
 	 * Ecran menu principal
 	 */
 	private JPanel ecranMenu;
-	
-	/**
-	 * Ecran des scores
-	 */
-	private JPanel ecranScores;
-	
+		
 	/**
 	 * Ecran des sauvegardes
 	 */
@@ -103,9 +98,13 @@ public class DameView {
 		
 		//Créations écrans
 		this.ecranParametres = new EcranParametre(this.controleur);
+		this.ecranMenu = new JPanel();
+		this.ecranSauvegardes = new JPanel();
 		
 		//Ajout des écrans
 		this.panelPrincipal.add(this.ecranParametres, DamesCtrl.ECRAN_PARAMETRES);
+		this.panelPrincipal.add(this.ecranMenu,DamesCtrl.ECRAN_PRINCIPAL);
+		this.panelPrincipal.add(this.ecranSauvegardes,DamesCtrl.ECRAN_SAUVEGARDES);
 	}
 	
 	/**

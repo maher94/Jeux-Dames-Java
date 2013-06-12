@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JOptionPane;
+
 import pda.datas.dames.Deplacement;
 import pda.datas.dames.IA;
 import pda.datas.dames.Joueur;
@@ -67,7 +69,17 @@ public class ControleurJeu implements MouseListener,ActionListener{
 	 * Lors du clic sur un des boutons de l'écran de jeu
 	 */
 	public void actionPerformed(ActionEvent clic) {
-		
+		//Si on clic sur retour menu
+		if(clic.getSource()==this.ecranJeu.getMenu()){
+			//Retour menu
+			this.ecranJeu.getControleur().changerMenu(DamesCtrl.ECRAN_PRINCIPAL);
+		}
+		//Si on clic sur sauvegarder
+		if(clic.getSource()==this.ecranJeu.getSauvegarder()){
+			//Sauvegarde
+			this.ecranJeu.getControleur().sauvegarderPartie(this.partieJouee);
+			JOptionPane.showMessageDialog(this.ecranJeu,"Votre partie a été sauvegardée", "Sauvegarde",JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 	//====================================================================================================
 		

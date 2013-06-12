@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import pda.control.IApplication;
 import pda.control.PdaCtrl;
+import pda.datas.dames.Jeu;
 import pda.datas.dames.Partie;
 import pda.view.dames.DameView;
 
@@ -29,11 +30,11 @@ public class DamesCtrl implements IApplication{
 	 * La vue du jeu de dames
 	 */
 	private DameView vue;
-	
+		
 	/**
-	 * Le pda
+	 * Le jeu de dame actuellement chargé
 	 */
-	private PdaCtrl pda;
+	private Jeu jeuCharge;
 	
 	/**
 	 * Menu principal
@@ -74,7 +75,14 @@ public class DamesCtrl implements IApplication{
 	
 	
 	//============================================ACCESSEUR(S)============================================
-	
+	/**
+	 * Permet de sauvegarder une partie dans le jeu.
+	 * @param p La partie à sauvegarder
+	 */
+	public void sauvegarderPartie(Partie p){
+		this.jeuCharge.ajouter(p);
+		this.jeuCharge.sauver();
+	}
 	//====================================================================================================
 	
 	
@@ -105,6 +113,14 @@ public class DamesCtrl implements IApplication{
 	public void lancerPartie(Partie partie){
 		this.vue.lancerPartie(partie);
 	}
+	
+	/**
+	 * Obtenir le jeu actuellement chargé
+	 * @return le jeu chargé
+	 */
+	public Jeu getJeu(){
+		return this.jeuCharge;
+	}
 	//====================================================================================================
 
 	
@@ -116,7 +132,11 @@ public class DamesCtrl implements IApplication{
 	public void start(PdaCtrl pda) {
 		System.out.println("\n\tIUT VANNES\nPROJET JEUX DE DAMES - 2013\n");
 		System.out.println("Mathieu THEBAUD\nNathan VILLIOT\n");
-		this.pda=pda;
+		
+		//Charge l'objet jeu enregistré
+		this.jeuCharge = Jeu.charger();
+		//Si le chargement a échoué
+		if(this.jeuCharge==null)this.jeuCharge = new Jeu();
 	}
 	
 	/**

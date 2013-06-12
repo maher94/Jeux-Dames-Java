@@ -101,7 +101,6 @@ public class ControleurAjoutPartie implements ActionListener{
 				largeurPlateau=12;
 			}
 			
-			
 			//Création en fonction du mode
 			Partie partieJouee=null;
 			
