@@ -139,7 +139,7 @@ public class DamesCtrl implements IApplication{
 		//Si le chargement a échoué
 		if(this.jeuCharge==null)this.jeuCharge = new Jeu();
 		//Menu par défault
-		this.changerMenu(DamesCtrl.ECRAN_SAUVEGARDES);
+		this.changerMenu(DamesCtrl.ECRAN_PRINCIPAL);
 	}
 	
 	/**
