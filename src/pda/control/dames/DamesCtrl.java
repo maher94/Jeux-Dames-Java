@@ -11,8 +11,9 @@ import pda.view.dames.DameView;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Le controleur principal de l'application de jeu de dames.<br>
+ * C'est à partir de ce controleur qu'on pourra décider de jouer une partie ou sauvegarder une nouvelle partie.<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -26,7 +27,7 @@ public class DamesCtrl implements IApplication{
 	 * Le nom de l'application
 	 */
 	private String nom="dames";
-	
+		
 	/**
 	 * La vue du jeu de dames
 	 */
@@ -41,42 +42,53 @@ public class DamesCtrl implements IApplication{
 	 * Menu principal
 	 */
 	public static final String ECRAN_PRINCIPAL="Menu principal";
-	
-	/**
-	 * Menu des scores
-	 */
-	public static final String ECRAN_SCORES="Scores";
-	
+		
 	/**
 	 * Menu des parties sauvegardées
 	 */
-	public static final String ECRAN_SAUVEGARDES="Sauvegardes";
+	public static final String ECRAN_CHARGEMENT="Charger partie";
 	
 	/**
 	 * Ecran de paramètrage d'une partie
 	 */
-	public static final String ECRAN_PARAMETRES="Paramètres";
-	
+	public static final String ECRAN_PARAMETRES="Paramètres d'une partie";
 	
 	/**
 	 * Ecran de jeu
 	 */
-	public static final String ECRAN_JEU="Jeu";
+	public static final String ECRAN_JEU="Joueur une partie";
 	//====================================================================================================
 	
 	
 	//==========================================CONSTRUCTEUR(S)==========================================
 	/**
-	 * Constructeur du controleur principal du jeu de dame.
+	 * Constructeur du controleur principal du jeu de dame.<br>
 	 * Cela va initialiser la vue ainsi que le modèle.
 	 */
 	public DamesCtrl(){
 		this.vue = new DameView(this);
+		//Charge l'objet jeu enregistré
+		this.jeuCharge = Jeu.charger();
+		//Si le chargement a échoué
+		if(this.jeuCharge==null)this.jeuCharge = new Jeu();
+		//Menu par défault
+		this.changerMenu(DamesCtrl.ECRAN_PRINCIPAL);
 	}
 	//====================================================================================================
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+	 * Obtenir le jeu actuellement chargé
+	 * @return le jeu chargé
+	 */
+	public Jeu getJeu(){
+		return this.jeuCharge;
+	}
+	//====================================================================================================
+	
+	
+	//============================================MUTATEUR(S)============================================
 	/**
 	 * Permet de sauvegarder une partie dans le jeu.
 	 * @param p La partie à sauvegarder
@@ -85,17 +97,7 @@ public class DamesCtrl implements IApplication{
 		this.jeuCharge.ajouter(p);
 	}
 	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
-	
-	//====================================================================================================
-	
+		
 	
 	//===========================================CHANGEMENT IHM===========================================
 	/**
@@ -114,14 +116,6 @@ public class DamesCtrl implements IApplication{
 	public void lancerPartie(Partie partie){
 		this.vue.lancerPartie(partie);
 	}
-	
-	/**
-	 * Obtenir le jeu actuellement chargé
-	 * @return le jeu chargé
-	 */
-	public Jeu getJeu(){
-		return this.jeuCharge;
-	}
 	//====================================================================================================
 
 	
@@ -133,13 +127,6 @@ public class DamesCtrl implements IApplication{
 	public void start(PdaCtrl pda) {
 		System.out.println("\n\tIUT VANNES\nPROJET JEUX DE DAMES - 2013\n");
 		System.out.println("Mathieu THEBAUD\nNathan VILLIOT\n");
-		
-		//Charge l'objet jeu enregistré
-		this.jeuCharge = Jeu.charger();
-		//Si le chargement a échoué
-		if(this.jeuCharge==null)this.jeuCharge = new Jeu();
-		//Menu par défault
-		this.changerMenu(DamesCtrl.ECRAN_PRINCIPAL);
 	}
 	
 	/**

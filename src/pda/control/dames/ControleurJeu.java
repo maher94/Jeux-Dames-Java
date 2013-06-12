@@ -18,7 +18,7 @@ import pda.view.dames.EcranJeu;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Cette écouteur est en fait l'écouteur qui va permettre de jouer une partie de dame dans l'écran de jeu qui lui est passé
  * en paramètre.<br>
  * @author Mathieu THEBAUD
@@ -51,7 +51,7 @@ public class ControleurJeu implements MouseListener,ActionListener{
 	private Point arriveeDeplacement;
 	
 	/**
-	 * Sert à savoir si la partie doit se jouer
+	 * Sert à savoir si la partie doit se jouer (pour éviter qu'une partie tourne en fond une fois la fenêtre fermée)
 	 */
 	private boolean jouerPartie;
 	//====================================================================================================
@@ -86,7 +86,6 @@ public class ControleurJeu implements MouseListener,ActionListener{
 			//Si il n'y a pas de déplacement en cours
 			if(!this.ecranJeu.getAffichagePlateau().isDeplacementEnCours()){
 				//Sauvegarde
-				this.partieJouee.stopperPartie();
 				this.ecranJeu.getControleur().sauvegarderPartie(this.partieJouee);
 				JOptionPane.showMessageDialog(this.ecranJeu,"Votre partie a été sauvegardée", "Sauvegarde",JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -140,12 +139,10 @@ public class ControleurJeu implements MouseListener,ActionListener{
 	
 	//Pas de redefinition des méthodes
 	public void mouseEntered(MouseEvent clic) {}
-
 	public void mouseExited(MouseEvent clic) {}
-
 	public void mousePressed(MouseEvent clic) {}
-
 	public void mouseReleased(MouseEvent clic) {}
+	
 	//====================================================================================================
 	
 	
@@ -176,7 +173,7 @@ public class ControleurJeu implements MouseListener,ActionListener{
 	
 	/**
 	 * Méthode qui va faire jouer le joueur puis l'IA.<br>
-	 * Le tout se fait dans une méthode synchronized pour ne pas avoir de conflit pendant l'animation.
+	 * Le tout se fait dans une méthode synchronized pour ne pas avoir de conflit de Thread pendant l'animation.
 	 */
 	public synchronized void jouerTour(){
 		//Doit on jouer ?
@@ -216,6 +213,7 @@ public class ControleurJeu implements MouseListener,ActionListener{
 			
 			//Si la partie est finie
 			if(this.partieJouee.isPartieFinie()){
+				System.out.println(this.partieJouee.getTempsEcoule());
 				Date duree = new Date(this.partieJouee.getTempsEcoule());
 				String message = null;
 				//Si il y a un gagnant

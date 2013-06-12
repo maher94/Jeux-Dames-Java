@@ -7,8 +7,8 @@ import pda.view.dames.EcranPrincipal;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Ecouteur qui permet d'afficher l'écran correspondant après le clic d'un des boutons du menu.<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -37,17 +37,7 @@ public class EcouteurMenu implements ActionListener{
 	//====================================================================================================
 
 	
-	//============================================ACCESSEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
+	//===========================================ECOUTE BOUTONS===========================================
 	/**
 	 * Effectue une action en fonction du clic sur un bouton
 	 * @param eP l'évenement
@@ -59,7 +49,7 @@ public class EcouteurMenu implements ActionListener{
 		}
 		//Clic sur charger
 		if(eP.getSource()==this.menu.getChargerPartie()){
-			this.menu.getControleur().changerMenu(DamesCtrl.ECRAN_SAUVEGARDES);
+			this.menu.getControleur().changerMenu(DamesCtrl.ECRAN_CHARGEMENT);
 		}
 		//Clic sur quitter
 		if(eP.getSource()==this.menu.getQuitter()){
@@ -69,5 +59,4 @@ public class EcouteurMenu implements ActionListener{
 		}
 	}
 	//====================================================================================================
-	
 }

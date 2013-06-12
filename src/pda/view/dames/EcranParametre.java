@@ -22,14 +22,14 @@ import pda.datas.dames.Pion;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Cet écran permet à l'utilisateur de choisir tous les paramètres d'une partie.<br>
+ * Les paramètres disponnibles changent selon le type de partie que l'utilisateur choisi.
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
  * @since 1.00
  */
-
 public class EcranParametre extends JPanel {
 	
 	
@@ -140,11 +140,21 @@ public class EcranParametre extends JPanel {
 	 */
 	private JRadioButton couleurNoir;
 	
+	/**
+	 * Panel qui sert à afficher des boutons
+	 */
 	private JPanel choixGche;
 	
+	/**
+	 * Panel qui sert à afficher des boutons
+	 */
 	private JPanel choixDte;
 	
+	/**
+	 * Label qui affiche la couleur du joueur 2
+	 */
 	private JLabel couleurJ2;
+	
 	/**
 	 * Bouton Radio pour choisir que le Joueur 1 commence
 	 */
@@ -216,6 +226,7 @@ public class EcranParametre extends JPanel {
 	/**
 	 * Constructeur de l'écran de paramètre, qui initialise l'écran et met en place les <br>
 	 * différents composants 
+	 * @param controleurP le controleur de l'application
 	 */
 	public EcranParametre(DamesCtrl controleurP){
 		this.setLayout(new BorderLayout());
@@ -286,115 +297,113 @@ public class EcranParametre extends JPanel {
 		return this.couleurJ2;
 	}
 	
-	//====================================================================================================
+	/**
+	 * Permet d'obtenir le bouton valider
+	 * @return le bouton valider
+	 */
+	public JButton getValider() {
+		return this.valider;
+	}
 	
+	/**
+	 * Permet d'obtenir le bouton annuler
+	 * @return le bouton annuler
+	 */
+	public JButton getAnnuler() {
+		return this.annuler;
+	}
 	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	public JPanel getChoixCouleur() {
-		return this.choixCouleur;
-	}
-
-
-	public String getIaVSia() {
-		return this.iaVSia;
-	}
-
-
-	public String getIaVShumain() {
-		return this.iaVShumain;
-	}
-
-
-	public String getHumainVShumain() {
-		return this.humainVShumain;
-	}
-
-
-	public void setIaVSia(String iaVSiaP) {
-		this.iaVSia = iaVSiaP;
-	}
-
-
-	public void setIaVShumain(String iaVShumainP) {
-		this.iaVShumain = iaVShumainP;
-	}
-
-
-	public void setHumainVShumain(String humainVShumainP) {
-		this.humainVShumain = humainVShumainP;
-	}
-
-
-	public JPanel getNomJoueur1() {
-		return this.nomJoueur1;
-	}
-
-
-	public JPanel getNomJoueur2() {
-		return this.nomJoueur2;
-	}
-
-
-	public JPanel getChoixCommence() {
-		return this.choixCommence;
-	}
-
-
+	/**
+	 * Obtenir le bouton qui choisi la taille 8x8
+	 * @return le bouton qui choisi 8x8
+	 */
 	public JRadioButton getVariante1() {
 		return this.variante1;
 	}
 
-
+	/**
+	 * Obtenir le bouton qui choisi la taille 10x10
+	 * @return le bouton qui choisi 10x10
+	 */
 	public JRadioButton getVariante2() {
 		return this.variante2;
 	}
 
-
+	/**
+	 * Obtenir le bouton qui choisi la taille 12x12
+	 * @return le bouton qui choisi 12x12
+	 */
 	public JRadioButton getVariante3() {
 		return this.variante3;
 	}
 
-
+	/**
+	 * Obtenir le bouton qui choisi la difficulte 1
+	 * @return le bouton de difficulte 1
+	 */
 	public JRadioButton getDiff1() {
 		return this.diff1;
 	}
 
-
+	/**
+	 * Obtenir le bouton qui choisi la difficulte 2
+	 * @return le bouton de difficulte 2
+	 */
 	public JRadioButton getDiff2() {
 		return this.diff2;
 	}
 
-
+	/**
+	 * Obtenir le bouton qui choisi la difficulte 3
+	 * @return le bouton de difficulte 3
+	 */
 	public JRadioButton getDiff3() {
 		return this.diff3;
 	}
 
-
+	/**
+	 * Obtenir la boite de choix du mode de partie
+	 * @return la boite de choix du mode
+	 */
 	public JComboBox getComboMode() {
 		return this.comboMode;
 	}
-
-
+	
+	/**
+	 * Obtenir le controleur principal de l'application
+	 * @return le controleur
+	 */
 	public DamesCtrl getControleur() {
 		return this.controleur;
 	}
-
-
-	public JButton getValider() {
-		return this.valider;
+	
+	/**
+	 * Obtenir l'item du choix IA vs IA
+	 * @return l'item du choix IA vs IA
+	 */
+	public String getIaVSia() {
+		return this.iaVSia;
 	}
 
-
-	public JButton getAnnuler() {
-		return this.annuler;
+	/**
+	 * Obtenir l'item du choix Humain vs IA
+	 * @return l'item du choix Humain vs IA
+	 */
+	public String getIaVShumain() {
+		return this.iaVShumain;
 	}
 
-
-	//========================================AUTRE(S) METHODE(S)========================================
+	/**
+	 * Obtenir l'item du choix Humain vs Humain
+	 * @return l'item du choix Humain vs Humain
+	 */
+	public String getHumainVShumain() {
+		return this.humainVShumain;
+	}
+	//====================================================================================================
+	
+	
+	//================================================IHM================================================
 	/**
 	 * Sert à créér et mettre en place tous les composants de l'écran de paramètrage.
 	 */
@@ -501,10 +510,11 @@ public class EcranParametre extends JPanel {
 		this.choixCommence.add(commenceJ2);
 		this.choixCommence.setBorder(BorderFactory.createTitledBorder("Qui commence ?"));
 		
+		//Affichage par défaut
 		this.actualiserAffichage();
 	}	
 		
-	
+
 	/**
 	 * Sert à actualiser l'écran de paramétrage à chaque fois que le mode de jeu est modifié
 	 * L'écran est vidé est reconstruit à chaque fois, en fonction du mode de jeu choisi.
@@ -561,7 +571,5 @@ public class EcranParametre extends JPanel {
 		this.valider.addActionListener(new ControleurAjoutPartie(this));
 		this.annuler.addActionListener(new ControleurAjoutPartie(this));
 	}
-	
 	//====================================================================================================
-	
 }

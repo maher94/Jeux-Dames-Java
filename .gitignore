@@ -1,3 +1,4 @@
+### Dir ###
 /build
 /doc
 /bin
@@ -16,3 +17,6 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+### Useless ###
+sauvegardeDames.out

@@ -12,8 +12,9 @@ import pda.view.dames.EcranParametre;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Ce controleur s'occupe de la gestion des boutons dans la fenêtre de paramètrage d'une partie.<br>
+ * Lorsqu'on appuie sur le bouton valider, si la partie créée est valide, on la lance dans l'écran approprié.
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -41,7 +42,7 @@ public class ControleurAjoutPartie implements ActionListener{
 	//==========================================CONSTRUCTEUR(S)==========================================
 	/**
 	 * Construit l'écouteur de l'écran de paramètre
-	 * @param controleurP le controleur de l'application
+	 * @param ecranParametresP l'écran de paramètre écouté
 	 */
 	public ControleurAjoutPartie(EcranParametre ecranParametresP){
 		this.ecranParametres=ecranParametresP;
@@ -49,18 +50,8 @@ public class ControleurAjoutPartie implements ActionListener{
 	}
 	//====================================================================================================
 	
-	
-	//============================================ACCESSEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
+
+	//==========================================REACTIONS CLICS ==========================================
 	/**
 	 * Méthode appellée lors du clic sur Valider ou Annuler
 	 */

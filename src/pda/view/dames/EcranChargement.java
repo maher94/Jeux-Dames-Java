@@ -19,8 +19,9 @@ import pda.datas.dames.Partie;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Ecran qui va permettre à charger l'une des parties conservées dans le jeu.<br>
+ * Il pourra également choisir de retourner au menu ou de supprimer une des parties conservées.
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -76,9 +77,6 @@ public class EcranChargement extends JList {
 	 * Le controleur de l'application
 	 */
 	private DamesCtrl controleur;
-	
-
-	
 	//====================================================================================================
 	
 	
@@ -144,15 +142,7 @@ public class EcranChargement extends JList {
 	//====================================================================================================
 	
 	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
-	
-	//====================================================================================================
-	
+	//================================================IHM================================================
 	/**
 	 * Sert à créer et mettre en place les différents item graphique dans l'écran
 	 */
@@ -198,7 +188,7 @@ public class EcranChargement extends JList {
 			Object[] cles = this.controleur.getJeu().date();
 			for(Object o : cles){
 				Date date = (Date)o;
-				Partie partie = this.controleur.getJeu().getdates().get(date);
+				Partie partie = this.controleur.getJeu().obtenir(date);
 				SimpleDateFormat formatdate = new SimpleDateFormat("dd/MM/yyyy-HH:mm",Locale.FRANCE);
 				tabliste.addElement(formatdate.format(date)+"   /    "+partie.getJ1().getNom()+" VS "+partie.getJ2().getNom());
 			}
@@ -213,5 +203,5 @@ public class EcranChargement extends JList {
 		this.charger.addActionListener(new EcouteurChargement(this));
 		this.annuler.addActionListener(new EcouteurChargement(this));
 	}
-	
+	//====================================================================================================
 }

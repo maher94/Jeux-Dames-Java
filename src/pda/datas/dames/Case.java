@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Cette classe représente une case du plateau de dame.<br>
  * Une case se caractérise par le pion qu'elle possède (ou pas) et sa couleur.
  * @author Mathieu THEBAUD

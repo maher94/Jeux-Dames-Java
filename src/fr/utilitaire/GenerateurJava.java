@@ -63,7 +63,7 @@ public class GenerateurJava {
 		//Entete
 		String codeClasse="package "+pack+";\n\n\n" +
 				"/**\n" +
-				" * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>\n" +
+				" * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>\n" +
 				" * <br>\n"+
 				" * @author Mathieu THEBAUD\n" +
 				" * @author Nathan VILLIOT\n" +

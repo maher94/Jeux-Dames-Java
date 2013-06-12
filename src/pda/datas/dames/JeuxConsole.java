@@ -8,7 +8,7 @@ import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Cette classe représente le jeux qui peut être fait en mode console.<br>
  * La classe ne contient qu'une méthode main qui s'occupe de demander les paramètres aux joueurs et de lancer une partie.
  * @author Mathieu THEBAUD
@@ -29,7 +29,9 @@ public class JeuxConsole {
 		//Entree console
 		Scanner scan = new Scanner(System.in);
 		
-		//Au debut, aucun des choix n'est fait
+		
+		//=========================================PARAMETRAGE PARTIE=========================================
+		//Aucun choix de fait
 		int choixVariante=-1;
 		int choixModeJeux=-1;
 		
@@ -193,9 +195,12 @@ public class JeuxConsole {
 				scan.nextLine();
 			}
 		}while(!choixJoueurCommenceCorrect);
+		//====================================================================================================
 		
+		
+		//================================================JEU================================================
 		/*
-		 * CREATION DES PARTIES ET JEUX
+		 * CREATION DES PARTIES ET JEU
 		 */
 		try{
 			switch(choixModeJeux){
@@ -281,6 +286,6 @@ public class JeuxConsole {
 		
 		//Fermeture du scanner
 		scan.close();
+		//====================================================================================================
 	}
-	
 }

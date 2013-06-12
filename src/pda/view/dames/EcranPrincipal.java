@@ -14,8 +14,10 @@ import pda.control.dames.EcouteurMenu;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Cet écran représente le "Menu principal" de l'application jeu de dames.<br>
+ * C'est à partir de ce menu que l'utilisateur peut faire le choix de charger une partie ou d'en créer une nouvelle.<br>
+ * Il peut également quitter l'application.
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -106,12 +108,7 @@ public class EcranPrincipal extends JPanel{
 	//====================================================================================================
 	
 	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
+	//================================================IHM================================================
 	/**
 	 * Méthode qui permet de créer l'interface
 	 */
@@ -141,6 +138,7 @@ public class EcranPrincipal extends JPanel{
 	 * Dessine le fond du panel
 	 */
 	public void paintComponent(Graphics g){
+		//Image de fond
 		g.drawImage(this.fond, 0, 0, this.getWidth(), this.getHeight(),null);
 	}
 	
@@ -153,6 +151,5 @@ public class EcranPrincipal extends JPanel{
 		this.chargerPartie.addActionListener(ecouteMenu);
 		this.quitter.addActionListener(ecouteMenu);
 	}
-	//====================================================================================================
-	
+	//====================================================================================================	
 }

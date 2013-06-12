@@ -14,8 +14,8 @@ import javax.swing.JButton;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Bouton personnalisé utilisé dans le menu du jeu de dame.<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -98,9 +98,9 @@ public class BoutonJeuDame extends JButton implements MouseListener{
 	
 	
 	//===========================================ECOUTE SOURIS===========================================
-	//Methodes qui permettent de changer l'action en fonction du clic
 	public void mouseClicked(MouseEvent eP) {}
 
+	//Methodes qui permettent de changer l'action en fonction du clic
 	public void mouseEntered(MouseEvent eP) {
 		this.texture = this.textureOver;
 		this.repaint();
@@ -121,5 +121,4 @@ public class BoutonJeuDame extends JButton implements MouseListener{
 		this.repaint();
 	}	
 	//====================================================================================================
-	
 }

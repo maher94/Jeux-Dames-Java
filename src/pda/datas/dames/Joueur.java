@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Cette classe représente un joueur.<br>
  * L'objet joueur servira lors des parties.
  * @author Mathieu THEBAUD
@@ -98,10 +98,4 @@ public class Joueur implements Serializable{
 		this.dernierDeplacement = dernierDeplacementP;
 	}
 	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
-	
-	//====================================================================================================
-	
 }

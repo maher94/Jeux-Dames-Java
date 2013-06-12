@@ -7,7 +7,7 @@ import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Classe abstraite qui va permettre aux joueurs de jouer une partie.<br>
  * La classe est abstraite car plusieurs type de partie peuvent être disponnible.
  * @author Mathieu THEBAUD
@@ -88,32 +88,69 @@ public abstract class Partie implements Serializable{
 	
 	
 	//============================================ACCESSEUR(S)============================================
+	/**
+	 * Obtenir le plateau sur lequel est jouée la partie
+	 * @return le plateau de la partie
+	 */
 	public Plateau getPlateau(){
 		return this.plateauJeux;
 	}
+	
+	/**
+	 * Obtenir le joueur 1
+	 * @return le joueur 1
+	 */
 	public Joueur getJ1() {
 		return this.j1;
 	}
+	/**
+	 * Obtenir le joueur 2
+	 * @return le joueur 2
+	 */
 	public Joueur getJ2() {
 		return this.j2;
 	}
+	/**
+	 * Connaitre la couleur actuellement jouée dans le tour
+	 * @return la couleur jouée
+	 */
 	public int getCouleurJouee() {
 		return this.couleurJouee;
 	}
+	/**
+	 * Connaître le nombre de tours joués
+	 * @return le nombre de tour
+	 */
 	public int getNbTours() {
 		return this.nbTours;
 	}
+	
+	/**
+	 * Connaître le temps écoulé depuis le début de la partie
+	 * @return le temps écoulé depuis le début
+	 */
 	public long getTempsEcoule() {
 		this.tempsEcoule = tempsEcoule + (System.currentTimeMillis()-this.tempsDepart);
 		this.tempsDepart = System.currentTimeMillis();
 		return this.tempsEcoule;
 	}
+	
+	/**
+	 * Savoir le tour suivant est la suite d'une prise
+	 * @return vrai si il y a une prise multiple
+	 */
 	public boolean isPriseMultiple() {
 		return this.priseMultiple;
 	}
+	
+	/**
+	 * Obtenir le nom du joueur qui doit jouer
+	 * @return le nom du joueur qui doit jouer
+	 */
 	public String getNomJoueurActuel(){
 		return this.getJoueurActuel().getNom();
 	}
+	
 	/**
 	 * Obtenir le nombre de pion restant pour la couleur passée en paramètre
 	 * @param couleur la couleur dont on veut le nombre de pion restants
@@ -126,28 +163,23 @@ public abstract class Partie implements Serializable{
 	
 	
 	//============================================MUTATEUR(S)============================================
+	/**
+	 * Changer le joueur 1
+	 * @param j1P le nouveau joueur 1
+	 * @throws IllegalArgumentException si la couleur du joueur 1 n'est pas différente de celle du joueur 2
+	 */
 	public void setJ1(Joueur j1P)throws IllegalArgumentException {
 		if(this.j2!=null && this.j2.getCouleur()==j1P.getCouleur())throw new IllegalArgumentException("Les couleurs de joueur 1 et de joueur 2 doivent être différentes");
 		this.j1 = j1P;
 	}
+	/**
+	 * Changer le joueur 2
+	 * @param j2P le nouveau joueur 2
+	 * @throws IllegalArgumentException si la couleur du joueur 2 n'est pas différente de celle du joueur 1
+	 */
 	public void setJ2(Joueur j2P)throws IllegalArgumentException{
 		if(this.j1!=null && this.j1.getCouleur()==j2P.getCouleur())throw new IllegalArgumentException("Les couleurs de joueur 1 et de joueur 2 doivent être différentes");
 		this.j2 = j2P;
-	}
-	public void setCouleurJouee(int couleurJoueeP) {
-		this.couleurJouee = couleurJoueeP;
-	}
-	public void setNbTours(int nbToursP) {
-		this.nbTours = nbToursP;
-	}
-	public void setTempsEcoule(long tempsEcouleP) {
-		this.tempsEcoule = tempsEcouleP;
-	}
-	public void setPriseMultiple(boolean priseMultipleP) {
-		this.priseMultiple = priseMultipleP;
-	}
-	public void setPlateauJeux(Plateau plateauJeuxP) {
-		this.plateauJeux = plateauJeuxP;
 	}
 	//====================================================================================================
 	
@@ -296,15 +328,6 @@ public abstract class Partie implements Serializable{
 	 */
 	public void lancerPartie(){
 		this.tempsDepart = System.currentTimeMillis();
-	}
-	
-	/**
-	 * Cette méthode permet de recalculer le temps écoulé dans une partie.<br>
-	 * Il est nécessaire d'appeler cette méthode avant chaque sauvegarde de la partie.
-	 */
-	public void stopperPartie(){
-		this.tempsEcoule = (System.currentTimeMillis()-this.tempsDepart);
-		this.tempsDepart=0;
 	}
 	//====================================================================================================	
 }

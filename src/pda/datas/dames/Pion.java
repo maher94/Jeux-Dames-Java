@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Cette classe répresente un pion du jeux.<br>
  * Un pion peut être une dame ou un pion normal, cela dépend du booleen qui indique si le pion est une dame ou non.<br>
  * Le pion possède également un entier qui réprésente sa couleur.
@@ -167,6 +167,11 @@ public class Pion implements Serializable{
 		return pionChaine;
 	}
 	
+	/**
+	 * Méthode qui permet de retourner une chaîne qui décrit la couleur du pion.
+	 * @param couleur la couleur à décrire
+	 * @return la chaîne qui représente la couleur
+	 */
 	public static String getNomCouleur(int couleur){
 		String nomCouleur="";
 		if(couleur == Pion.PION_BLANC){

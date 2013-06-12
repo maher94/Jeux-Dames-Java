@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Cette classe représente l'intelligence artificielle implentée dans le jeux.<br>
  * L'IA est en fait un joueur et possède donc des caractéristiques communes.
  * @author Mathieu THEBAUD
@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 
 public class IA extends Joueur{
-	
 	
 	//============================================ATTRIBUT(S)============================================
 	/**
@@ -72,18 +71,7 @@ public class IA extends Joueur{
 		this.couleurOpposante=-this.couleur;
 	}
 	//====================================================================================================
-	
-	
-	//============================================ACCESSEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
+		
 	//========================================AUTRE(S) METHODE(S)========================================
 	/**
 	 * Cette méthode permet de calculer la note d'un déplacement.<br>

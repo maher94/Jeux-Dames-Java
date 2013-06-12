@@ -18,7 +18,7 @@ import pda.datas.dames.Plateau;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Ce panel est le panel qui va permettre d'afficher le plateau de jeu.<br>
  * Le panel doit être instancié avec une partie créée (donc non null).
  * @author Mathieu THEBAUD
@@ -166,6 +166,10 @@ public class PanelPlateau extends JPanel{
 		//Fond blanc
 		g.setColor(Color.white);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		
+		/*
+		 * Ces calculs servent à centrer la grille par rapport au panel
+		 */
 		//Calcul de la taille d'une case
 		this.largeurCase = this.getWidth()/this.plateauJeux.getTaille();
 		this.hauteurCase = this.getHeight()/this.plateauJeux.getTaille();
@@ -173,6 +177,9 @@ public class PanelPlateau extends JPanel{
 		this.decalageLargeur = this.getWidth()%this.plateauJeux.getTaille()/2;
 		this.decalageHauteur = this.getHeight()%this.plateauJeux.getTaille()/2;
 		
+		/*
+		 * Dessin de chaque case du plateau avec le pion quelle contient
+		 */
 		//Dessin du plateau et des pions
 		for(int y=0;y<this.plateauJeux.getTaille();y++){
 			for(int x=0;x<this.plateauJeux.getTaille();x++){
@@ -223,8 +230,6 @@ public class PanelPlateau extends JPanel{
 				g.drawString(x+","+y,this.decalageLargeur+x*this.largeurCase,this.decalageHauteur+y*this.hauteurCase+10);
 			}
 		}
-		
-		//System.out.println("Largeur : "+this.largeurCase+"\nHauteur : "+this.hauteurCase+"\nDecal larg "+this.decalageLargeur+"\nDecal haut "+this.decalageHauteur);
 	}
 	//====================================================================================================
 	

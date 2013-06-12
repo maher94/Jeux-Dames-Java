@@ -12,12 +12,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
-import pda.datas.dames.exception.InvalidPlateauSizeException;
-
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Cette classe représente le jeu dans son ensemble.<br>
+ * Le jeu nous permet de conserver des parties enregistrées [et des les meilleurs scores des joueurs].
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -50,19 +49,9 @@ public class Jeu implements Serializable{
 	//====================================================================================================
 	
 	
-	//============================================ACCESSEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
+	//========================================PARTIES SAUVEGARDEES========================================
 	/**
-	 * Enumération des parties
+	 * Enumération des clefs
 	 * @return Retourne un tableau de date (sous forme d'objet, car pas de cast possible)
 	 */
 	public Object[] date(){
@@ -100,15 +89,26 @@ public class Jeu implements Serializable{
 	public void ajouter(Partie partie) throws IllegalArgumentException {
 		Date date = new Date();
 		if(partie==null){throw new IllegalArgumentException("L'objet partie n'existe pas");}
-		partie.stopperPartie();
 		this.listePartie.put(date,partie);	
 		this.sauver();
 		
 	}
-
+	
+	/**
+	 * Permet d'obtenir la partie qui correspond à la date passée en paramètre.
+	 * @param date la date de sauvegarde
+	 * @return la partie obtenue, ou null si la date n'était pas valide.
+	 */
+	public Partie obtenir(Date date){
+		return this.listePartie.get(date);
+	}
+	//====================================================================================================
+	
+	
+	//=======================================CHARGEMENT/SAUVEGARDE=======================================
 	/**
 	 * Sert à charger la liste des parties
-	 * @return Un objet de type Jeu contenant la liste des parties
+	 * @return Un objet de type Jeu contenant la liste des parties, ou null si le chargement a échoué.
 	 */
 	public static Jeu charger(){
 		Jeu jeu =null;
@@ -118,16 +118,12 @@ public class Jeu implements Serializable{
 			jeu = (Jeu) ois.readObject();
 			ois.close();
 		}catch(FileNotFoundException e){
-			e.printStackTrace();
-			System.out.println(e.getMessage());}
-	 	 catch(IOException e){
-	 		 e.printStackTrace();
-	 		 System.out.println(e.getMessage());}
-		 catch(ClassNotFoundException e){
-			 e.printStackTrace();
-			 System.out.println(e.getMessage());
+			System.err.println("Erreur de chargement du jeu : "+e.getMessage());
+		}catch(IOException e){
+	 		System.err.println("Erreur de chargement du jeu : "+e.getMessage());
+	 	 }catch(ClassNotFoundException e){
+			System.err.println("Erreur de chargement du jeu : "+e.getMessage());
 		 }
-
 		return jeu;
 	}
 
@@ -141,116 +137,12 @@ public class Jeu implements Serializable{
 			oos.writeObject(this);
 			oos.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.err.println(e.getMessage());}
-		  catch (IOException e) {
-			  e.printStackTrace();
-			  System.err.println(e.getMessage());}
+			System.err.println("Erreur de chargement du jeu : "+e.getMessage());
+		} catch (IOException e) {
+			System.err.println("Erreur de chargement du jeu : "+e.getMessage());
+		}
 	}
-
 	//====================================================================================================
 	
-
-
-
 	
-	public static void main(String args[]){
-		PartieIAvsIA part1 = null;
-		PartieIAvsIA part2 = null;
-		PartieIAvsIA part4 = null;
-		PartieIAvsIA part5 = null;
-		PartieIAvsIA part6 = null;
-		PartieIAvsIA part7 = null;
-		PartieIAvsIA part8 = null;
-		PartieIAvsIA part9 = null;
-		PartieIAvsIA part10 = null;
-		PartieIAvsIA part11= null;
-		PartieIAvsIA part12= null;
-		PartieIAvsIA part13= null;
-		PartieIAvsIA part14= null;
-		PartieIAvsIA part15= null;
-		PartieIAvsIA part16= null;
-		PartieIAvsIA part17= null;
-		PartieIAvsIA part18= null;
-		PartieIAvsIA part19= null;
-		PartieIAvsIA part20= null;
-		try {
-			part1 = new PartieIAvsIA(10,20,1,1);
-			part2 = new PartieIAvsIA(10,20,1,1);
-			part4 = new PartieIAvsIA(10,20,1,1);
-			part5 = new PartieIAvsIA(10,20,1,1);
-			part6 = new PartieIAvsIA(10,20,1,1);
-			part7 = new PartieIAvsIA(10,20,1,1);
-			part8 = new PartieIAvsIA(10,20,1,1);
-			part9 = new PartieIAvsIA(10,20,1,1);
-			part10 = new PartieIAvsIA(10,20,1,1);
-			part11 = new PartieIAvsIA(10,20,1,1);
-			part12= new PartieIAvsIA(10,20,1,1);
-			part13= new PartieIAvsIA(10,20,1,1);
-			part14= new PartieIAvsIA(10,20,1,1);
-			part15= new PartieIAvsIA(10,20,1,1);
-			part16= new PartieIAvsIA(10,20,1,1);
-			part17= new PartieIAvsIA(10,20,1,1);
-			part18= new PartieIAvsIA(10,20,1,1);
-			part19= new PartieIAvsIA(10,20,1,1);
-			part20= new PartieIAvsIA(10,20,1,1);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidPlateauSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Jeu jeu = new Jeu();
-		jeu.charger();
-		try {
-			System.out.println(jeu.taille());
-			jeu.ajouter(part1);
-			Thread.sleep(10);
-			System.out.println(jeu.taille());
-			jeu.ajouter(part2);
-			Thread.sleep(10);
-			System.out.println(jeu.taille());
-			jeu.ajouter(part4);
-			System.out.println(jeu.taille());
-			jeu.ajouter(part5);
-			jeu.ajouter(part6);
-			jeu.ajouter(part7);
-			jeu.ajouter(part8);
-			jeu.ajouter(part9);
-			jeu.ajouter(part10);
-			jeu.ajouter(part11);
-			jeu.ajouter(part12);
-			jeu.ajouter(part13);
-			jeu.ajouter(part14);
-			jeu.ajouter(part15);
-			jeu.ajouter(part16);
-			jeu.ajouter(part17);
-			jeu.ajouter(part18);
-			jeu.ajouter(part19);
-			jeu.ajouter(part20);
-			jeu.sauver();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for(Object o : jeu.date()){
-			Date d = (Date)o;
-			System.out.println(d);
-		}
-	
-		
-	}
-	
-	public HashMap<Date, Partie> getdates(){
-		return this.listePartie;	
-		
-	}
 }
-
-		
-		
-	

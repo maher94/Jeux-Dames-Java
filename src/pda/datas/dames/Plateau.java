@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Le plateau où se déroule une partie.<br>
+ * Cette classe est sans doute parmis les plus importantes du jeu de dames car c'est dans cette classe que va se faire le déplacement des pions sur le plateau.<br>
+ * Les méthodes qui servent à la vérification des déplacements vont également servir à l'IA pour calculer les coups à l'avance en utilisant les déplacements possibles 
+ * pour chaque couleur.
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00

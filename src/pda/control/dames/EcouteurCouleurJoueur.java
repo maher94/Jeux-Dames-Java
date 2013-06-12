@@ -8,8 +8,8 @@ import pda.view.dames.EcranParametre;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Ecouteur qui va permettre de changer le label qui indique la couleur du joueur 2 en fonction de la couleur choisie par le joueur 1.<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -30,7 +30,7 @@ public class EcouteurCouleurJoueur implements ActionListener {
 	//==========================================CONSTRUCTEUR(S)==========================================
 	
 	/**
-	 * Constructeur de l'écouteur du changement de couleur du joueur 1
+	 * Constructeur de l'écouteur du changement de couleur du joueur 2
 	 * @param ecranParametresP l'écran des paramètres
 	 */
 	public EcouteurCouleurJoueur(EcranParametre ecranParametresP){
@@ -39,18 +39,7 @@ public class EcouteurCouleurJoueur implements ActionListener {
 	//====================================================================================================
 	
 	
-	//============================================ACCESSEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
-	
+	//===========================================ECOUTE BOUTONS===========================================
 	/**
 	 * Méthode qui change le contenu du JLabel de la couleur du Joueur 2 en fonction
 	 * de la couleur du Joueur 1
@@ -65,6 +54,5 @@ public class EcouteurCouleurJoueur implements ActionListener {
 		}
 	
 	}
-	//====================================================================================================
-	
+	//====================================================================================================	
 }

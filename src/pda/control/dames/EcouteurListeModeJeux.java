@@ -7,7 +7,7 @@ import pda.view.dames.EcranParametre;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Ecouteur de la liste des modes de jeux de l'écran paramètres.<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
@@ -36,17 +36,7 @@ public class EcouteurListeModeJeux implements ActionListener{
 	//====================================================================================================
 	
 	
-	//============================================ACCESSEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
+	//============================================ECOUTE LISTE============================================
 	/**
 	 * Méthode appelée lors du clic sur la liste
 	 */
@@ -54,5 +44,4 @@ public class EcouteurListeModeJeux implements ActionListener{
 		this.ecranParametres.actualiserAffichage();
 	}
 	//====================================================================================================
-	
 }

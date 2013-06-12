@@ -7,7 +7,7 @@ import pda.datas.dames.exception.InvalidDeplacementException;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Cette classe représente un déplacement sur le plateau dame.<br>
  * Le déplacement est caractérisé par une position de départ ainsi qu'une position d'arrivée.<br>
  * Le déplacement possède un booleen qui permet d'inquider si le déplacement effectue une prise ou non.

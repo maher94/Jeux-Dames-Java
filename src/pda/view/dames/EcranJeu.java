@@ -17,7 +17,7 @@ import pda.datas.dames.Pion;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Ceci est l'écran de jeu. C'est l'écran principal de l'application Jeu de dames.<br>
  * Dans cet écran, on affichera les informations sur la partie en cours ainsi que le panel du plateau qui affichera le plateau de jeu.<br>
  * @author Mathieu THEBAUD
@@ -27,7 +27,6 @@ import pda.datas.dames.Pion;
  */
 
 public class EcranJeu extends JPanel{
-	
 	
 	//============================================ATTRIBUT(S)============================================
 	/**

@@ -9,8 +9,8 @@ import pda.view.dames.EcranParametre;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Ecouteur qui va permettre de changer dynamiquement le nom des joueurs qui commencent en fonction des noms entrés.<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -40,16 +40,10 @@ public class EcouteurNomJoueur implements KeyListener {
 	//====================================================================================================
 
 
-	
-	public void keyPressed(KeyEvent arg0) {
-	}
-
-
-
-	public void keyReleased(KeyEvent arg0) {		
-	}
-
-
+	//===========================================ECOUTE CLAVIER===========================================
+	/**
+	 * Méthode qui va réagir à la pression d'une des touches du clavier.
+	 */
 	public void keyTyped(KeyEvent e) {
 		if (e.getSource()== this.ecranParametres.getJoueur1()){
 			String nomJoueur = this.ecranParametres.getJoueur1().getText();
@@ -66,19 +60,8 @@ public class EcouteurNomJoueur implements KeyListener {
 		
 	}
 	
-	
-	//============================================ACCESSEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
-	
-	//====================================================================================================
-	
+	//Pas de redéfinition des autres méthodes
+	public void keyPressed(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {}
+	//====================================================================================================	
 }

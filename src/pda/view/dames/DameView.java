@@ -9,8 +9,9 @@ import pda.datas.dames.Partie;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
- * <br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
+ * Vue principale de l'application du jeu de dame.<br>
+ * Le panel principal de cette application est géré par une card layout qui permettra de basculer d'un écran à l'autre facilement.
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
  * @version 1.00
@@ -44,8 +45,7 @@ public class DameView {
 	/**
 	 * Ecran des sauvegardes
 	 */
-	private EcranChargement ecranSauvegardes;
-	
+	private EcranChargement ecranChargement;
 	
 	/**
 	 * Le layout qui permet de changer d'écran
@@ -61,9 +61,10 @@ public class DameView {
 	
 	//==========================================CONSTRUCTEUR(S)==========================================
 	/**
-	 * 
-	 * @param controleurP
-	 * @throws IllegalArgumentException
+	 * Constructeur de la vue principale de l'application de jeu de dame.<br>
+	 * Ce constructeur va s'occuper d'initialiser les différents écrans de l'application (sauf celui de jeu qui sera recréer à chaque nouvelle partie)
+	 * @param controleurP le controleur principal de l'application
+	 * @throws IllegalArgumentException si le constructeur est null
 	 */
 	public DameView(DamesCtrl controleurP)throws IllegalArgumentException{
 		if(controleurP==null)throw new IllegalArgumentException("Le controleur doit exister");
@@ -97,13 +98,14 @@ public class DameView {
 		
 		//Créations écrans
 		this.ecranParametres = new EcranParametre(this.controleur);
-		this.ecranSauvegardes = new EcranChargement(this.controleur);
+		this.ecranChargement = new EcranChargement(this.controleur);
 		this.ecranMenu = new EcranPrincipal(this.controleur);	
 		
 		//Ajout des écrans
 		this.panelPrincipal.add(this.ecranParametres, DamesCtrl.ECRAN_PARAMETRES);
 		this.panelPrincipal.add(this.ecranMenu,DamesCtrl.ECRAN_PRINCIPAL);
-		this.panelPrincipal.add(this.ecranSauvegardes,DamesCtrl.ECRAN_SAUVEGARDES);	}
+		this.panelPrincipal.add(this.ecranChargement,DamesCtrl.ECRAN_CHARGEMENT);
+	}
 	
 	/**
 	 * Cette méthode permet de changer le menu affiché
@@ -111,8 +113,8 @@ public class DameView {
 	 */
 	public void changerMenu(String menu){
 		//Si on passe à l'écran de chargement, on actualise
-		if(menu.equals(DamesCtrl.ECRAN_SAUVEGARDES)){
-			this.ecranSauvegardes.actualiserInterface();
+		if(menu.equals(DamesCtrl.ECRAN_CHARGEMENT)){
+			this.ecranChargement.actualiserInterface();
 		}
 		//Change menu	
 		this.changeurMenu.show(this.panelPrincipal, menu);
@@ -124,7 +126,7 @@ public class DameView {
 	
 	/**
 	 * Cette méthode va permettre de créer et d'afficher l'écran de jeu dans le panel principal.
-	 * @param partie la partie que l'on veut jouer
+	 * @param partie la partie que l'on veut jouer (doit exister)
 	 */
 	public void lancerPartie(Partie partie){
 		if(partie!=null){
@@ -132,21 +134,9 @@ public class DameView {
 			if(this.ecranJeu!=null)this.panelPrincipal.remove(this.ecranJeu);
 			this.ecranJeu = new EcranJeu(this.controleur, partie);
 			this.panelPrincipal.add(this.ecranJeu, DamesCtrl.ECRAN_JEU);
-
 			this.changerMenu(DamesCtrl.ECRAN_JEU);
 		}
 		
 	}
-	//====================================================================================================
-
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
-	
-	//====================================================================================================
-	
+	//====================================================================================================	
 }

@@ -4,7 +4,7 @@ import pda.datas.dames.exception.InvalidPlateauSizeException;
 
 
 /**
- * <strong>Projet IUT Vannes 2013 - Jeux de dames</strong><br>
+ * <strong>Projet IUT Vannes 2013 - Jeu de dames</strong><br>
  * Cette classe représente une partie entre un joueur Humain et l'IA<br>
  * @author Mathieu THEBAUD
  * @author Nathan VILLIOT
@@ -44,22 +44,4 @@ public class PartieHumainvsIA extends Partie{
 		this.setJ2(j2);
 	}
 	//====================================================================================================
-	
-	
-	//============================================ACCESSEUR(S)============================================
-	public Joueur getJoueurHumain(){
-		return this.getJ1();
-	}
-	//====================================================================================================
-	
-	
-	//============================================MUTATEUR(S)============================================
-	
-	//====================================================================================================
-	
-	
-	//========================================AUTRE(S) METHODE(S)========================================
-	
-	//====================================================================================================
-	
 }
