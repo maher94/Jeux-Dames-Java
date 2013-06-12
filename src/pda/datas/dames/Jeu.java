@@ -157,11 +157,43 @@ public class Jeu implements Serializable{
 	public static void main(String args[]){
 		PartieIAvsIA part1 = null;
 		PartieIAvsIA part2 = null;
-		PartieIAvsIA part3 = null;
+		PartieIAvsIA part4 = null;
+		PartieIAvsIA part5 = null;
+		PartieIAvsIA part6 = null;
+		PartieIAvsIA part7 = null;
+		PartieIAvsIA part8 = null;
+		PartieIAvsIA part9 = null;
+		PartieIAvsIA part10 = null;
+		PartieIAvsIA part11= null;
+		PartieIAvsIA part12= null;
+		PartieIAvsIA part13= null;
+		PartieIAvsIA part14= null;
+		PartieIAvsIA part15= null;
+		PartieIAvsIA part16= null;
+		PartieIAvsIA part17= null;
+		PartieIAvsIA part18= null;
+		PartieIAvsIA part19= null;
+		PartieIAvsIA part20= null;
 		try {
 			part1 = new PartieIAvsIA(10,20,1,1);
 			part2 = new PartieIAvsIA(10,20,1,1);
-			part3 = new PartieIAvsIA(10,20,1,1);
+			part4 = new PartieIAvsIA(10,20,1,1);
+			part5 = new PartieIAvsIA(10,20,1,1);
+			part6 = new PartieIAvsIA(10,20,1,1);
+			part7 = new PartieIAvsIA(10,20,1,1);
+			part8 = new PartieIAvsIA(10,20,1,1);
+			part9 = new PartieIAvsIA(10,20,1,1);
+			part10 = new PartieIAvsIA(10,20,1,1);
+			part11 = new PartieIAvsIA(10,20,1,1);
+			part12= new PartieIAvsIA(10,20,1,1);
+			part13= new PartieIAvsIA(10,20,1,1);
+			part14= new PartieIAvsIA(10,20,1,1);
+			part15= new PartieIAvsIA(10,20,1,1);
+			part16= new PartieIAvsIA(10,20,1,1);
+			part17= new PartieIAvsIA(10,20,1,1);
+			part18= new PartieIAvsIA(10,20,1,1);
+			part19= new PartieIAvsIA(10,20,1,1);
+			part20= new PartieIAvsIA(10,20,1,1);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -170,6 +202,7 @@ public class Jeu implements Serializable{
 			e.printStackTrace();
 		}
 		Jeu jeu = new Jeu();
+		jeu.charger();
 		try {
 			System.out.println(jeu.taille());
 			jeu.ajouter(part1);
@@ -178,8 +211,25 @@ public class Jeu implements Serializable{
 			jeu.ajouter(part2);
 			Thread.sleep(10);
 			System.out.println(jeu.taille());
-			jeu.ajouter(part3);
+			jeu.ajouter(part4);
 			System.out.println(jeu.taille());
+			jeu.ajouter(part5);
+			jeu.ajouter(part6);
+			jeu.ajouter(part7);
+			jeu.ajouter(part8);
+			jeu.ajouter(part9);
+			jeu.ajouter(part10);
+			jeu.ajouter(part11);
+			jeu.ajouter(part12);
+			jeu.ajouter(part13);
+			jeu.ajouter(part14);
+			jeu.ajouter(part15);
+			jeu.ajouter(part16);
+			jeu.ajouter(part17);
+			jeu.ajouter(part18);
+			jeu.ajouter(part19);
+			jeu.ajouter(part20);
+			jeu.sauver();
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
