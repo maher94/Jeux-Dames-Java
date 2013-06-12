@@ -1,15 +1,21 @@
 package pda.view.dames;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import pda.control.dames.DamesCtrl;
 import pda.control.dames.EcouteurChargement;
+import pda.datas.dames.Partie;
 
 
 /**
@@ -161,8 +167,10 @@ public class EcranChargement extends JList {
 		this.centre = new JPanel();
 		this.liste = new JList();
 		this.liste.setModel(new DefaultListModel());
-		//this.centre.add(new JScrollPane(this.liste));
-		this.centre.add(this.liste);
+		JScrollPane scroll = new JScrollPane(this.liste);
+		scroll.setPreferredSize(new Dimension(315,250));
+		this.centre.add(scroll);
+		
 	
 		
 		
@@ -189,7 +197,10 @@ public class EcranChargement extends JList {
 			tabliste.removeAllElements();
 			Object[] cles = this.controleur.getJeu().date();
 			for(Object o : cles){
-				tabliste.addElement(o.toString());
+				Date date = (Date)o;
+				Partie partie = this.controleur.getJeu().getdates().get(date);
+				SimpleDateFormat formatdate = new SimpleDateFormat("dd/MM/yyyy-HH:mm",Locale.FRANCE);
+				tabliste.addElement(formatdate.format(date)+"   /    "+partie.getJ1().getNom()+" VS "+partie.getJ2().getNom());
 			}
 		}
 	}
