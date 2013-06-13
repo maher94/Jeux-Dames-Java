@@ -1,30 +1,83 @@
 package pda.datas.dames.test;
 
-import static org.junit.Assert.*;
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import pda.datas.dames.Case;
+import pda.datas.dames.Pion;
+
 public class CaseTest extends TestCase{
 
-	@Test
+	/**
+	 * Test du constructeur d'une case
+	 */
 	public void testCase() {
-		fail("Not yet implemented");
-	}
+		//Mauvaise couleur
+				try {
+					Case c = new Case(3);
+					fail("Exception etait attendue");
+				} catch (IllegalArgumentException e) {}
+				
+				//Bonne couleur
+				try {
+					Case c = new Case(Case.CASE_BLANCHE);
+					assertNotNull(c);
+				} catch (IllegalArgumentException e) {
+					fail("Il ne devait pas y avoir d'exception");
+				}
+			}
 
-	@Test
+	
+
+	/**
+	 * Test de la méthode GetPionPose
+	 */
 	public void testGetPionPose() {
-		fail("Not yet implemented");
+		try {
+			Case c = new Case(Case.CASE_BLANCHE);
+			assertNull(c.getPionPose());
+			c.setPionPose(new Pion(Pion.PION_BLANC));
+			assertNotNull(c.getPionPose());
+		} catch (IllegalArgumentException e) {
+			fail("Il ne devait pas y avoir d'exception");
+		}
+
 	}
 
-	@Test
+	/**
+	 * Test de la méthode SetPionPose
+	 */
 	public void testSetPionPose() {
-		fail("Not yet implemented");
+		try {
+			Case c = new Case(Case.CASE_BLANCHE);
+			assertNull(c.getPionPose());
+			Pion p =new Pion(Pion.PION_BLANC);
+			c.setPionPose(p);
+			assertEquals(c.getPionPose(),p);
+		} catch (IllegalArgumentException e) {
+			fail("Il ne devait pas y avoir d'exception");
+		}
 	}
 
-	@Test
+	
+
+	/**
+	 * test de la méthode qui change la couleur d'une case
+	 */
 	public void testSetCouleur() {
-		fail("Not yet implemented");
+		try {
+			Case c = new Case(Case.CASE_BLANCHE);
+			c.setCouleur(Case.CASE_NOIRE);
+			assertEquals(c.getCouleur(),Case.CASE_NOIRE);
+		} catch (IllegalArgumentException e) {
+			fail("Il ne devait pas y avoir d'exception");
+		}
+		try{
+			Case c=new Case(3);
+			fail("Exception etait attendue");
+		}catch(IllegalArgumentException e){}
+
 	}
 
 }

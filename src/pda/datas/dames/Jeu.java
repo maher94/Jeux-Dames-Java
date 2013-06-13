@@ -58,7 +58,15 @@ public class Jeu implements Serializable{
 		return this.listePartie.keySet().toArray();	
 	}
 	
-
+	/**
+	 * Sert à retourner une date de la liste des partie sauvegarder en format date et non Object
+	 * @param i l'index correspondant à la date dans la liste
+	 * @return Retourne un objet Date
+	 */
+	public Date getDate(int i){
+		return (Date) this.date()[i];
+	}
+	
 	/**
 	 * Sert à retourner la taille de la HashMap
 	 * @return Retourne un entier correspondant à la taille de la HashMap
