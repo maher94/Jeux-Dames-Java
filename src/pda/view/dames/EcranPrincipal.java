@@ -128,7 +128,7 @@ public class EcranPrincipal extends JPanel{
 		boutons.add(this.quitter);
 		
 		//Placement boutons
-		boutons.setBounds(60,150,200,150);
+		boutons.setBounds(60,120,200,150);
 		
 		//Ajout total
 		this.add(boutons);

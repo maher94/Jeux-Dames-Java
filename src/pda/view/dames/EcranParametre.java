@@ -1,6 +1,7 @@
 package pda.view.dames;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -407,8 +408,7 @@ public class EcranParametre extends JPanel {
 	/**
 	 * Sert à créér et mettre en place tous les composants de l'écran de paramètrage.
 	 */
-	public void creerInterface(){
-		
+	public void creerInterface(){	
 		//Gère la partie sud avec les boutons "Valider" et "Annuler"
 		this.sud = new JPanel();
 		this.valider = new JButton("Valider");

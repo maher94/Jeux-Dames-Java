@@ -1,6 +1,7 @@
 package pda.datas.dames.test;
 
 import junit.framework.TestCase;
+import pda.datas.dames.Deplacement;
 import pda.datas.dames.Pion;
 import pda.datas.dames.Plateau;
 import pda.datas.dames.exception.InvalidPlateauSizeException;
@@ -98,6 +99,37 @@ public class PlateauTest extends TestCase{
 	 * Il servira donc comme test pour toutes les différentes méthodes déplacement.
 	 */
 	public void testEffectuerDeplacement() {
+		//Notre plateau de test (10x10 : aucun pion dessus)
+		try {
+			testPlateau = new Plateau(10,20);
+		} catch (InvalidPlateauSizeException e) {
+			fail("Pas d'exception attendue");
+		}
 		
+		/*
+		 * On rappelle que les pions blancs sont toujours au nord et que les noirs sont toujours au sud
+		 */
+		//Test avec les pions noirs, la couleur étant un entier, si le test réussi avec les pions noirs, alors il fonctionnera avec les pions blancs
+		testPlateau.setPion(1, 6, new Pion(Pion.PION_NOIR));
+		//Déplacement normal
+		assertTrue(testPlateau.effectuerDeplacement(new Deplacement(1,6,2,5),Pion.PION_NOIR));
+		assertTrue(testPlateau.effectuerDeplacement(new Deplacement(2,5,1,4),Pion.PION_NOIR));
+		assertFalse(testPlateau.effectuerDeplacement(new Deplacement(1,4,2,5),Pion.PION_NOIR));
+		assertFalse(testPlateau.effectuerDeplacement(new Deplacement(1,4,0,5),Pion.PION_NOIR));
+		//Prise arrière
+		testPlateau.setPion(2,5,new Pion(Pion.PION_BLANC));
+		assertTrue(testPlateau.effectuerDeplacement(new Deplacement(1,4,3,6),Pion.PION_NOIR));
+		//Deplacement en dehors du plateau
+		testPlateau.setPion(1, 0, new Pion(Pion.PION_NOIR));
+		assertFalse(testPlateau.effectuerDeplacement(new Deplacement(1,0,0,-1),Pion.PION_NOIR));
+		//Déplacement avec dame
+		testPlateau.setPion(2, 5, new Pion(Pion.PION_NOIR));
+		testPlateau.getPion(2, 5).promotion();
+		//arrière
+		assertTrue(testPlateau.effectuerDeplacement(new Deplacement(2,5,0,7),Pion.PION_NOIR));
+		//avant
+		assertTrue(testPlateau.effectuerDeplacement(new Deplacement(0,7,2,5),Pion.PION_NOIR));
+		//pas par dessus les autres pions alliés
+		assertFalse(testPlateau.effectuerDeplacement(new Deplacement(2,5,4,7),Pion.PION_NOIR));
 	}
 }

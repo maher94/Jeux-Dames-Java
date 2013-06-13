@@ -1,7 +1,7 @@
 package pda.view.dames;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -186,6 +186,7 @@ public class EcranJeu extends JPanel{
 		 */
 		this.affichageInfos = new JPanel(new BorderLayout());
 		this.add(this.affichageInfos,BorderLayout.NORTH);
+		
 		
 		//Description des informations
 		JLabel dCouleur = new JLabel("Couleur");

@@ -60,11 +60,6 @@ public class PanelPlateau extends JPanel{
 	 * Image d'un pion blanc
 	 */
 	private Image pionBlanc;
-
-	/**
-	 * Image d'une case blanche selectionnée
-	 */
-	private Image caseBlancheSelectionnee;
 	
 	/**
 	 * Image d'une case blanche
@@ -145,7 +140,6 @@ public class PanelPlateau extends JPanel{
 			this.caseNoire = ImageIO.read(new File("./data/img/dames/case_noire.png"));
 			this.dameBlanche = ImageIO.read(new File("./data/img/dames/dame_blanche.png"));
 			this.dameNoire = ImageIO.read(new File("./data/img/dames/dame_noire.png"));
-			this.caseBlancheSelectionnee = ImageIO.read(new File("./data/img/dames/case_blanche_selec.png"));
 			this.caseNoireSelectionnee = ImageIO.read(new File("./data/img/dames/case_noire_selec.png"));
 		}catch(Exception e){
 			System.err.println("Erreur de chargement d'image : "+e.getMessage());
@@ -190,8 +184,7 @@ public class PanelPlateau extends JPanel{
 					else textureCase=this.caseNoire;
 				}
 				else{
-					if(this.plateauJeux.getCase(x, y).isSelectionnee())textureCase=this.caseBlancheSelectionnee;
-					else textureCase=this.caseBlanche;
+					textureCase=this.caseBlanche;
 				}
 				//Dessine
 				g.drawImage(textureCase,this.decalageLargeur+x*this.largeurCase,this.decalageHauteur+y*this.hauteurCase,this.largeurCase,this.hauteurCase,null);

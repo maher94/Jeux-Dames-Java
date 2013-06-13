@@ -35,12 +35,7 @@ public class BoutonJeuDame extends JButton implements MouseListener{
 	 * La texture normal (position "repos")
 	 */
 	private Image textureNormal;
-	
-	/**
-	 * La texture lorsqu'on clic
-	 */
-	private Image textureClic;
-	
+		
 	/**
 	 * La texture lorsqu'on met la souris sur le bouton
 	 */
@@ -49,7 +44,7 @@ public class BoutonJeuDame extends JButton implements MouseListener{
 	/**
 	 * Police utilisée pour le texte du bouton
 	 */
-	private static final Font POLICE_TEXTE = new Font("Tahoma",Font.PLAIN,12);
+	private static final Font POLICE_TEXTE = new Font("Tahoma",Font.BOLD,14);
 	//====================================================================================================
 
 	
@@ -67,7 +62,6 @@ public class BoutonJeuDame extends JButton implements MouseListener{
 		//Chargement des images
 		try {
 			this.textureNormal = ImageIO.read(new File("./data/img/dames/bouton_menu_simple.png"));
-			this.textureClic = ImageIO.read(new File("./data/img/dames/bouton_menu_clic.png"));
 			this.textureOver = ImageIO.read(new File("./data/img/dames/bouton_menu_over.png"));
 		} catch (IOException e) {
 			System.err.println("Erreur de chargement du bouton : "+e.getMessage());
@@ -88,10 +82,10 @@ public class BoutonJeuDame extends JButton implements MouseListener{
 		//Dessin de la texture
 		g.drawImage(this.texture, 0, 0, this.getWidth(), this.getHeight(), this);
 		//Dessin du texte centré
-		g.setColor(Color.black);
+		g.setColor(Color.WHITE);
 		g.setFont(BoutonJeuDame.POLICE_TEXTE);
 		int positionX = (int) (this.getWidth()/2.0-g.getFontMetrics().stringWidth(this.getText())/2.0);
-		int positionY = (int) (this.getHeight()/2.0+g.getFontMetrics().getHeight()/2.0);
+		int positionY = (int) (this.getHeight()/2.0+g.getFontMetrics().getHeight()/2.0-5);
 		g.drawString(this.getText(), positionX, positionY);
 	}
 	//====================================================================================================
@@ -112,7 +106,7 @@ public class BoutonJeuDame extends JButton implements MouseListener{
 	}
 
 	public void mousePressed(MouseEvent eP) {
-		this.texture = this.textureClic;
+		this.texture = this.textureOver;
 		this.repaint();
 	}
 
