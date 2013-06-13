@@ -136,7 +136,11 @@ public class Plateau implements Serializable{
 	 * @param nouveauPion Le pion qui sera posé
 	 */
 	public void setPion(int posX,int posY,Pion nouveauPion){
-		if(this.verifierEmplacement(posX, posY))this.casesPlateau[posY][posX].setPionPose(nouveauPion);
+		if(this.verifierEmplacement(posX, posY)){
+			if(this.getCase(posX, posY).getCouleur()==Case.CASE_NOIRE){
+				this.casesPlateau[posY][posX].setPionPose(nouveauPion);
+			}
+		}
 	}
 	
 	/**
