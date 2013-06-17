@@ -245,7 +245,6 @@ public class JeuxConsole {
 						deplacementValide=false;
 					}
 				}while(!deplacementValide);
-				
 			}
 			//Si c'est à l'IA
 			else{
