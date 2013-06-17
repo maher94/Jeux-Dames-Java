@@ -130,7 +130,7 @@ public abstract class Partie implements Serializable{
 	 * @return le temps écoulé depuis le début
 	 */
 	public long getTempsEcoule() {
-		this.tempsEcoule = tempsEcoule + (System.currentTimeMillis()-this.tempsDepart);
+		if(this.tempsDepart!=0)this.tempsEcoule = tempsEcoule + (System.currentTimeMillis()-this.tempsDepart);
 		this.tempsDepart = System.currentTimeMillis();
 		return this.tempsEcoule;
 	}

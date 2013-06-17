@@ -114,7 +114,11 @@ public class DamesCtrl implements IApplication{
 	 * @param partie la partie à lancer
 	 */
 	public void lancerPartie(Partie partie){
+		//Lance la partie
 		this.vue.lancerPartie(partie);
+		//On recharge le jeu (pour conserver une partie différente de celle jouée)
+		Jeu jeuCharge = Jeu.charger();
+		if(jeuCharge!=null)this.jeuCharge=jeuCharge;
 	}
 	//====================================================================================================
 
