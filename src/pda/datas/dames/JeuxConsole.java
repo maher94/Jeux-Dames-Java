@@ -202,80 +202,21 @@ public class JeuxConsole {
 		/*
 		 * CREATION DES PARTIES ET JEU
 		 */
+		Partie partie=null;
+		
 		try{
 			switch(choixModeJeux){
 			//Partie IA vs IA
 			case 2:
-				PartieIAvsIA iavsia = new PartieIAvsIA(largeurPlateau,nbPion,premierJoueur,difficulte);
-				//Joue la partie
-				while(!iavsia.isPartieFinie()){
-					System.out.println("==================================");
-					System.out.println("Au tour de : "+iavsia.getNomJoueurActuel());
-					System.out.println("Déplacement choisi : "+iavsia.faireJouerIA());
-					System.out.println(iavsia.getPlateau());
-				}
-				//Affiche les infos de fin
-				System.out.println("Partie terminée\nGagnant de la partie : "+iavsia.getGagnant().getNom()+"\nNombre de tours : "+iavsia.getNbTours()+"\nTemps écoulé : "+(iavsia.getTempsEcoule()/1000)+" secondes");
+				partie = new PartieIAvsIA(largeurPlateau,nbPion,premierJoueur,difficulte);
 				break;
 			//Partie Humain vs IA
 			case 1:
-				PartieHumainvsIA humvsia = new PartieHumainvsIA(largeurPlateau,nbPion,premierJoueur,nomJoueur1,difficulte,couleurJoueur1);
-				//Joue la partie
-				while(!humvsia.isPartieFinie()){
-					Joueur j = humvsia.getJoueurActuel();
-					//Si c'est au joueur humain
-					if(j.getClass() == Joueur.class){
-						boolean deplacementValide=false;
-						do{
-							System.out.println("==================================");
-							System.out.println("Au tour de : "+humvsia.getNomJoueurActuel());
-							System.out.println(humvsia.getPlateau());
-							System.out.println("Entrez votre déplacement (x1/y1-x2/y2) : ");
-							try {
-								Deplacement d = Deplacement.parseDeplacement(scan.nextLine());
-								deplacementValide=humvsia.jouerTour(d);
-								if(!deplacementValide)System.out.println("Votre déplacement n'est pas valide, recommencez");
-							} catch (InvalidDeplacementException e) {
-								System.out.println(e.getMessage());
-								deplacementValide=false;
-							}
-						}while(!deplacementValide);
-						
-					}
-					//Si c'est à l'IA
-					else{
-						System.out.println("==================================");
-						System.out.println("Au tour de : "+humvsia.getNomJoueurActuel());
-						System.out.println("Déplacement choisi : "+humvsia.faireJouerIA());
-						System.out.println(humvsia.getPlateau());
-					}
-				}
-				//Affiche les infos de fin
-				System.out.println("Partie terminée\nGagnant de la partie : "+humvsia.getGagnant().getNom()+"\nNombre de tours : "+humvsia.getNbTours()+"\nTemps écoulé : "+(humvsia.getTempsEcoule()/1000)+" secondes");
+				partie = new PartieHumainvsIA(largeurPlateau,nbPion,premierJoueur,nomJoueur1,difficulte,couleurJoueur1);
 				break;
-				
-				
 			//Partie Humain vs Humain
 			case 0:
-				PartieHumainvsHumain humvshum = new PartieHumainvsHumain(largeurPlateau,nbPion,premierJoueur,nomJoueur1,couleurJoueur1,nomJoueur2,couleurJoueur2);
-				//Joue la partie
-				while(!humvshum.isPartieFinie()){
-					boolean deplacementValide=false;
-					do{
-						System.out.println("==================================");
-						System.out.println("Au tour de : "+humvshum.getNomJoueurActuel());
-						System.out.println(humvshum.getPlateau());
-						System.out.println("Entrez votre déplacement (x1/y1-x2/y2) : ");
-						try {
-							Deplacement d = Deplacement.parseDeplacement(scan.nextLine());
-							deplacementValide=humvshum.jouerTour(d);
-							if(!deplacementValide)System.out.println("Votre déplacement n'est pas valide, recommencez");
-						} catch (InvalidDeplacementException e) {
-							System.out.println(e.getMessage());
-							deplacementValide=false;
-						}
-					}while(!deplacementValide);
-				}
+				partie = new PartieHumainvsHumain(largeurPlateau,nbPion,premierJoueur,nomJoueur1,couleurJoueur1,nomJoueur2,couleurJoueur2);
 				break;
 			}
 		} catch (IllegalArgumentException e) {
@@ -283,6 +224,39 @@ public class JeuxConsole {
 		} catch (InvalidPlateauSizeException e) {
 			e.printStackTrace();
 		}
+		
+		//Joue la partie
+		while(!partie.isPartieFinie()){
+			Joueur j = partie.getJoueurActuel();
+			//Si c'est au joueur humain
+			if(!(j instanceof IA)){
+				boolean deplacementValide=false;
+				do{
+					System.out.println("==================================");
+					System.out.println("Au tour de : "+partie.getNomJoueurActuel());
+					System.out.println(partie.getPlateau());
+					System.out.println("Entrez votre déplacement (x1/y1-x2/y2) : ");
+					try {
+						Deplacement d = Deplacement.parseDeplacement(scan.nextLine());
+						deplacementValide=partie.jouerTour(d);
+						if(!deplacementValide)System.out.println("Votre déplacement n'est pas valide, recommencez");
+					} catch (InvalidDeplacementException e) {
+						System.out.println(e.getMessage());
+						deplacementValide=false;
+					}
+				}while(!deplacementValide);
+				
+			}
+			//Si c'est à l'IA
+			else{
+				System.out.println("==================================");
+				System.out.println("Au tour de : "+partie.getNomJoueurActuel());
+				System.out.println("Déplacement choisi : "+partie.faireJouerIA());
+				System.out.println(partie.getPlateau());
+			}
+		}
+		//Affiche les infos de fin
+		System.out.println("Partie terminée\nGagnant de la partie : "+partie.getGagnant().getNom()+"\nNombre de tours : "+partie.getNbTours()+"\nTemps écoulé : "+(partie.getTempsEcoule()/1000)+" secondes");
 		
 		//Fermeture du scanner
 		scan.close();
